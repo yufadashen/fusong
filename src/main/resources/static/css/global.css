@@ -1,0 +1,654 @@
+/*！
+ * GLOBAL CSS
+ * @Description: 所有页面的样式的集合
+ * @Author: Liph
+ * @Create Date: 2018/07/20
+ * @usage:
+ *   1.所有页面的样式须在本文件中编写，非特殊情况请勿直接使用行间样式及内联样式
+ *   2.对于前景色、背景色、图标及图片可根据需要在主题css文件中重写
+ *   3.引用顺序为：第三方css -> global.css -> 自定义主题css文件
+ * @Modified (order by date desc):
+ *   2018/07/20 查找不同模块的样式并进行综合
+*/
+
+/* ============================ I'm a split line ============================ */
+
+/* #region 首页 */
+html{height: 100%;}
+body{height:100%;position: relative;overflow:hidden;}
+.home-body{background: url(../themes/blue/images/i/body_bg.jpg) center top no-repeat;}
+.header{ height: 83px;background: #3F6281; border-bottom: 1px solid #9cbbca;}
+.header .con{width:1100px; height: 83px;margin: 0px auto;}
+.header .con .logo{width:600px; height: 60px; float: left;background:url(../themes/blue/images/i/login.png) left center no-repeat;}
+.header .con .logoRight{width: 470px;  height:83px; line-height:83px;float: right; text-align: right;color: #FFFFFF;}
+.header .con .logoRight .userName{ display: inline-block; height: 26px; line-height: 26px; padding:0px 23px; font-size: 14px; border-radius: 12px; margin-right: 21px;background: #295071;color: #ffffff;}
+.header .con .logoRight .a{display: inline-block; height: 20px; line-height: 20px;padding-left: 25px;text-decoration: none;color: #FFFFFF;}
+.header .con .logoRight .a:hover{  text-decoration: none; }
+.header .con .logoRight .themes{overflow:visible; position: relative;background: url(../themes/blue/images/i/top_icon3.png) left center no-repeat;}
+.header .con .logoRight .themes .themesCon{display:none;width: 93px; padding-top:26px;position: absolute; top: 2px; right: -6px; z-index: 999999;}
+.header .con .logoRight .themes .themesList{width: 93px; padding-top: 6px;background: url(../themes/blue/images/i/themes_arrow.png) center top no-repeat;}
+.header .con .logoRight .themes .themesList ul{padding:8px 0px 6px;background: #FFFFFF;}
+.header .con .logoRight .themes .themesList ul li{ height: 14px;padding: 6px 0px 6px 11px; line-height: 14px; font-size: 14px; text-align: left;background: #FFFFFF;}
+.header .con .logoRight .themes .themesList ul li i{ display: inline-block; width: 13px; height: 13px; margin-right: 8px;}
+.header .con .logoRight .themes:hover .themesCon{display:block;}
+.header .con .logoRight .themes .themesList ul li.theme_blue{ color: #295db2;}
+.header .con .logoRight .themes .themesList ul li.theme_blue i{ background: #295db2;}
+.header .con .logoRight .themes .themesList ul li.theme_brown{ color: #ba8f56;}
+.header .con .logoRight .themes .themesList ul li.theme_brown i{ background: #ba8f56;}
+.header .con .logoRight .themes .themesList ul li.theme_green{ color: #12bb75;}
+.header .con .logoRight .themes .themesList ul li.theme_green i{ background: #12bb75;}
+.header .con .logoRight .addressList{ background: url(../themes/blue/images/i/top_icon1.png) left center no-repeat;}
+.header .con .logoRight .personalization{ background: url(../themes/blue/images/i/top_icon4.png) left center no-repeat;}
+.header .con .logoRight .logOff{ background: url(../themes/blue/images/i/top_icon2.png) left center no-repeat;}
+
+
+.ping{ width: 100%; margin-top:15px;color: #FFFFFF;}
+
+.ptit2{width:1098px; margin:0px auto; margin-bottom: 10px;}
+.pingCon{ width: 1200px; height: 444px; margin:0px auto; position: relative;}
+.ptit2.ping1{ background: url(../themes/blue/images/i/mywork_title.png) left center no-repeat;}
+.ptit2.ping2{ background: url(../themes/blue/images/i/docrout_title.png) left center no-repeat;}
+.ptit2.ping3{ background: url(../themes/blue/images/i/synergy_title.png) left center no-repeat;}
+.ptit2.ping4{ background: url(../themes/blue/images/i/supervise_title.png) left center no-repeat;}
+.ptit2.ping5{ background: url(../themes/blue/images/i/data_title.png) left center no-repeat;}
+.ptit2.ping6{ background: url(../themes/blue/images/i/ping6_title.png) left center no-repeat;}
+.ptit3{ height: 32px; line-height: 32px; font-size: 18px; padding-left: 60px;background-color:rgba(63, 98, 129,0.8);}
+.ptit3 .ptit3-title{color:#fff;}
+.ptit3 a.more{ display: inline-block; width: 46px;height: 10px;margin-top: 10px;margin-right: 16px; text-indent: -9999px; overflow: hidden; float: right;background: url(../themes/blue/images/i/more.png) no-repeat;}
+.ptit3 a.addData{ display: inline-block; width: 20px;height: 20px;margin-top: 15px;margin-right: 12px; text-indent: -9999px; overflow: hidden; float: right;background: url(../themes/blue/images/i/scheduleAdd_icon.png) no-repeat;}
+
+.blockBg1{ background: url(../themes/blue/images/i/blockBg1.png);}
+.blockBg2{ background: url(../themes/blue/images/i/schedule_bg1.png);}
+.blockBg3{ background: url(../themes/blue/images/i/schedule_bg2.png);}
+.blockbg_1{ background: #ff534c;}
+.blockbg_2{ background: #fe8a52;}
+.blockbg_3{ background: #feb550;}
+.blockbg_4{ background: #369a97;}
+.blockbg_5{ background: #fe8a52;}
+
+.daiban{width: 261px;height: 144px;position: absolute;left: 0px;top: 0px;}
+.document{width: 261px;height: 144px;position: absolute;left: 0px;top: 0px;}
+.mail{width: 527px;height: 144px;position: absolute;left: 0px;top: 300px;}
+.notice{width: 261px;height: 294px;position: absolute;left: 266px;top: 0px;}
+.otherBox{top:-3px; left:530px;position: absolute;width:275px; height:440px;}
+.otherBox2,.otherBox3,.otherBox4{top:-3px; left:833px; position: absolute;width:275px; height:440px;}
+.other,.otherP2,.otherP4{width: 128px;height: 144px; float:left;}
+.otherP3{width: 263px;;height: 144px; float:left;}
+.schedule{width: 294px;height: 444px; position:absolute; top:0; right:0;}
+
+.daiban div{ margin-left: 8px;}
+.daiban .ptit3{background: url(../themes/blue/images/i/todo_icon.png) 17px center no-repeat;}
+.document div{ margin-left: 6px;}
+.document .ptit3{background: url(../themes/blue/images/i/bumph_icon.png) 17px center no-repeat;}
+.daiban div ul li, .document div ul li{ height: 65px; float: left;  line-height: 34px; }
+.daiban div ul li{width:72px; margin:10px 5px 0px; text-align: center;}
+.document div ul li{width: 111px; margin:10px 7px 0px;text-indent: 6px;}
+.daiban div ul li p, .document div ul li p{ text-align: right; margin-right: 8px; font-size: 24px; margin-top: -5px;}
+.mail div{height: 78px; overflow: hidden; margin-top: 2px;}
+.mail div ul li .type{ color: #ff534c;}
+.mail div ul li a,.notice div ul li a{ color: #FFFFFF;}
+.mail div ul li a:hover,.notice div ul li a:hover{ color: #FFFFFF;}
+.mail .ptit3{background: url(../themes/blue/images/i/mail_icon.png) 17px center no-repeat;}
+.notice div{height: 225px; overflow: hidden; margin-top: 3px;}
+.notice .ptit3{background: url(../themes/blue/images/i/notice_icon.png) 17px center no-repeat;}
+.mail div ul li{height:26px; line-height:26px; overflow: hidden;}
+.notice div ul li{height:25px; line-height:25px; overflow: hidden;}
+.mail div ul li{ margin:0px 17px 0px 10px;}
+.notice div ul li{margin:0px 17px;}
+.mail div ul li .time{ float: right;}
+.mail div ul li a:hover,.notice div ul li a:hover{ text-decoration: none;}
+.other a,.otherP2 a,.otherP3 a,.otherP4 a{ color: #FFFFFF;}
+.other a:hover,.otherP2 a:hover,.otherP3 a:hover,.otherP4 a:hover{ text-decoration: none; cursor: pointer;color: #FFFFFF;}
+.other div,.otherP2 div,.otherP3 div,.otherP4 div{height: 40px;margin-top: 43px;}
+.other1 div{background: url(../themes/blue/images/i/block_icon1.png) center center no-repeat;}
+.other2 div{background: url(../themes/blue/images/i/block_icon2.png) center center no-repeat;}
+.other3 div{background: url(../themes/blue/images/i/block_icon3.png) center center no-repeat;}
+.other4 div{background: url(../themes/blue/images/i/block_icon4.png) center center no-repeat;}
+.other5 div{background: url(../themes/blue/images/i/block_icon5.png) center center no-repeat;}
+.other6 div{height:144px;margin-top:0px;background: url(../themes/blue/images/i/block_icon6.png) center center no-repeat;}
+.other p,.otherP2 p,.otherP3 p,.otherP4 p{height: 36px;line-height: 36px;text-align: center;}
+
+.schedule .ptit3{background: url(../themes/blue/images/i/notice_icon.png) 17px center no-repeat;}
+.schedule .calendar{width: 294px;height: 232px;}
+.schedule .list{height: 163px; overflow: hidden;}
+.schedule .list ul li{padding:4px 10px 4px 46px; line-height: 23px;background: url(../themes/blue/images/i/schedule_listIcon02.png) 23px 10px no-repeat;}
+.schedule .list ul li.first{ background: url(../themes/blue/images/i/schedule_listIcon01.png) 23px 10px no-repeat;}
+.schedule .list ul li a{ color: #FFFFFF;}
+.schedule .list ul li a:hover{ text-decoration: none;color: #FFFFFF;}
+
+.hd{width: 640px; position: absolute; bottom: 10px;left:50%; margin-left:-295px;text-align: center;}
+.hd ul li.li1{ background: url(../themes/blue/images/i/sroll_icon1.png) center center no-repeat;}
+.hd ul li.li1.on{ background: url(../themes/blue/images/i/sroll_icon1_h.png) center center no-repeat;}
+.hd ul li.li2{ background: url(../themes/blue/images/i/sroll_icon2.png) center center no-repeat;}
+.hd ul li.li2.on{ background: url(../themes/blue/images/i/sroll_icon2_h.png) center center no-repeat;}
+.hd ul li.li3{ background: url(../themes/blue/images/i/sroll_icon3.png) center center no-repeat;}
+.hd ul li.li3.on{ background: url(../themes/blue/images/i/sroll_icon3_h.png) center center no-repeat;}
+.hd ul li.li4{ background: url(../themes/blue/images/i/sroll_icon4.png) center center no-repeat;}
+.hd ul li.li4.on{ background: url(../themes/blue/images/i/sroll_icon4_h.png) center center no-repeat;}
+.hd ul li.li5{ background: url(../themes/blue/images/i/sroll_icon5.png) center center no-repeat;}
+.hd ul li.li5.on{ background: url(../themes/blue/images/i/sroll_icon5_h.png) center center no-repeat;}
+.hd ul li.li6{ background: url(../themes/blue/images/i/sroll_icon6.png) center center no-repeat;}
+.hd ul li.li6.on{ background: url(../themes/blue/images/i/sroll_icon6_h.png) center center no-repeat;}
+.hd ul li{width: 92px;height: 95px; margin-right: 70px;float: left;cursor:pointer;position: relative;
+    -webkit-transition: background-color .25s ease-in-out;
+    -moz-transition: background-color .25s ease-in-out;
+    -o-transition: background-color .25s ease-in-out;
+    transition: background-color .25s ease-in-out;
+}
+.hd ul li img{
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+.hd ul li:hover img{
+    transform:scale(1.2,1.2);
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+.hd ul li:hover .tab-underline{display:block;width: 80px;left: 0;
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+.hd ul li.actived .tab-underline{
+    display:block;width: 80px;left: 0;
+}
+.hd ul li .tab-font{
+    color: #fff;
+    font-weight: bold;
+}
+.hd .prev, .hd .next{width: 54px;height: 54px;position: absolute; top: -5px;cursor:pointer;}
+.hd .prev{ left:-106px;top:20px;background: url(../themes/blue/images/i/prev.png);
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+.hd .next{ right:-106px;top:20px;background: url(../themes/blue/images/i/next.png);
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+.hd .prev:hover{
+    transform: translateX(-5px);
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+.hd .next:hover{
+    transform: translateX(5px);
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+.ft{position: fixed;bottom:0px;z-index: 10;width:100%;height: 115px;background:url(../themes/blue/images/index/Translucent-black.png) repeat;}
+.ft .hover-area{
+    width:20%;height:20px;margin:0 auto;
+    font-weight: bold;
+    text-align:center;
+    cursor: pointer;
+    visibility:hidden;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    color:#666;background-color:#fff;
+}
+.ft-mark{
+    position:fixed;
+    bottom:0;
+    z-index:-1;
+    height:180px;
+    width:100%;
+}
+
+.level_urgent{background: #ff534c;}
+.level_important{background: #feb352;}
+.level_commonly{background: #19aeaa;}
+/*第2屏 公文流转/电子公文*/
+.shouWen{width:412px; height: 294px; left: 0px; top: 0px;}
+.shouWen .ptit3{background: url(../themes/blue/images/i/doc_icon1.png) 17px center no-repeat;}
+.myWork{width:412px; height: 144px; left: 0px;top: 0px;}
+.myWork .ptit3{background: url(../themes/blue/images/i/doc_icon2.png) 17px center no-repeat;}
+.faWen{width:412px; height: 294px; left: 418px; top: 0px;}
+.faWen .ptit3{background: url(../themes/blue/images/i/doc_icon3.png) 17px center no-repeat;}
+.cuiBan{width:412px; height: 144px; left: 418px;top: 0px;}
+.cuiBan .ptit3{background: url(../themes/blue/images/i/doc_icon4.png) 17px center no-repeat;}
+
+.level_urgent{ display: inline-block; width: 6px; height: 6px;margin-right:7px; border-radius: 100%;}
+.level_important{ display: inline-block; width: 6px; height: 6px;margin-right:7px; border-radius: 100%;}
+.level_commonly{ display: inline-block; width: 6px; height: 6px;margin-right:7px; border-radius: 100%;}
+
+.colorfulBlockTwo div{margin-left:10px;}
+.colorfulBlockTwo div ul li{width:177px; text-align: left; text-indent: 8px; margin-left: 5px;margin-right:5px;}
+.colorfulBlockThree div{margin-left:14px;}
+.colorfulBlockThree div ul li{width:120px; text-align: left; text-indent: 8px; margin-left: 4px;margin-right:4px;}
+
+/*新增 首页标题*/
+.title-index{ height: 50px;width: 1080px;margin: 0px auto;position: relative;margin-top: 7px;padding-top: 25px;}
+.img-index{ float:left;height: 25px;}
+.font-index{ float:left;font-weight: bold;font-size:18px;margin-left: 7px;font-family:"Microsoft YaHei";text-decoration: none;color:white;}
+.tab-underline{background-color: #73d2ff;}
+.butDiv{height: 30px;margin-bottom: 5px;}
+
+/*首页导航栏*/
+.tab-img{ float: left;width:100%;margin-top: 10px;}
+.tab-font{ float: left;width:100%;margin-top: 10px;font-size:16px;font-family:"Microsoft YaHei";}
+.tab-underline{position: absolute;left: 40px;bottom: 6px;width: 0px;margin: 0 6px;box-sizing: inherit;height: 3px;
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+/*应用面板*/
+.bd .homeul-container{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.homeul-container > ul >li{
+    overflow: auto;
+}
+
+.homeul-container > ul{
+    margin: 0 auto;
+}
+
+/*滚动条样式*/
+._mCS_1 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+
+}
+._mCS_1 .mCSB_scrollTools .mCSB_draggerRail{
+    background-color: rgba(255,255,255,.2);
+    filter: "alpha(opacity=20)";
+    -ms-filter: "alpha(opacity=20)";
+}
+/*transform 动画-上滑显示*/
+.bodyBg .slide-up-show{
+    transform: translateY(0);
+    -webkit-transition: all 0.75s ease-in-out;
+    -moz-transition: all 0.75s ease-in-out;
+    -o-transition: all 0.75s ease-in-out;
+    transition: all 0.75s ease-in-out;
+}
+.bodyBg .slide-up-show{
+    opacity: 1;
+}
+/*gridster 数据网格样式*/
+.gridster{
+    color: #fff;
+}
+.gridster .gs-w {
+    background: transparent;
+    background-color: transparent;
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.gridster .player {
+    -webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    background: #BBB;
+}
+.gridster .gs-w.try {
+    background-image: url(../img/sprite.png);
+    background-repeat: no-repeat;
+    background-position: 37px -169px;
+}
+.gridster .preview-holder {
+    border: none !important;
+    border-radius: 0 !important;
+    background: red !important;
+}
+.gridster ul {
+    background-color: transparent;
+}
+.gridster li {
+    font-size: 10px;
+    font-weight: bold;
+    text-align: left;
+    line-height: 100%;
+}
+.gridster-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.controls {
+    margin-bottom: 20px;
+}
+.gridster .del {
+    position:absolute;
+    right:0;
+    top:0;
+    font-size:20px;
+}
+.layout-title{
+    height:20px;
+    background: #2a70b7;
+}
+.layout-title-left {
+    float:left;
+    margin-left: 5px;
+    font-size:5px;
+    margin-top: 5px;
+}
+.layout-title-right {
+    float:right;
+    margin-right: 15px;
+    font-size:5px;
+    margin-top: 5px;
+}
+
+
+@media screen and (max-height:768px){
+    .title-index {
+        height: 30px;
+        padding-top: 5px;
+    }
+    .hd {
+        width: 590px;
+        left: 50%;
+        margin-left: -295px;
+    }
+
+}
+@media screen and (max-width:1200px){
+    .bodyBg{width: 1200px;}
+}
+/* #endregion 首页 */
+
+
+/* ============================ I'm a split line ============================ */
+
+/* #region 树插件 */
+
+.leftTree{overflow-y: auto;}
+
+/*===== 设置整体padding间距======*/
+.ztree{padding:10px;overflow: auto;}
+/*===== 设置通用的字体大小，颜色等======*/
+.ztree *{ font-size:14px; line-height:18px; font-family:"Microsoft YaHei"; color:#262626;}
+/*===== 设置每一行的上下行间距。li只能设置top，a只能设置bottom======*/
+.ztree li{}
+.ztree li  a{ padding-bottom:10px;  padding-right:10px;}
+/*===== 设置hover时的下划线不显示======*/
+.ztree li  a:hover{ text-decoration:none;}
+/*===== 设置所有图标，“+”、“-”、“开口文件夹”、“闭口文件夹”、“叶子节点图标”等图标的背景图片======*/
+.ztree li span.button{ background-image:url(../images/icon.png);}
+/*===== 替换 - 折叠按钮 ====*/
+.ztree li span.button.noline_open{ background-position:-6px -1px;}
+/*===== 替换 + 折叠按钮 ====*/
+.ztree li span.button.noline_close{  background-position:-6px -21px;}
+/*===== 替换开口文件夹图标 ========*/
+.ztree li span.button.ico_open{ width:19px; height:16px; margin-right:4px; background-position:-28px -2px;}
+/*===== 替换闭口文件夹图标 ========*/
+.ztree li span.button.ico_close{ width:19px; height:16px; margin-right:4px; background-position:-28px -2px;}
+/*===== 替换叶子节点图标==========*/
+.ztree li span.button.ico_docu{width:17px; height:20px; margin-right:4px; margin-top:-2px; background-position:-54px 0px;}
+/*===== 设置点击选中时a的底色边框等样式*/
+.ztree li a.curSelectedNode{  background-color:#ffffff; border:none; opacity:1; padding-top:1px; height:17px;}
+.ztree li a.curSelectedNode span{color:#2a70b7}
+
+
+.ztree.ztreechk li span.button.chk {width:14px; height:14px; margin:0 6px 0 0;background-image:url(../images/iconchk.png);cursor: auto}
+.ztree.ztreechk li span.button.chk.checkbox_false_full {background-position:0 0}
+.ztree.ztreechk li span.button.chk.checkbox_false_full_focus {background-position:0 -14px}
+.ztree.ztreechk li span.button.chk.checkbox_false_part {background-position:0 -28px}
+.ztree.ztreechk li span.button.chk.checkbox_false_part_focus {background-position:0 -42px}
+.ztree.ztreechk li span.button.chk.checkbox_true_full {background-position:-14px 0}
+.ztree.ztreechk li span.button.chk.checkbox_true_full_focus {background-position:-14px -14px}
+.ztree.ztreechk li span.button.chk.checkbox_true_part {background-position:-14px -28px}
+.ztree.ztreechk li span.button.chk.checkbox_true_part_focus {background-position:-14px -42px}
+.ztree.ztreechk li span.button.chk.checkbox_true_disable {background-position:-14px -56px}
+.ztree.ztreechk li span.button.chk.radio_false_full {background-position:-28px 0}
+.ztree.ztreechk li span.button.chk.radio_false_full_focus {background-position:-28px -14px}
+.ztree.ztreechk li span.button.chk.radio_false_part {background-position:-28px -28px}
+.ztree.ztreechk li span.button.chk.radio_false_part_focus {background-position:-28px -42px}
+.ztree.ztreechk li span.button.chk.radio_false_disable {background-position:-28px -56px}
+.ztree.ztreechk li span.button.chk.radio_true_full {background-position:-42px 0}
+.ztree.ztreechk li span.button.chk.radio_true_full_focus {background-position:-42px -14px}
+.ztree.ztreechk li span.button.chk.radio_true_part {background-position:-42px -28px}
+.ztree.ztreechk li span.button.chk.radio_true_part_focus {background-position:-42px -42px}
+.ztree.ztreechk li span.button.chk.radio_true_disable {background-position:-42px -56px}
+/* #endregion 树插件 */
+
+/* #region表单布局 */
+.uni-form::after {
+    content: "";
+    height: 0;
+    display: table;
+    clear: both;
+}
+.uni-form-group{
+    margin-bottom: 15px;
+    padding-right: 20px;
+}
+.uni-form-group .uni-form-item{
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+.uni-form-group .uni-form-item:last-child{
+    border: none;
+}
+.uni-form-group::after{
+    content: "";
+    height: 0;
+    display: table;
+    clear: both;
+}
+.uni-form-group .uni-upload-comp .uni-input-ins-con{
+    float: left;
+    width: 100%;
+}
+.uni-form-group .uni-upload-comp .uni-input-ins{
+    width: 100%;
+    margin-right: 92px;
+}
+.uni-form-group .uni-upload-comp  > label{
+    float: right;
+    margin-left: -92px;
+    position: relative;
+}
+.uni-form-group .uni-interval-comp .uni-input-ins{
+    width: 100%;
+}
+.uni-form-group .uni-interval-comp .uni-input-first{
+    width: 50%;
+    margin-right: -12px;
+    float: left;
+}
+.uni-form-group .uni-interval-comp .uni-input-last{
+    width: 50%;
+    margin-left: -12px;
+    float: right;
+}
+
+.uni-form-group .uni-interval-comp .uni-input-first > div{
+    padding-right: 12px;
+}
+.uni-form-group .uni-interval-comp .uni-input-last > div{
+    padding-left: 12px;
+}
+
+.uni-input, .uni-textarea {
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.uni-input, .uni-input-ins, .uini-select, .uni-textarea {
+    height: 38px;
+    line-height: 1.3;
+    line-height: 38px\9;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.input-xs {
+    width: 3em;
+}
+
+.input-sm {
+    width: 6em;
+}
+
+.input-md {
+    width: 10em;
+}
+
+.input-lg {
+    width: 20em;
+}
+
+.uni-form-label, .uni-input, .uni-input-ins, .uni-select, .uni-textarea {
+    border-color: #e6e6e6;
+}
+
+.uni-btn, .uni-input, .uni-input-ins, .uni-select, .uni-textarea, .uni-upload-button {
+    outline: 0;
+    /* -webkit-appearance: none; */
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    box-sizing: border-box;
+}
+
+.uni-form .uni-form-item {
+    float: left;
+    margin-bottom: 15px;
+    clear: both;
+}
+
+.uni-form-item::after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.uni-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 110px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.uni-input-block {
+    margin-left: 140px;
+    min-height: 36px;
+    position: relative;
+    white-space: nowrap;
+}
+.uni-select {
+    height: 38px;
+    width: 100%;
+    line-height: 1.3;
+    line-height: 38px\9;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    border-color: #e6e6e6;
+}
+.uni-radio {
+    height: 38px;
+    line-height: 38px;
+    margin-right: 3px;
+    vertical-align: middle;
+}
+
+.uni-radio-block {
+    display: inline-block;
+    padding-right: 5px;
+}
+
+input.uni-input-ins {
+    width: 140px;
+    padding-left: 10px;
+}
+
+span.uni-font-connect {
+    display: inline-block;
+    /* vertical-align: middle; */
+    padding: 0 5px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    width: 14px;
+}
+
+.uni-container-block {
+    padding: 20px;
+    margin: 0 auto 50px;
+}
+
+.uni-symbol-required::before {
+    content: "*";
+    color: #e74c3c;
+}
+
+.uni-upload-comp .sbtn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.uni-footer-bar {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    box-sizing: border-box;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 20px 20px;
+    text-align: right;
+    background-color: #fff;
+}
+
+.uni-flow-page{
+    overflow-y: auto;
+}
+
+.uni-flow-page .uni-container-block {
+    margin-bottom: 40px;
+}
+
+.uni-table {
+    width: 100%;
+}
+.uni-table thead th{
+    border: 1px solid #ccc;
+    padding: 3px;
+    box-sizing: border-box;
+}
+.uni-table tbody td{
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.uni-table td input[type='text']{
+    border: 1px solid #e9e9e9;
+    width: 100%;
+    min-height: 24px;
+    padding: 3px;
+    box-sizing:border-box;
+}
+
+.uni-table thead {
+    background-color: #e9e9e9;
+}
+.uni-table tr > td:first-child{
+    background-color: #e9e9e9;
+}
+/* #endregion表单布局 */

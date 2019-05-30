@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>table</title>
+	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css"/>
+	<link rel="stylesheet" type="text/css" href="../themes/icon.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/demo.css"/>
+	<script type="text/javascript" src="../js/test/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/test/jquery.easyui.min.js"></script>
+<style>
+table, thead, th{
+	color:#32CD32;
+	font-size:20px
+}
+td{
+text-align:center;
+}
+</style>
+</head>
+<body>
+	<table style="width:900px;height:500px;background-color: black" border="1" >
+		<caption style="font-size:200%;font-weight:bold;background-color: black">MRI磁共振室</caption>
+		<thead>
+			<tr>
+				<th>检查号</th>
+				<th>姓名</th>
+				<th>状态</th>
+				<th>性别</th>
+				<th>检查机房</th>
+			</tr>
+		</thead> 
+		<tbody>
+			<tr th:each="view:${viewList}">
+				<td th:text="${view.requisitionId}"></td>
+				<td th:text="${view.ptnName}"></td>
+				<td th:text="${view.emergencyId}"></td>
+				<td th:text="${view.sex}"></td>
+				<td th:text="${view.reqDepartment}"></td>
+			</tr>
+	    </tbody>
+   </table>
+   
+</body>
+<!-- <script type="text/javascript" src="../js/page/table.js"></script> -->
+</html>
+
+
+
+
+
+
+
+

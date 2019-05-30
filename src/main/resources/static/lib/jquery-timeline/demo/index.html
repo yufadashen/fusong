@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>专题页面</title>
+    <link rel="stylesheet" href="/css/jquery.timeline.css">
+    <script src="lib/jquery-1.12.4.min.js"></script>
+    <script src="../js/jquery.timeliner.js"></script>
+    <style>
+        .sjz{
+            width: 400px;border:1px solid #ccc;
+            min-height:300px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sjz">
+        <!-- 时间轴 -->
+    </div>
+    <script>
+        $(".sjz").timeliner({
+            url:"data/data.json",
+            type:"GET",
+            showYear: true,
+            sort: 'desc',
+            onLoadSuccess: function () {
+                
+            }
+        });
+        
+    </script>
+</body>
+</html>
