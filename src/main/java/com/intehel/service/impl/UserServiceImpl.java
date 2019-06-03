@@ -1,7 +1,7 @@
 package com.intehel.service.impl;
 import org.springframework.stereotype.Service;
 
-import com.intehel.entity.User;
+import com.intehel.model.User;
 import com.intehel.service.UserService;
 
 @Service

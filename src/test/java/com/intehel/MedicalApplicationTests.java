@@ -8,14 +8,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
-import java.util.Map;
 
 import com.intehel.dao.CallerMapper;
 import com.intehel.dao.PxViewMapper;
 import com.intehel.dao.UserMapper1;
-import com.intehel.entity.Caller;
-import com.intehel.entity.PxView;
-import com.intehel.entity.User;
+import com.intehel.model.Caller;
+import com.intehel.model.PxView;
 import com.intehel.service.CallerService;
 import com.intehel.service.UserService;
 

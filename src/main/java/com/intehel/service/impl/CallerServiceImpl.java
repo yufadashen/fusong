@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -19,10 +18,10 @@ import com.intehel.dao.CallerMapper;
 import com.intehel.dao.ClinicMapper;
 import com.intehel.dao.PxViewMapper;
 import com.intehel.dao.StationMapper;
-import com.intehel.entity.Caller;
-import com.intehel.entity.Clinic;
-import com.intehel.entity.PxView;
-import com.intehel.entity.Station;
+import com.intehel.model.Caller;
+import com.intehel.model.Clinic;
+import com.intehel.model.PxView;
+import com.intehel.model.Station;
 import com.intehel.service.CallerService;
 
 @Service("callerService")

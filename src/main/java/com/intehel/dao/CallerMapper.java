@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.intehel.entity.Caller;
-import com.intehel.entity.PxView;
+import com.intehel.model.Caller;
+import com.intehel.model.PxView;
 
 import tk.mybatis.mapper.common.Mapper;
 

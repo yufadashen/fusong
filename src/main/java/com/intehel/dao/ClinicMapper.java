@@ -1,6 +1,6 @@
 package com.intehel.dao;
 
-import com.intehel.entity.Clinic;
+import com.intehel.model.Clinic;
 
 import tk.mybatis.mapper.common.Mapper;
 

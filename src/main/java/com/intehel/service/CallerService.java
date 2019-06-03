@@ -1,9 +1,8 @@
 package com.intehel.service;
 
 import java.util.List;
-import com.intehel.common.web.FyPageObject;
-import com.intehel.entity.Caller;
-import com.intehel.entity.PxView;
+
+import com.intehel.model.PxView;
 
 public interface CallerService {
 

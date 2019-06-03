@@ -1,4 +1,4 @@
-package com.intehel.entity;
+package com.intehel.model;
 
 import java.util.Date;
 

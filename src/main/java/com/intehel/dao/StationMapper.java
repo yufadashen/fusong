@@ -1,7 +1,7 @@
 package com.intehel.dao;
 
 
-import com.intehel.entity.Station;
+import com.intehel.model.Station;
 
 import tk.mybatis.mapper.common.Mapper;
 

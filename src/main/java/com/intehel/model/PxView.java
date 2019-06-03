@@ -1,34 +1,33 @@
-package com.intehel.entity;
+package com.intehel.model;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-@Table(name = "TB_CALLER")
-public class Caller {
+@Table(name = "TB_VIEW")
+public class PxView {
 	@Id
-    @Column(name = "ID_")
+    @Column(name = "ID")
 	private Integer id;
-	@Column(name = "REQUISITION_ID_")
+	@Column(name = "Requisition_ID")
 	private String requisitionId;
-	@Column(name = "PATIENT_ID_")
-	private String patienId;
-	@Column(name = "NAME_")
-	private String name;
-	@Column(name = "SEX_")
+	@Column(name = "PTN_ID")
+	private String ptnId;
+	@Column(name = "Patient_ID")
+	private String patientId;
+	@Column(name = "PTN_NAME")
+	private String ptnName;
+	@Column(name = "SEX")
 	private String sex;
-	@Column(name = "EMERGENCY_")
-	private String emergency;
-	@Column(name = "REQ_DEPARTMENT_")
+	@Column(name = "Emergency_ID")
+	private String emergencyId;
+	@Column(name = "Req_Department")
 	private String reqDepartment;
-	@Column(name = "SECTIONS_ID_")
+	@Column(name = "sections_Id")
 	private String sectionsId;
-	@Column(name = "STATE_")
-	private String state;
-	@Column(name = "CREATED_")
+	@Column(name = "created")
 	private Date created;
 	
 	
@@ -44,17 +43,23 @@ public class Caller {
 	public void setRequisitionId(String requisitionId) {
 		this.requisitionId = requisitionId;
 	}
-	public String getPatienId() {
-		return patienId;
+	public String getPtnId() {
+		return ptnId;
 	}
-	public void setPatienId(String patienId) {
-		this.patienId = patienId;
+	public void setPtnId(String ptnId) {
+		this.ptnId = ptnId;
 	}
-	public String getName() {
-		return name;
+	public String getPatientId() {
+		return patientId;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
+	public String getPtnName() {
+		return ptnName;
+	}
+	public void setPtnName(String ptnName) {
+		this.ptnName = ptnName;
 	}
 	public String getSex() {
 		return sex;
@@ -62,11 +67,11 @@ public class Caller {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public String getEmergency() {
-		return emergency;
+	public String getEmergencyId() {
+		return emergencyId;
 	}
-	public void setEmergency(String emergency) {
-		this.emergency = emergency;
+	public void setEmergencyId(String emergencyId) {
+		this.emergencyId = emergencyId;
 	}
 	public String getReqDepartment() {
 		return reqDepartment;
@@ -80,18 +85,13 @@ public class Caller {
 	public void setSectionsId(String sectionsId) {
 		this.sectionsId = sectionsId;
 	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
 	public Date getCreated() {
 		return created;
 	}
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+	
 	
 	
 	

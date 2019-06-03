@@ -1,11 +1,8 @@
-package com.intehel.entity;
-
-import java.util.Date;
+package com.intehel.model;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Table(name = "TB_STATION")
 public class Station {

@@ -1,6 +1,6 @@
 package com.intehel.dao;
 
-import com.intehel.entity.PxView;
+import com.intehel.model.PxView;
 
 import tk.mybatis.mapper.common.Mapper;
 

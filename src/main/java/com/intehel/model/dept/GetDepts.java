@@ -1,4 +1,4 @@
-package com.intehel.entity.dept;
+package com.intehel.model.dept;
 
 public class GetDepts {
     /**

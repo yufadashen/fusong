@@ -3,7 +3,7 @@ package com.intehel.common.util;
 import java.lang.reflect.Field;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.intehel.entity.User;
+import com.intehel.model.User;
 
 public class MappingResults {
 	

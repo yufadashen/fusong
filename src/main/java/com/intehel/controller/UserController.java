@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.intehel.entity.User;
+import com.intehel.model.User;
 
 @Controller
 public class UserController {

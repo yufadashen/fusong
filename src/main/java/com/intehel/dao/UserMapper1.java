@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
 import com.intehel.dao.sqlprovider.UserSqlProvider;
-import com.intehel.entity.User;
+import com.intehel.model.User;
 
 public interface UserMapper1 {
 	

@@ -1,9 +1,6 @@
 package com.intehel.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,15 +11,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.util.StringUtil;
-import com.intehel.common.web.FyPageObject;
-import com.intehel.entity.Caller;
-import com.intehel.entity.PxView;
-import com.intehel.entity.User;
+import com.intehel.model.PxView;
 import com.intehel.service.CallerService;
 
 @Controller
