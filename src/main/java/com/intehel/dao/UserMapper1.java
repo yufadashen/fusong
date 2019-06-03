@@ -33,7 +33,7 @@ public interface UserMapper1 {
      *  @SelectProvider
 	 *	@InsertProvider
 	 *	@UpdateProvider
-	 *	@DeleteProvider
+	 *	@DeleteProvider 
 	 *
              *   无论什么方式,如果涉及多个参数,则必须加上@Param注解,否则无法使用EL表达式获取参数。
      */

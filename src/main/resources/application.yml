@@ -7,11 +7,23 @@ server:
 
 spring:
   datasource:
+<<<<<<< Updated upstream
     url: jdbc:mysql://localhost:3306/hl_fusong?useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     platform: mysql
+=======
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: lkp
+    password: 123456
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    #url: jdbc:mysql://localhost:3306/hl_nmyy?useSSL=false
+    #username: root
+    #password: 123456
+    #driver-class-name: com.mysql.jdbc.Driver
+    platform: oracle
+>>>>>>> Stashed changes
     type: com.alibaba.druid.pool.DruidDataSource
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大

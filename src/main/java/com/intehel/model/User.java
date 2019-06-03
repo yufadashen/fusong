@@ -9,10 +9,10 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-@Table(name = "T_USER")
+@Table(name = "TB_USER")
 public class User {
 	@Id
-    @Column(name = "USER_ID")
+    @Column(name = "USERID")
 	private String userId;
 	@Column(name = "USERNAME")
 	private String username;
