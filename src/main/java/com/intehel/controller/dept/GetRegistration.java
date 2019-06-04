@@ -22,13 +22,13 @@ public class GetRegistration {
      * 查询排班数据
      * @param OperatorType  坐诊类型    0:科室； 1:医生；空值：查询全部
      * @param DeptId    科室ID
-     * @param DrId  医生ID
+//     * @param DrId  医生ID
      * @param day   查询天数
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/GetSchedules",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String GetSchedules(String OperatorType,String DeptId,String DrId,int day) {
+    public String GetSchedules(String OperatorType,String DeptId,Integer day) {
         //获取当前时间
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
         Date date=new Date();
@@ -38,12 +38,14 @@ public class GetRegistration {
         cal.add(Calendar.DATE, day);//获取day天的排班信息
         String DateEnd = df.format(cal.getTime())+"000000";
         String str="";
+        System.err.println(DateStart);
+        System.err.println(DateEnd);
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetSchedules?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><ScheduleRequest>" +
                             "<OperatorType>"+OperatorType+"</OperatorType>" +
                             "<DeptId>"+DeptId+"</DeptId>" +
-                            "<DrId>"+DrId+"</DrId><RegLevel></RegLevel>" +
+                            "<DrId></DrId><RegLevel></RegLevel>" +
                             "<DateStart>"+DateStart+"</DateStart>" +
                             "<DateEnd>"+DateEnd+"</DateEnd></ScheduleRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);
@@ -62,7 +64,7 @@ public class GetRegistration {
     /**
      * 占用号点
      * 功能：患者占用HIS系统中的号点。
-     * @param ScheduleTime  号点时间
+     //* @param ScheduleTime  号点时间
      * @param ScheduleId    号点Id
      * @param OutpatientId  患者ID
      * @param RegLevelId    挂号级别
@@ -80,22 +82,37 @@ public class GetRegistration {
     public String OccupyRegPoint(String ScheduleTime,String ScheduleId,String OutpatientId,String RegLevelId,String DeptId,
                                  String VisitTime,String PresentHistory,String PastMedHistory,
                                  String AllergicHistory,String InfectiousDisease,String GeneticDisease) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/OccupyRegPoint?xmltxt="+
+            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/OccupyRegPoint?xmltxt=" +
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><AppointmentRequest>" +
+                    "<ScheduleTime>"+ScheduleTime+"</ScheduleTime>" +
+                    "<ScheduleId>"+ScheduleId+"</ScheduleId>" +
+                    "<OutpatientId>"+OutpatientId+"</OutpatientId>" +
+                    "<RegLevelId>"+RegLevelId+"</RegLevelId>" +
+                    "<DeptId>"+DeptId+"</DeptId>" +
+                    "<VisitTime></VisitTime>" +
+                    "<PresentHistory></PresentHistory>" +
+                    "<PastMedHistory></PastMedHistory>" +
+                    "<AllergicHistory></AllergicHistory>" +
+                    "<InfectiousDisease></InfectiousDisease>" +
+                    "<GeneticDisease></GeneticDisease>" +
+                    "</AppointmentRequest>","utf-8");
+                  /*  URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><AppointmentRequest>" +
                             "<ScheduleTime>"+ScheduleTime+"</ScheduleTime> " +
-                            "<ScheduleId>"+ScheduleId+"</ScheduleId><" +
-                            "OutpatientId>"+OutpatientId+" </OutpatientId>" +
+                            "<ScheduleId>"+ScheduleId+"</ScheduleId>" +
+                            "<OutpatientId>"+OutpatientId+" </OutpatientId>" +
                             "<RegLevelId>"+RegLevelId+"</RegLevelId>" +
                             "<DeptId>"+DeptId+"</DeptId>" +
-                            "<VisitTime>"+VisitTime+"</VisitTime>" +
-                            "<PresentHistory>"+PresentHistory+"</PresentHistory>" +
-                            "<PastMedHistory>"+PastMedHistory+"</PastMedHistory>" +
-                            "<AllergicHistory>"+AllergicHistory+"</AllergicHistory>" +
-                            "<InfectiousDisease>"+InfectiousDisease+"</InfectiousDisease>" +
-                            "<GeneticDisease>"+GeneticDisease+"</GeneticDisease></AppointmentRequest>","utf-8");
+                            "<VisitTime></VisitTime>" +
+                            "<PresentHistory>"+(PresentHistory==null?"":PresentHistory)+"</PresentHistory>" +
+                            "<PastMedHistory>"+(PastMedHistory==null?"":PastMedHistory)+"</PastMedHistory>" +
+                            "<AllergicHistory>"+(AllergicHistory==null?"":AllergicHistory)+"</AllergicHistory>" +
+                            "<InfectiousDisease>"+(InfectiousDisease==null?"":InfectiousDisease)+"</InfectiousDisease>" +
+                            "<GeneticDisease>"+(GeneticDisease==null?"":GeneticDisease)+"</GeneticDisease></AppointmentRequest>","utf-8");*/
             str = HttpUtils.httpGet(strURL);
+            System.err.println(str);
             System.err.println(strURL);
 //            System.err.println(str);
         }catch (Exception e){
@@ -136,39 +153,68 @@ public class GetRegistration {
      * 支付挂号费
      * 功能：支付成功后，更新挂号的支付状态。
      * @param RegNo 挂号流水号
-     * @param TermialType   终端ID
-     * @param AppId
+//     * @param TermialType   终端ID
+   //  * @param AppId     操作员编号
      * @param SettleDate    第三方清算日期
      * @param TradeSerialNumber 第三方交易流水号
-     * @param PaymentWay    支付类型ID
-     * @param PactCode
-     * @param PactName
-     * @param PaykindCode
-     * @param CardNo
-     * @param TRANSNO
-     * @param SiInmainifoList
+//     * @param PaymentWay    支付类型ID
+//     * @param PactCode
+//     * @param PactName
+//     * @param PaykindCode
+//     * @param CardNo
+//     * @param TRANSNO
+//     * @param SiInmainifoList
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/PayForAppointment",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String PayForAppointment(String RegNo,String TermialType,String AppId,String SettleDate,String TradeSerialNumber,String PaymentWay,String PactCode,
-                                    String PactName,String PaykindCode,String CardNo,String TRANSNO,String SiInmainifoList) {
+    public String PayForAppointment(String RegNo,String Fee,String SettleDate,String TradeSerialNumber) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/PayForAppointment?xmltxt="+
-                    URLEncoder.encode("<RegPaymentRequest>" +
+                    URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<RegPaymentRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                    "<HospId/>" +
+                            "<Fee>"+Fee+"</Fee>"+
+                            "<PaymentWay>12</PaymentWay>" +
                             "<RegNo>"+RegNo+"</RegNo>" +
-                            "<TermialType>"+TermialType+"</TermialType>" +
-                            "<AppId>"+AppId+"</AppId>" +
+                            "<SettleDate>"+SettleDate+"</SettleDate>" +
+                            "<TermialType>自助机支付</TermialType>" +
+                            "<TradeSerialNumber>"+TradeSerialNumber+"</TradeSerialNumber>" +
+                    "<ExtParams>" +
+                    "        <ExtItem>" +
+                    "            <Key></Key>" +
+                    "            <Value />" +
+                    "        </ExtItem>" +
+                    "    </ExtParams>" +
+                    "</RegPaymentRequest>","utf-8");
+                  /*  URLEncoder.encode("<RegPaymentRequest>" +
+                            "<Fee>"+Fee+"</Fee>"+
+                            "<RegNo>"+RegNo+"</RegNo>" +
+                            "<TermialType>自助机支付</TermialType>" +
+                            "<AppId>100734</AppId>" +
                             "<SettleDate>"+SettleDate+"</SettleDate>" +
                             "<TradeSerialNumber>"+TradeSerialNumber+"</TradeSerialNumber>" +
-                            "<PaymentWay>"+PaymentWay+"</PaymentWay>" +
-                            "<PactCode>"+PactCode+"</PactCode>" +
-                            "<PactName>"+PactName+"</PactName>" +
-                            "<PaykindCode>"+PaykindCode+"</PaykindCode>" +
-                            "<CardNo>"+CardNo+"</CardNo>" +
-                            "<TRANSNO>"+TRANSNO+"</TRANSNO>" +
-                            "<SiInmainifoList>"+SiInmainifoList+"</SiInmainifoList></RegPaymentRequest>","utf-8");
+                            "<PaymentWay>12</PaymentWay>" +
+                            "<PactCode></PactCode>" +
+                            "<PactName></PactName>" +
+                            "<PaykindCode></PaykindCode>" +
+                            "<CardNo></CardNo>" +
+                            "<TRANSNO></TRANSNO>" +
+                            "<SiInmainifoList></SiInmainifoList></RegPaymentRequest>","utf-8");*/
+//                    URLEncoder.encode("<RegPaymentRequest>" +
+//                            "<RegNo>"+RegNo+"</RegNo>" +
+//                            "<TermialType>"+TermialType+"</TermialType>" +
+//                            "<AppId>100734</AppId>" +
+//                            "<SettleDate>"+SettleDate+"</SettleDate>" +
+//                            "<TradeSerialNumber>"+TradeSerialNumber+"</TradeSerialNumber>" +
+//                            "<PaymentWay>"+PaymentWay+"</PaymentWay>" +
+//                            "<PactCode>"+PactCode+"</PactCode>" +
+//                            "<PactName>"+PactName+"</PactName>" +
+//                            "<PaykindCode>"+PaykindCode+"</PaykindCode>" +
+//                            "<CardNo>"+CardNo+"</CardNo>" +
+//                            "<TRANSNO>"+TRANSNO+"</TRANSNO>" +
+//                            "<SiInmainifoList>"+SiInmainifoList+"</SiInmainifoList></RegPaymentRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);
             System.err.println(strURL);
             System.err.println(str);

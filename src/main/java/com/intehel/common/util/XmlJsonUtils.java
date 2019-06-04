@@ -59,7 +59,7 @@ public class XmlJsonUtils {
             map1=getNodess(e);//递归
             list.add(map1);
         }
-//        list.add(map);
+       list.add(map);
         return list;
     }
 
@@ -67,22 +67,25 @@ public class XmlJsonUtils {
         List<Map>list=new ArrayList<>();
         Map map = new HashMap();
 
-        System.out.println("--------------------");
+        System.out.println("-----------123---------");
         //当前节点的名称、文本内容和属性
         System.out.println(e.getName()+":"+e.getTextTrim());//当前节点名称
+        map.put(e.getName(),e.getTextTrim());
 //        map.put(e.getName(),e.getTextTrim());
-//        List<Attribute> listAttr=node.attributes();//当前节点的所有属性的list
-//        for(Attribute attr:listAttr){//遍历当前节点的所有属性
-//            String name=attr.getName();//属性名称
-//            String value=attr.getValue();//属性的值
-//            System.out.println("属性名称："+name+"属性值："+value);
-//            map.put(attr.getName(),attr.getValue());
-//        }
+        List<Element> listAttr=e.attributes();//当前节点的所有属性的list
+        for(Element attr:listAttr){//遍历当前节点的所有属性
+            String name=attr.getName();//属性名称
+            String value=attr.getTextTrim();//属性的值
+            System.out.println("属性名称："+name+"属性值："+value);
+            map.put(attr.getName(),attr.getTextTrim());
+        }
         //递归遍历当前节点所有的子节点
         List<Element> listElement=e.elements();//所有一级子节点的list
         for(Element ee:listElement){//遍历所有一级子节点
+
             map.put(ee.getName(),ee.getTextTrim());
             getNodess(ee);//递归
+            list.add(map);
         }
 //        list.add(map);
         return map;

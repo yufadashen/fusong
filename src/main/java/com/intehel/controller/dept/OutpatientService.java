@@ -115,15 +115,30 @@ public class OutpatientService {
     }
 
 
+    /**
+     * 支付门诊费
+     //* @param AppId
+     * @param RegNo
+     * @param RecipeNo
+     * @param VisitDateStart
+     * @param VisitDateEnd
+     * @param UpdateDateStart
+     * @param UpdateDateEnd
+     * @param InvoiceNo
+     * @param ExecStatus
+     * @param SysType
+     * @param PaymentStatus
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/PayForRecipes",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String PayForRecipes(String AppId,String RegNo,String RecipeNo,String VisitDateStart,String VisitDateEnd,
+    public String PayForRecipes(String RegNo,String RecipeNo,String VisitDateStart,String VisitDateEnd,
                                          String UpdateDateStart,String UpdateDateEnd,String InvoiceNo,String ExecStatus,String SysType,String PaymentStatus) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/PayForRecipes?xmltxt="+
                     URLEncoder.encode("<PayForRecipesRequest>" +
-                            "<AppId>"+AppId+"</AppId>" +
+                            "<AppId>100734</AppId>" +
                             "<RegNo>"+RegNo+"</RegNo>" +
                             "<RecipeNos><RecipeDatail>" +
                                 "<RecipeNo>"+RecipeNo+"</RecipeNo>" +

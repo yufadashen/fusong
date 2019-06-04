@@ -1,6 +1,6 @@
 package com.intehel.controller.dept;
 
-import com.intehel.common.util.GetHttpString;
+
 import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
 import com.intehel.common.util.XmlJsonUtils;
@@ -18,7 +18,7 @@ public class GetPatientMain {
 
     /**
      * 获取患者门诊信息
-     * @param Create 是否自动创建 默认false  查询无结果的话是否自动创建并返回新创建的outpatientId
+//     * @param Create 是否自动创建 默认false  查询无结果的话是否自动创建并返回新创建的outpatientId
      * @param Name  患者姓名
      * @param PapersNo 证件号
      * @param PapersType    证件类型
@@ -29,13 +29,12 @@ public class GetPatientMain {
      */
     @ResponseBody
     @RequestMapping(value = "/FindPatient",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String FindPatient(String Create,String Name,String PapersNo,String PapersType,String PhoneNo,String Gender,
+    public String FindPatient(String Name,String PapersNo,String PapersType,String PhoneNo,int Gender,
                               String BirthDate) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/FindPatient?xmltxt="+
-                    URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?> <PatientRequest><Create>" +
-                            Create +"</Create> <PatientInfo> <Name>" +
+                    URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?> <PatientRequest><Create>1</Create> <PatientInfo> <Name>" +
                             Name +"</Name>  <PapersNo>" +
                             PapersNo +"</PapersNo> <PapersType>" +
                             PapersType +"</PapersType><PhoneNo>" +
@@ -56,7 +55,7 @@ public class GetPatientMain {
     }
 
     /**
-     *
+     * 绑定就诊实体卡卡号
      * @param CardType  实体卡类型
      * @param CardNo    实体卡号
      * @param Password  卡密码
@@ -70,7 +69,7 @@ public class GetPatientMain {
      */
     @ResponseBody
     @RequestMapping(value = "/GetOutpatientCardInfos",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String GetOutpatientCardInfos(String CardType,String CardNo,String Password,String Name,String PapersNo,String PapersType,String PhoneNo,String Gender,
+    public String GetOutpatientCardInfos(String CardType,String CardNo,String Password,String Name,String PapersNo,String PapersType,String PhoneNo,int Gender,
                               String BirthDate) {
         String str="";
         try {
