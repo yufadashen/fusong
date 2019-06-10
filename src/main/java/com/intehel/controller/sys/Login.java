@@ -48,9 +48,9 @@ public class Login {
     public int Login(HttpServletRequest req,String username, String password, String captcha) {
         HttpSession   session   =   req.getSession();
 
-        if (!username.equals("aaa")){
+        if (!username.equals("admin")){
             return 1;
-        }else if (!password.equals("aaa")){
+        }else if (!password.equals("123456")){
             return 2;
         }else if (!captcha.toLowerCase().equals(session.getAttribute("imgcode").toString().toLowerCase())){
             return 3;

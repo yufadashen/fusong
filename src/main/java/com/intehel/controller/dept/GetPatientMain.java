@@ -46,8 +46,13 @@ public class GetPatientMain {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
         }
-        System.err.println(str);
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));
@@ -89,8 +94,13 @@ public class GetPatientMain {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
         }
-        System.err.println(str);
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));

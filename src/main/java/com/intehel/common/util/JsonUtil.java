@@ -48,7 +48,7 @@ public class JsonUtil {
   /**
    * 用于对象通过其他工具已转为JSON的字符形式，这里不需要再加上引号
    * @param obj
-   * @param isObject
+//   * @param isObject
    */
   public static String getJsonSuccess(Object obj){
     String jsonString = null;
@@ -151,4 +151,6 @@ public class JsonUtil {
   public  static JsonUtil sucess(String msg){
     return new JsonUtil(true,msg);
   }
+
+
 }

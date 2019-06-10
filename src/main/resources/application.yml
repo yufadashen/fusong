@@ -7,21 +7,21 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/hl_fusong?useSSL=false
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-    #url: jdbc:oracle:thin:@localhost:1521:orcl
-    #username: lkp
-    #password: 123456
-    #driver-class-name: oracle.jdbc.driver.OracleDriver
+#    url: jdbc:mysql://localhost:3306/hl_fusong?useSSL=false
+#    username: root
+#    password: 123456
+#    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:oracle:thin:@39.105.199.116:1521:orcl
+    username: yufa
+    password: yufa
+    driver-class-name: oracle.jdbc.driver.OracleDriver
     #url: jdbc:mysql://localhost:3306/hl_nmyy?useSSL=false
     #username: root
     #password: 123456
     #driver-class-name: com.mysql.jdbc.Driver
-    #platform: oracle
-    platform: mysql
-    type: com.alibaba.druid.pool.DruidDataSource
+    platform: oracle
+#    platform: mysql
+#    type: com.alibaba.druid.pool.DruidDataSource
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
     initialSize: 1

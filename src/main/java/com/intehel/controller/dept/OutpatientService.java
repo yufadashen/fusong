@@ -2,6 +2,7 @@ package com.intehel.controller.dept;
 
 import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
+import com.intehel.common.util.StringUtils;
 import com.intehel.common.util.XmlJsonUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,49 @@ import java.util.Map;
 @Controller
 public class OutpatientService {
 
+
+    /**
+     * 获取门诊队列排队信息
+     * @param OutpatientIds 患者门诊ID集合
+     * @param SeqNos    患者手中的流水号集合（挂号流水号、处方流水号等）
+     * @param ExecDeptId    执行科室ID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/GetQueueInfo",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    public String GetQueueInfo(String[] OutpatientIds,String[] SeqNos,String ExecDeptId) {
+        String str="";
+        try {
+            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetQueueInfo?xmltxt="+
+                    URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                            "<QueInfoRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
+                            "<HospId/>" +
+                            "<OutpatientIds>" +
+                            StringUtils.stringArrar(OutpatientIds) +
+                            "</OutpatientIds>" +
+                            "<SeqNos>" +
+                            StringUtils.stringArrar(SeqNos) +
+                            "</SeqNos>" +
+                            "<ExecDeptId>"+ ExecDeptId+"</ExecDeptId>" +
+                            "<ExtParams>" +
+                            "<ExtItem>" +
+                            "<Key></Key>"+
+                            "<Value />" +
+                            "</ExtItem>" +
+                            "</ExtParams>" +
+                            "</QueInfoRequest>","utf-8");
+
+            str = HttpUtils.httpGet(strURL);
+            System.err.println(strURL);
+            System.err.println(str);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        // 解析XML
+        Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
+        System.err.println(JsonUtil.toString(map));
+        return JsonUtil.toString(map);
+    }
 
 
 //<?xml version="1.0" encoding="utf-8"?><OutpatientFeeRequest><RegNos></RegNos><RecipeNos></RecipeNos><OutpatientIds></OutpatientIds><VisitDateStart></VisitDateStart><VisitDateEnd></VisitDateEnd><UpdateDateStart></UpdateDateStart><UpdateDateEnd></UpdateDateEnd><InvoiceNo></InvoiceNo><ExecStatus>0</ExecStatus><SysType>0</SysType><PaymentStatus></PaymentStatus></OutpatientFeeRequest>
@@ -35,15 +79,15 @@ public class OutpatientService {
      */
     @ResponseBody
     @RequestMapping(value = "/GetOutpatientFeeList",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String GetOutpatientFeeList(String RegNos,String RecipeNos,String OutpatientIds,String VisitDateStart,String VisitDateEnd,
+    public String GetOutpatientFeeList(String[] RegNos,String[] RecipeNos,String[] OutpatientIds,String VisitDateStart,String VisitDateEnd,
                                        String UpdateDateStart,String UpdateDateEnd,String InvoiceNo,String ExecStatus,String SysType,String PaymentStatus) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetOutpatientFeeList?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><OutpatientFeeRequest>" +
-                            "<RegNos><string>"+RegNos+"</string></RegNos>" +
-                            "<RecipeNos><string>"+RecipeNos+"</string></RecipeNos>" +
-                            "<OutpatientIds><string>"+OutpatientIds+"</string></OutpatientIds>" +
+                            "<RegNos>"+StringUtils.stringArrar(RegNos)+"</RegNos>" +
+                            "<RecipeNos>"+StringUtils.stringArrar(RecipeNos)+"</RecipeNos>" +
+                            "<OutpatientIds>"+StringUtils.stringArrar(OutpatientIds)+"</OutpatientIds>" +
                             "<VisitDateStart>"+VisitDateStart+"</VisitDateStart>" +
                             "<VisitDateEnd>"+VisitDateEnd+"</VisitDateEnd>" +
                             "<UpdateDateStart>"+UpdateDateStart+"</UpdateDateStart>" +
@@ -59,6 +103,12 @@ public class OutpatientService {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -84,15 +134,15 @@ public class OutpatientService {
      */
     @ResponseBody
     @RequestMapping(value = "/GetOutpatientIdFeeList",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String GetOutpatientIdFeeList(String RegNos,String RecipeNos,String OutpatientIds,String VisitDateStart,String VisitDateEnd,
+    public String GetOutpatientIdFeeList(String[] RegNos,String[] RecipeNos,String[] OutpatientIds,String VisitDateStart,String VisitDateEnd,
                                        String UpdateDateStart,String UpdateDateEnd,String InvoiceNo,String ExecStatus,String SysType,String PaymentStatus) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetOutpatientIdFeeList?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><OutpatientFeeRequest>" +
-                            "<RegNos>"+RegNos+"</RegNos>" +
-                            "<RecipeNos>"+RecipeNos+"</RecipeNos>" +
-                            "<OutpatientIds>"+OutpatientIds+"</OutpatientIds>" +
+                            "<RegNos>"+StringUtils.stringArrar(RegNos)+"</RegNos>" +
+                            "<RecipeNos>"+StringUtils.stringArrar(RecipeNos)+"</RecipeNos>" +
+                            "<OutpatientIds>"+StringUtils.stringArrar(OutpatientIds)+"</OutpatientIds>" +
                             "<VisitDateStart>"+VisitDateStart+"</VisitDateStart>" +
                             "<VisitDateEnd>"+VisitDateEnd+"</VisitDateEnd>" +
                             "<UpdateDateStart>"+UpdateDateStart+"</UpdateDateStart>" +
@@ -107,6 +157,12 @@ public class OutpatientService {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -163,6 +219,12 @@ public class OutpatientService {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -196,6 +258,12 @@ public class OutpatientService {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);

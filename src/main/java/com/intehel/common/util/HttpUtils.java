@@ -24,7 +24,7 @@ public class HttpUtils {
     public static String httpGet(String urlAddr) {
         HttpURLConnection conn = null;
         try {
-
+//<?xml version="1.0" encoding="UTF-8"?><RegInfosRequest><HospId/><IsSee>false</IsSee><IsNiox>1</IsNiox><OutpatientIds>0051522299</OutpatientIds><RegNos>6118003</RegNos><UpdateDateStart>20120101</UpdateDateStart><UpdateDateEnd>20190605</UpdateDateEnd><RegDateStart>20190602</RegDateStart><RegDateEnd>20190606</RegDateEnd><ExtParams><ExtItem><Key></Key><Value/></ExtItem></ExtParams></RegInfosRequest>
             URL url = new URL(urlAddr.toString()); // 创建URL对象
             // 返回一个URLConnection对象，它表示到URL所引用的远程对象的连接
             conn = (HttpURLConnection) url.openConnection();

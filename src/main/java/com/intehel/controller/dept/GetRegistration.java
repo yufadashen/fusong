@@ -1,8 +1,6 @@
 package com.intehel.controller.dept;
 
-import com.intehel.common.util.HttpUtils;
-import com.intehel.common.util.JsonUtil;
-import com.intehel.common.util.XmlJsonUtils;
+import com.intehel.common.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,6 +51,12 @@ public class GetRegistration {
 //            System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<4){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -117,6 +121,12 @@ public class GetRegistration {
 //            System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<4){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -142,6 +152,12 @@ public class GetRegistration {
 //            System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<4){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -168,7 +184,7 @@ public class GetRegistration {
      */
     @ResponseBody
     @RequestMapping(value = "/PayForAppointment",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String PayForAppointment(String RegNo,String Fee,String SettleDate,String TradeSerialNumber) {
+    public String PayForAppointment(String RegNo,String PaymentWay,String Fee,String SettleDate,String TradeSerialNumber) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/PayForAppointment?xmltxt="+
@@ -176,7 +192,7 @@ public class GetRegistration {
                     "<RegPaymentRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                     "<HospId/>" +
                             "<Fee>"+Fee+"</Fee>"+
-                            "<PaymentWay>12</PaymentWay>" +
+                            "<PaymentWay>"+PaymentWay+"</PaymentWay>" +
                             "<RegNo>"+RegNo+"</RegNo>" +
                             "<SettleDate>"+SettleDate+"</SettleDate>" +
                             "<TermialType>自助机支付</TermialType>" +
@@ -220,6 +236,12 @@ public class GetRegistration {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<4){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -236,14 +258,14 @@ public class GetRegistration {
      */
     @ResponseBody
     @RequestMapping(value = "/GetPatientIsSee",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String GetPatientIsSee() {
+    public String GetPatientIsSee(String[] RegNos) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetPatientIsSee?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                             "<VisitInfoRequest>" +
                             "<RegNos>" +
-                            "<string></string>" +
+                                    StringUtils.stringArrar(RegNos)+
                             "</RegNos>" +
                             "</VisitInfoRequest> ","utf-8");
             str = HttpUtils.httpGet(strURL);
@@ -251,6 +273,12 @@ public class GetRegistration {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<4){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -260,42 +288,68 @@ public class GetRegistration {
 
     /**
      * 查询挂号信息
-     * @param RegNos
-     * @param OutpatientIds
-     * @param RegDateStart
-     * @param RegDateEnd
-     * @param IsNiox
-     * @param IsSee
+     * @param RegNos    挂号流水号
+     * @param OutpatientIds 患者id
+     * @param RegDateStart 挂号日期开始（闭区间）
+     * @param RegDateEnd    挂号日期结束（闭区间）
+     * @param IsNiox    是否从大象就医挂号
+     * @param IsSee 是否已就诊
      * @param UpdateDateStart
      * @param UpdateDateEnd
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/GetRegInfos",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String GetRegInfos(String RegNos,String OutpatientIds,String RegDateStart,String RegDateEnd,String IsNiox,String IsSee,String UpdateDateStart,String UpdateDateEnd) {
+    public String GetRegInfos(String[] RegNos,String[] OutpatientIds,String RegDateStart,String RegDateEnd,String IsNiox,String IsSee,String UpdateDateStart,String UpdateDateEnd) {
         String str="";
+        if (IsNiox==null){IsNiox="";}
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetRegInfos?xmltxt="+
-                    URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+                    URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                    "<RegInfosRequest>" +
+                    "<HospId/>" +
+                    "<IsSee>"+IsSee +"</IsSee>"+
+                    "<IsNiox>"+IsNiox +"</IsNiox>" +
+                    "<OutpatientIds>"+StringUtils.stringArrar(OutpatientIds)+"</OutpatientIds>" +
+                    "<RegNos>"+StringUtils.stringArrar(RegNos)+"</RegNos>"+
+                            "<UpdateDateStart>20120101</UpdateDateStart>" +
+                            "<UpdateDateEnd>"+DateUtil.ymd() +"</UpdateDateEnd>" +
+                            "<RegDateStart>"+RegDateStart+"</RegDateStart>" +
+                            "<RegDateEnd>"+RegDateEnd+"</RegDateEnd>" +
+                    "<ExtParams>" +
+                    "<ExtItem>" +
+                    "<Key></Key>" +
+                    "<Value/>" +
+                    "</ExtItem>" +
+                    "</ExtParams>" +
+                    "</RegInfosRequest>","utf-8");
+                   /* URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                             "<RegInfosRequest>" +
-                            "<RegNos>" +RegNos
-                            /*"<string></string>"*/ +
+                            "<RegNos>" +
+                            "<string>"+RegNos+"</string>" +
                             "</RegNos>" +
-                            "<OutpatientIds>" +OutpatientIds
-                            /*"<string></string>"*/ +
+                            "<OutpatientIds>" +
+                            "<string>"+OutpatientIds+"</string>" +
                             "</OutpatientIds>" +
                             "<RegDateStart>"+RegDateStart+"</RegDateStart>" +
                             "<RegDateEnd>"+RegDateEnd+"</RegDateEnd>" +
                             "<IsNiox>"+IsNiox+"</IsNiox>" +
                             "<IsSee>"+IsSee+"</IsSee>" +
-                            "<UpdateDateStart>"+UpdateDateStart+"</UpdateDateStart>" +
-                            "<UpdateDateEnd>"+UpdateDateEnd+"</UpdateDateEnd>" +
-                            "</RegInfosRequest> ","utf-8");
-            str = HttpUtils.httpGet(strURL);
+                            "<UpdateDateStart>20120101</UpdateDateStart>" +
+                            "<UpdateDateEnd>"+DateUtil.ymd() +"</UpdateDateEnd>" +
+                            "</RegInfosRequest> ","utf-8");*/
             System.err.println(strURL);
+            str = HttpUtils.httpGet(strURL);
+
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
@@ -311,10 +365,10 @@ public class GetRegistration {
      * @param Fee   支付金额
      * @return
      */
-
+//<?xml version="1.0" encoding="utf-8"?><RegInfosRequest><RegNos>6118003</RegNos><OutpatientIds>0051522299</OutpatientIds><RegDateStart>20190602</RegDateStart><RegDateEnd>20190606</RegDateEnd><IsNiox></IsNiox><IsSee>false</IsSee><UpdateDateStart>20120101</UpdateDateStart><UpdateDateEnd>20190605</UpdateDateEnd></RegInfosRequest>
     @ResponseBody
     @RequestMapping(value = "/ReconReg",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String ReconReg(String RegNo,String Fee) {
+    public String ReconReg(String RegNo,int Fee) {
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/ReconReg?xmltxt="+
@@ -328,7 +382,39 @@ public class GetRegistration {
             System.err.println(str);
         }catch (Exception e){
             e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
         }
+        if (str==null){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }else if (str.length()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }
+        // 解析XML
+        Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
+        System.err.println(JsonUtil.toString(map));
+        return JsonUtil.toString(map);
+    }
+
+   @ResponseBody
+    @RequestMapping(value = "/AbortReg",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    public String AbortReg(String RegNo) {
+        String str="";
+        try {
+            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/AbortReg?xmltxt="+
+                    URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+                            "<AbortRegRequest><RegNo>"+RegNo+"</RegNo></AbortRegRequest>","utf-8");
+            str = HttpUtils.httpGet(strURL);
+            System.err.println(strURL);
+            System.err.println(str);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+       if (str==null){
+           return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+       }else if (str.length()<1){
+           return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+       }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));

@@ -26,9 +26,18 @@ public class GetDeptsMain {
     @ResponseBody
     @RequestMapping(value = "/GetDepts",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
     public String GetDepts() {
+        Map<String,Map> map=null;
+        try {
         String str=GetHttpString.xmlJson0("GetDepts","DeptsRequest","20120101020202",df.format(new Date()));
         // 解析XML
-        Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
+        map=XmlJsonUtils.readStringXmlOut(str);
+    }catch (Exception e){
+        e.printStackTrace();
+        return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+    }
+        if (map.size()<1){
+        return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+    }
         System.err.println(JsonUtil.toString(map));
         return JsonUtil.toString(map);
     }
@@ -41,10 +50,19 @@ public class GetDeptsMain {
     @ResponseBody
     @RequestMapping(value = "/GetEmployees",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
     public String GetEmployees(String DeptId) {
+        Map<String,Map> map=null;
+        try {
         String str=GetHttpString.xmlJson1("GetEmployees","EmployeesRequest","DeptId",DeptId ,"20120101020202",df.format(new Date()));
         // 解析XML
-        Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
+         map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));
+    }catch (Exception e){
+        e.printStackTrace();
+        return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+    }
+        if (map.size()<1){
+        return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+    }
         return JsonUtil.toString(map);
     }
 
@@ -55,11 +73,20 @@ public class GetDeptsMain {
     @ResponseBody
     @RequestMapping(value = "/GetNoonInfos",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
     public String GetNoonInfos() {
+        Map<String,Map> map=null;
+        try {
                 String str=GetHttpString.xmlJson0("GetNoonInfos","UpdateDateStart" ,"20120101020202",df.format(new Date()));
         System.err.println(str);
         // 解析XML
-        Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
+        map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));
+        }catch (Exception e){
+            e.printStackTrace();
+            return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+        }
+        if (map.size()<1){
+            return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+        }
         return JsonUtil.toString(map);
     }
 
@@ -70,11 +97,20 @@ public class GetDeptsMain {
     @ResponseBody
     @RequestMapping(value = "/GetCardTypes",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
     public String GetCardTypes() {
+        Map<String,Map> map=null;
+        try {
         String str=GetHttpString.xmlJson0("GetCardTypes","CardTypesRequest" ,"20120101020202",df.format(new Date()));
         System.err.println(str);
         // 解析XML
-        Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
+         map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));
+    }catch (Exception e){
+        e.printStackTrace();
+        return "{\"Message\":\"输入内容有误\",\"Code\":\"-1\"}";
+    }
+        if (map.size()<1){
+        return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
+    }
         return JsonUtil.toString(map);
     }
 
