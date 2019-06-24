@@ -59,7 +59,7 @@ public class XmlJsonUtils {
             map1=getNodess(e);//递归
             list.add(map1);
         }
-       list.add(map);
+//       list.add(map);
         return list;
     }
 

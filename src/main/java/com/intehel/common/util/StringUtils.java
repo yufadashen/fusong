@@ -3,8 +3,9 @@ package com.intehel.common.util;
 public class StringUtils {
 
     private static String str="";
-    public static String stringArrar(String[] arrar){
-        for (String st:arrar) {
+    public static String stringArrar(String arrar){
+        String[] strings=arrar.replace("{","").replace("}","").split(",");
+        for (String st:strings) {
             str=str+"<string>"+st+"</string>";
         }
         return str;

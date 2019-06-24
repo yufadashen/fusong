@@ -1,6 +1,7 @@
 server:
   #端口号
   port: 8888
+#  max-http-header-size: 8999
   #项目名，如果不设定，默认是 /
   #context-path: /
 
@@ -44,11 +45,21 @@ spring:
     filters: stat,wall,slf4j
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+#    druid:
+#      validation-query: select * from dual
 
-  thymeleaf:
-    cache: false #关闭缓存
-    prefix: classpath:/templates/ #添加路径前缀   
-   
+#
+#    suffix: .jsp #添加路径前缀
+   #spring.mvc.view.prefix=/WEB-INF/jsp/
+   #spring.mvc.view.suffix=.jsp
+   #application.message: Hello Phil
+
+  mvc:
+    view:
+        prefix: /
+        suffix: .jsp
+#    static-path-pattern: /static/**
+
 
 mybatis:
   configuration:

@@ -5,19 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class TestController {
 
     @Autowired
     TestService testService;
-    @ResponseBody
-    @RequestMapping(value = "/Test01",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String Test01(){
+//    @ResponseBody
+    @RequestMapping(value = "/index.jsp",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    public String Test01(HttpServletRequest request){
+//request.setAttribute("123","123");
 
-        String str=testService.test();
-        return null;
+        return "jsp/index";
     }
+
 
 }

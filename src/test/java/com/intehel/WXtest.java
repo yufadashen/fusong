@@ -7,40 +7,19 @@ import java.util.Map;
 
 public class WXtest {
     public static void main(String[] args) throws Exception {
+
+        String notifyData = "<xml><appid><![CDATA[wx8565264272b020b6]]></appid><bank_type><![CDATA[CFT]]></bank_type><cash_fee><![CDATA[1]]></cash_fee><fee_type><![CDATA[CNY]]></fee_type><is_subscribe><![CDATA[N]]></is_subscribe><mch_id><![CDATA[1532622521]]></mch_id><nonce_str><![CDATA[oKsQOHSJRtxSlz16XHfgcfaWR6bb4uLU]]></nonce_str><openid><![CDATA[okfZ6wL-XXcP7jrINQK01gT7h-Hw]]></openid><out_trade_no><![CDATA[6118052]]></out_trade_no><result_code><![CDATA[SUCCESS]]></result_code><return_code><![CDATA[SUCCESS]]></return_code><sign><![CDATA[AE7232D42A2E4EFCEF740A503F45018E075E943E9F24BB2C3BB8866F7E61380E]]></sign><time_end><![CDATA[20190611162213]]></time_end><total_fee>1</total_fee><trade_type><![CDATA[NATIVE]]></trade_type><transaction_id><![CDATA[4200000316201906113447315940]]></transaction_id></xml>"; // 支付结果通知的xml格式数据
+
         MyConfig config = new MyConfig();
         WXPay wxpay = new WXPay(config);
-        String st=WXPayUtil.generateNonceStr();
-        Map map=new HashMap();
-        map.put("appid","wx8565264272b020b6");
-        map.put("body","test");
-        map.put("mch_id","1532622521");
-        map.put("nonce_str","192006250b4c09247ec02edce69f6a2b");
-        map.put("notify_url","http://boyi.natapp1.cc/WXtest");
-        map.put("out_trade_no",st);
-        map.put("product_id","20190610987654");
-        map.put("spbill_create_ip","0.0.0.0");
-        map.put("total_fee","1");
-        map.put("trade_type","NATIVE");
-        String s = WXPayUtil.generateSignedXml(map, "192006250b4c09247ec02edce69f6a2a", WXPayConstants.SignType.MD5);
-System.err.println(s);
-        Map maps=new HashMap();
-        maps.put("appid","wx8565264272b020b6");
-        maps.put("body","test");
-        maps.put("mch_id","1532622521");
-        maps.put("nonce_str","192006250b4c09247ec02edce69f6a2b");
-        maps.put("notify_url","http://boyi.natapp1.cc/WXtest");
-        maps.put("out_trade_no",st);
-        maps.put("product_id","20190610987654");
-        maps.put("spbill_create_ip","0.0.0.0");
-        maps.put("total_fee","1");
-        maps.put("trade_type","NATIVE");
-        maps.put("sign",s);
-        try {
-            Map<String, String> resp = wxpay.unifiedOrder(maps);
-            System.out.println(resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        Map<String, String> notifyMap = WXPayUtil.xmlToMap(notifyData);  // 转换成map
+        System.err.println(notifyMap.get("out_trade_no"));
+        System.err.println(notifyMap.get("total_fee"));
+        System.err.println(notifyMap.get("transaction_id"));
+        System.err.println(notifyMap.get("time_end"));
+
     }
+
 
 }

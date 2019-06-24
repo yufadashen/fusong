@@ -230,7 +230,13 @@ public class WXPayUtil {
         }
         return new String(nonceChars);
     }
-
+    public static String generateNonceStr8() {
+        char[] nonceChars = new char[8];
+        for (int index = 0; index < nonceChars.length; ++index) {
+            nonceChars[index] = SYMBOLS.charAt(RANDOM.nextInt(SYMBOLS.length()));
+        }
+        return new String(nonceChars);
+    }
 
     /**
      * 生成 MD5

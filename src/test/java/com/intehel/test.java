@@ -1,7 +1,9 @@
 package com.intehel;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.intehel.common.alipay.AliPayUtil;
 import com.intehel.common.util.GetHttpString;
 import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
@@ -14,26 +16,40 @@ import java.util.*;
 
 public class test {
 
-    public static void main(String[] args) throws Exception {
-      /*  String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetDepts?xmltxt="+
-               URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><DeptsRequest> <UpdateDateStart>20160521094932</UpdateDateStart><UpdateDateEnd>20190718020202 </UpdateDateEnd></DeptsRequest>","utf-8");
-//        String str = HttpUtils.httpGet(strURL);//
-        String str=GetHttpString.xmlJson0("GetDepts","DeptsRequest","20160521094932","20190718020202");
-        System.err.println(str);
-        // 解析XML
-        Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
-        System.err.println(JsonUtil.toString(map));*/
+    public static void main(String[] argss) throws Exception {
+        String orderId="12546789";//订单号
+        String orderMoney="12546789";//金额
+        String orderName="抚松县人民医院";//标题
+       System.err.println( AliPayUtil.pay(orderId,orderMoney,orderName));
+//        System.err.println((""+v+"").split(".")[0]);
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
-        System.out.println(df.format(new Date()));
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.DATE, 7);
-        System.err.println(df.format(cal.getTime()));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//String Fee="302";
+//{RecipeSeq:1,RecipeDrId:009999,FeeType:PCZ,PackageName:"",ItemSpec:10ml*10支,ItemNum:10,MedicalType:"",Fee
+//        Fee=String.valueOf(Double.parseDouble(Fee)/100);
+//        Fee=String.valueOf(Integer.parseInt(Fee,2)/100);
+//[{RecipeSeq:1, RecipeDrId:009999, FeeType:PCZ, PackageName:
 
     }
-
-
 
 
 }

@@ -1,0 +1,85 @@
+#login{
+	position: absolute;
+    width: 417px;
+    height: 102px;
+    left:430px;
+	top:450px; 
+}
+
+
+#tip_div{
+	position: absolute;
+    width:659px;
+    height:176px;
+    /* display:none;  */
+    left:282px;
+	top:460px; 
+}
+#tip_divInfo{
+	position: absolute;
+    width:470px;
+    height:80px;
+    /* display:none;  */
+    left:50px;
+	top:60px; 
+}
+
+#tipWeb{
+	position: absolute;
+    width:650px;
+    height:80px;
+    /* display:none;  */
+    left:350px;
+	top:300px; 
+}
+#login_Card{
+	position: absolute;
+    width: 256px;
+    height: 324px;
+    /* display:none;  */
+    left:512px;
+	top:400px; 
+}
+
+#syb{
+	position:absolute; 
+	margin-top:830px; 
+	margin-left:120px;
+}
+	
+/* #table1 table, td{
+	font:100% Arial, Helvetica, sans-serif; 
+}
+#table1 table{width:100%;border-collapse:collapse;margin:1em 0;}
+#table1 th, td{text-align:left;padding:.5em;border:1px solid #fff;}
+#table1 th{background:#328aa4 url(tr_back.gif) repeat-x;color:#fff;}
+#table1 td{background:#e5f1f4;} */
+
+
+
+/* table{ 
+	table-layout:fixed; 
+	empty-cells:show; 
+	border-collapse: collapse; 
+	margin:0 auto; 
+} 
+
+.table{ 
+	border:1px solid black; 
+	color:black; 
+} 
+.table th { 
+	background-repeat:repeat-x; 
+	height:12px; 
+} */
+table td{ 
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}  
+
+
+
+
+
+
