@@ -24,7 +24,7 @@
                 data-options属性对标签的基本功能进行修改操作
     -->
     <!--引入主题样式-->
-    <link rel="stylesheet" type="text/css" href="themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="/themes/default/easyui.css"/>
     <!--引入图标样式-->
     <link rel="stylesheet" type="text/css" href="themes/icon.css"/>
     <!--引入jQuery文件-->

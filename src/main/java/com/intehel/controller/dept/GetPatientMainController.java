@@ -1,23 +1,26 @@
 package com.intehel.controller.dept;
 
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
 import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
 import com.intehel.common.util.XmlJsonUtils;
 import com.intehel.service.GetPatientMainService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.URLEncoder;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class GetPatientMainController {
-
+    Logger logger = Logger.getLogger(this.getClass().getName());
     @Autowired
     GetPatientMainService getPatientMainService;
 
@@ -33,8 +36,9 @@ public class GetPatientMainController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/FindPatient",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String FindPatient(String Name,String PapersNo,String PapersType,String PhoneNo,int Gender,
+    @CrossOrigin
+    @RequestMapping(value = "/FindPatient",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public String FindPatient(String Name,String PapersNo,String PapersType,String PhoneNo,String Gender,
                               String BirthDate) {
         String str="";
         try {
@@ -47,6 +51,7 @@ public class GetPatientMainController {
                             Gender +"</Gender><BirthDate>" +
                             BirthDate +"</BirthDate></PatientInfo></PatientRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);
+            logger.info("获取患者门诊信息"+str);
             System.err.println(strURL);
 //            System.err.println("123"+str);
         }catch (Exception e){
@@ -65,8 +70,13 @@ public class GetPatientMainController {
         if (map.get("Code").equals("0")){
             getPatientMainService.createUser(map,Name);
         }
-        System.err.println(JsonUtil.toString(map));
-        return JsonUtil.toString(map);
+        System.err.println(JSONUtils.toJSONString(map));
+
+//        return
+//        return JsonUtil.toString(map);
+        return JSON.toJSONString(map);
+
+//        return "11";
     }
 
     /**
@@ -83,7 +93,8 @@ public class GetPatientMainController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetOutpatientCardInfos",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetOutpatientCardInfos",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetOutpatientCardInfos(String CardType,String CardNo,String Password,String Name,String PapersNo,String PapersType,String PhoneNo,int Gender,
                               String BirthDate) {
         String str="";
@@ -113,6 +124,7 @@ public class GetPatientMainController {
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
+
         System.err.println(JsonUtil.toString(map));
         return JsonUtil.toString(map);
     }

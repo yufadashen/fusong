@@ -1,587 +1,506 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <html>
 <head>
-    <object width="0" height="0" name="plugin"
-            classid="clsid:4C5F4B81-B044-4C45-AC9A-26864D324EBA"></object>
-    <object width="0" height="0" id="AVFOCX"
-            classid="clsid:83B1BDC2-E546-4910-9E05-8B352F3FD5BA"></object>
-    <title>门诊预约-医生</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/js/jquery-1.11.2.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/DriverJS/json2.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/DriverJS/PinPad.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/DriverJS/ReceiptPrinter.js"></script>
-    <script src="${pageContext.request.contextPath}/js/layui.js"></script>
-    <script src="${pageContext.request.contextPath}/js/easing.js"></script>
-    <script src="${pageContext.request.contextPath}/js/stepBar.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jqsession.js"></script>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/css/layui.css" media="all">
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/css/control.css" media="all">
-    <meta http-equiv="X-UA-Compatible" content="IE=8">
-    <!--以IE8模式渲染-->
-    <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <!--以IE7模式渲染-->
-    <style type="text/css">
-        body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            text-align: center;
-            background: url(${pageContext.request.contextPath}/images/bj.jpg) no-repeat;
-        }
-    </style>
-</head>
-<body scroll="no">
-<!-- 显示返回主页面倒计时时间 -->
-<div id="time" style="position:absolute;top:20px;right:40px;font-size:60px;color: #FF0000;">
-</div>
-<div id="stepByKeshi" class="ui-stepBar-wrap"
-     style="display:none;width:90%;height:100px;position:absolute;top:290px;left:57px;background-color:#f7fcff">
-    <div class="ui-stepBar">
-        <div class="ui-stepProcess"></div>
-    </div>
-    <div class="ui-stepInfo-wrap">
-        <table class="ui-stepLayout" border="0" cellpadding="0"
-               cellspacing="0">
-            <tr>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">1</a>
-                    <p class="ui-stepName">选择科室</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">2</a>
-                    <p class="ui-stepName">选择医生</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">3</a>
-                    <p class="ui-stepName">选择日期</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">4</a>
-                    <p class="ui-stepName">选择时间</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">5</a>
-                    <p class="ui-stepName">填写电话</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">6</a>
-                    <p class="ui-stepName">预约</p></td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div id="stepByRiqi" class="ui-stepBar-wrap"
-     style="display:none;width:90%;height:100px;position:absolute;top:1200px;left:57px;background-color:#f7fcff">
-    <div class="ui-stepBar">
-        <div class="ui-stepProcess"></div>
-    </div>
-    <div class="ui-stepInfo-wrap">
-        <table class="ui-stepLayout" border="0" cellpadding="0"
-               cellspacing="0">
-            <tr>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">1</a>
-                    <p class="ui-stepName">选择日期</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">2</a>
-                    <p class="ui-stepName">选择科室</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">3</a>
-                    <p class="ui-stepName">选择医生</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">4</a>
-                    <p class="ui-stepName">选择时间</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">5</a>
-                    <p class="ui-stepName">填写电话</p></td>
-                <td class="ui-stepInfo"><a class="ui-stepSequence">6</a>
-                    <p class="ui-stepName">预约</p></td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div id="tip_div"
-     style="z-index:1000;display:none;width:659px;height:243px;background-image:url('${pageContext.request.contextPath}/images/dck2.png');position:absolute;left:290px;top:465px;">
-    <div id="tip_divInfo"
-         style="text-align:center;position:relative;top:82px">
-        <span id="error" style="font-size:30px;color:#EE7700;"><strong></strong></span>
-    </div>
-    <img id="tip_s"
-         src="${pageContext.request.contextPath}/images/qdmix.png" width="90"
-         height="43" style="position:relative;top:145px;left:4px"/>
-</div>
-<div style="z-index:60;position:absolute;top:195px;left:480px;">
-    <img id="title"
-         src="${pageContext.request.contextPath}/images/ghtitle.png"/>
-</div>
-<div id="doctor"
-     style="z-index:30;position:absolute;left:130px;top:400px;display:block;text-align:center">
+<title>门诊挂号</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.11.2.js"></script>
+<script src="${pageContext.request.contextPath}/js/layui.js" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/easing.js"></script>
+<script src="${pageContext.request.contextPath}/js/stepBar.js"></script>
+<script src="${pageContext.request.contextPath}/js/jqsession.js"></script>
+<script src="${pageContext.request.contextPath}/js/pageOper.js"></script>
 
-    <table id="doctor1" style="table-layout:fixed;cellspacing:2px">
-        <thead>
-        <%--<tr
-                style="height:80px;background-color:#E0FFFF;border:1px solid black;">
-            <td
-                    style="width:190px;height:60px;border:1px solid black;font-size:35px;text-align:center">医生姓名
-            </td>
-            <td
-                    style="width:190px;height:60px;border:1px solid black;font-size:35px;text-align:center">医生职称
-            </td>
-            &lt;%&ndash;            <td
-                                style="width:190px;height:60px;border:1px solid black;font-size:35px;text-align:center">挂号费用
-                        </td>&ndash;%&gt;
-            <td
-                    style="width:190px;height:60px;border:1px solid black;font-size:35px;text-align:center">剩余号源
-            </td>
-            <td
-                    style="width:190px;height:60px;border:1px solid black;font-size:35px;text-align:center">操作
-            </td>
-        </tr>--%>
-        </thead>
-        <tbody id="info1"></tbody>
-        <tfoot>
-        <tr>
-            <td colspan="2"
-                style="width:200px;height:100px;font-size:35px;text-align:center;">
-                <button id="pageup" style="font-size:35px;height:60px"
-                        class="layui-btn layui-btn-primary layui-btn-radius"
-                        onclick="page.prePage();">上一页
-                </button>
-            </td>
-            <td colspan="3"
-                style="width:200px;height:100px;font-size:35px;text-align:center;">
-                <button id="pagedown" style="font-size:35px;height:60px"
-                        class="layui-btn layui-btn-primary layui-btn-radius"
-                        onclick="page.nextPage();">下一页
-                </button>
-            </td>
-        </tr>
-        </tfoot>
-    </table>
-</div>
-<div id="main" style="position: absolute;top:800px;left:450px;">
-    <img src="${pageContext.request.contextPath}/images/main.png"
-         res_img="${pageContext.request.contextPath}/images/main1.png"
-         height="" width=""/>
-</div>
-<div id="pre" style="position: absolute;top:790px;left:650px;">
-    <img src="${pageContext.request.contextPath}/images/pre.png"
-         res_img="${pageContext.request.contextPath}/images/pre1.png"
-         height="" width=""/>
-</div>
-<%--进度条logo--%>
-<div id="jz" style="width:1280px;height:1024px;backgroud:#fff;position:absolute;top:0px;left:0px;z-index:100">
-    <img src="${pageContext.request.contextPath}/images/huanchong.gif" height="300" width="300"
-         style="position: absolute;top:320px;left:490px;"/>
-    <br><span style="font-size:50px;color:#EE7700;position: absolute;top:620px;left:420px;">正在加载请稍后......</span>
-</div>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layui.css" media="all">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/control.css" media="all">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<!--以IE8模式渲染-->
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<!--以IE7模式渲染-->
+<style type="text/css">
+body {
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	text-align: center;
+	background:url(../../images/yue/bgn.jpg) no-repeat;
+}
+#titleArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:44px;
+	color:white;
+	margin-top:0px;
+}
+#bottomArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:24px;
+	color:white;
+	margin-top:35px;
+	line-height:60px;
+}
+#showArea{
+	border:1px black solid; 
+	border-radius:10px; 
+	width:995px;
+	height:570px;
+	margin-left:11px;
+	margin-top:20px;
+	behavior:url(../../js/PIE.htc);
+}
+.models{
+	width:210px;
+	height:190px;
+	background-color:#599CE0;
+	border-radius:10px;
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 22px;
+    behavior:url(../../js/PIE.htc);
+}
+td{
+	padding:7px;
+}
+.pageButton{
+	width:180px;
+	height:60px;
+	border:1px black solid; 
+	border-radius:10px; 
+	background-color:#85c531;
+	line-height:60px;
+	margin-left:20px;
+	behavior:url(../../js/PIE.htc);
+}
+#confirmBtn{
+	border:2px solid #3f7dac;
+	width:180px;
+	height:60px;
+	line-height:60px;
+	border-radius:10px; 
+	margin-left:20px;
+	behavior:url(../../js/PIE.htc);
+}
+.modifyInput{
+	margin:4px 0px 0px 0px;
+	height: 105px;
+	width: 350px;
+}
+.chooseType{
+	margin: 0px 0px 0px -180px;
+	font-size: 28px;
+	color: grey;
+}
+.chooseType1{
+	margin: 0px 0px 0px -180px;
+	font-size: 28px;
+	color: #599CE0;
+}
+.modifys{
+	background-color:#599CE0;
+	position:absolute;
+	height:60px;
+	width:91px;
+	margin:-55px 0px 0 189px;
+	font-size:30px;
+	color:white;
+	line-height:55px;
+}
+.modifys1{
+	background-color:grey;
+	position:absolute;
+	height:60px;
+	width:91px;
+	margin:-55px 0px 0 189px;
+	font-size:30px;
+	color:white;
+	line-height:55px;
+}
+.chooseContent{
+	width:182px;
+	height:40px;
+	margin-left:-93px;
+	border:none;
+	font-size:28px;
+	margin-top:15px;
+}
+.contentBox{
+	position:absolute;
+	height:60px;
+	width:280px;
+	border-radius:5px;
+	border:1px #599CE0 solid;
+	margin-top:0px;
+	behavior:url(../../js/PIE.htc);
+}
+/*医生姓名*/
+.mzysxm{
+	position:absolute;
+	color:#04fd02;
+	font-size: 33px;
+    margin: -96px 0px 0px 52px;
+    text-align: center;
+    width:120px;
+}
+/*医生职称*/
+.mzyszc{
+	position:absolute;
+	margin:-39px 0px 0px 47px;
+	color: red;
+	text-align: center;
+	font-size:20px;
+	width:126px;
+}
+/*午别*/
+.noon{
+	position:absolute;
+	margin: 0px 0px 0px 10px;
+	color:blue;
+	text-align: center;
+	font-size:33px;
+}
+/*剩余挂号数*/
+.syghs0{
+	position:absolute;
+	margin: 7px 0px 0px 102px;
+	color: #00fdff;
+	text-align: center;
+}
+/*挂号费*/
+.ghfei0{
+	position:absolute;
+	margin: 60px 0px 0px 10px;
+	color: white;
+}
+</style>
+</head>
+<body scroll="no" onselectstart="return false">
+<div id="time" style="position:absolute;top:3px;left:900px;font-size:60px;color: #FF0000;"></div>
+	<div id="titleArea">
+		<font style="margin-left:40px;">选择预约医生</font>
+	</div>
+	<div id="showArea">
+		<div style="font-size:44px;margin-top:3px;"><span style="margin-left:-170px;">请选择要预约的医生!</span></div>
+		<table id="keshi_t" style="table-layout:fixed;cellspacing:20px;margin-left:15px;">
+			<tbody id="info_t" >
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="" style="width:200px;height:80px;font-size:30px;color:white; text-align:center;">
+						<div class="pageButton" onclick="page.prePage($('#confirmBtn'))">上一页</div>
+					</td>
+					<td colspan="" style="width:200px;height:80px;font-size:30px; text-align:center;">
+						<div id="confirmBtn" ></div>
+					</td>
+					<td colspan="" style="width:200px;height:80px;font-size:30px;color:white; text-align:center;">
+						<div class="pageButton" onclick="page.nextPage($('#confirmBtn'))">下一页</div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div style="position: absolute;margin-top:-569px;margin-left:720px;width:350px;">
+		<div class="modifyInput">
+			<span class="chooseType">选择预约科别</span>
+			<div class="contentBox">
+				<input class="chooseContent" id="chooseKb" type="text"  readonly="readonly">
+				<div class="modifys1" id="yykebie">修改</div>
+			</div>
+		</div>
+		<div class="modifyInput">
+			<span class="chooseType">选择预约科室</span>
+			<div class="contentBox">
+				<input class="chooseContent"  id="chooseKs" type="text"  readonly="readonly">
+				<div class="modifys" id="yykeshi">修改</div>
+			</div>
+		</div>
+		<div class="modifyInput">
+			<span class="chooseType">选择预约日期</span>
+			<div class="contentBox">
+				<input class="chooseContent" id="chooseNoon" type="text"  readonly="readonly">
+				<div class="modifys" id="yydate">修改</div>
+			</div>
+		</div>
+		<div class="modifyInput">
+			<span class="chooseType" >选择预约医生</span>
+			<div class="contentBox">
+				<input class="chooseContent" id="chooseDoc" type="text"  readonly="readonly">
+				<div class="modifys" id="yydoctor">修改</div>
+			</div>
+		</div>
+		<div class="modifyInput">
+			<span class="chooseType">选择预约时间</span>
+			<div class="contentBox">
+				<input class="chooseContent" id="chooseTime" type="text"  readonly="readonly">
+				<div class="modifys" id="yytime" >修改</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="bottomArea">
+		<span style="margin-left:20px;">姓名：<span id="cusName">name</span></span>
+		<span style="margin-left:60px;">卡号：<span id="cusCardNo">0</span></span>
+		<span style="margin-left:60px;">余额：<span id="cusBalance">0.00</span></span>
+		<div style="margin-left:50px;position:absolute;margin: -62px 0px 0px 700px;">
+			<img id="btnMain" style="margin-top:8px;" src="${pageContext.request.contextPath}/images/yue/mzgh_index_y.png" res_img="" height="" width=""/>
+		</div>
+		<div style="margin-left:20px;position:absolute;margin: -61px 0px 0px 855px;">
+			<img id="btnReturn" style="margin-top:6px;" src="${pageContext.request.contextPath}/images/yue/mzgh_return_y.png" res_img="" height="" width=""/>
+		</div>
+	</div>
+		<div id="tip_div"  style="margin: -529px 0px 0px 0px;display:none;z-index:1000;width:659px;height:243px;background-image:url('${pageContext.request.contextPath}/images/dck2.png');position:absolute;left:212px;">
+         <div id="tip_divInfo" style="text-align:center;position:relative;top:82px">
+           <span id="error" style="font-size:30px;color:#EE7700;"><strong></strong></span>
+         </div>
+      <img id="tip_s" src="${pageContext.request.contextPath}/images/qdmix.png" 
+        width="90" height="43" style="position:relative;top:125px;left:4px" />
+   </div> 
+	<div id="waiting"  style="margin: -529px 0px 0px 0px;display:none;z-index:1000;width:576px;height:321px;position:absolute;left:212px;">
+		<img src="../../images/waiting.gif">
+   </div>
 </body>
 <script type="text/javascript">
-    var cardNo = window.parent.cardNo;//卡号
-    var xming0 = window.parent.xming0;//患者名称
-    var xbie00 = window.parent.xbie00;//患者性别
-    var csrq00 = window.parent.csrq00;//出生日期
-    var brnl00 = window.parent.brnl00;//病人年龄
-    var brid00 = window.parent.brid00;//病人ID
-    var yjjye0 = window.parent.yjjye0;//预交金余额（结算金额使用）
-    var cxfs00 = window.parent.cardtype; //卡类型 ：01(自费卡) 、  02    、5
-    var doctor; //医生
-    var ysid00;//医生ID
-    var pbid00;//排班ID
-    var pbbz00 = $.session.get('pbbz00');   //类型标志:非1表示按科室排序  1代表:获取yyrq00的值，根据预约日期来获取和显示科室信息
-    var ghzfy0 = ""; //挂号价格
-    var log = document.getElementById("AVFOCX");
-    //初始化倒计时时间：60秒
-    var time = window.parent.reTime;
+	//returnTime();
+	//var xbie00="男";
+	//var brnl00="25";
+	var keshi; //科室
+	var ksid00;//科室代码
+	var cardNo = window.parent.cardNo;
+	var xming0 = window.parent.xming0;//患者名称
+	var xbie00 = window.parent.xbie00;//患者性别
+	var brnl00 = window.parent.brnl00;//病人年龄
+	var log = document.getElementById("AVFOCX");
+	var fssj00;//发送时间
+	var	ksczrq;//开始日期时间
+	var	jsczrq;//结束日期时间
+	var sjdms01;//时间点编号
+	//初始化倒计时时间：120秒
+	var time = 120;
+	//自动倒计时，计时时间为0时，
+	function returnTime() {
+		myVar = setInterval(
+			function() {
+				time--;
+				$("#time").text(time);
+				if (time == 0) {
+					//跳转页面
+					$.session.clear();
+					window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+				}
+			}, 1000);
+	}
+	//用户点击或按键等操作时，倒计时重新计时
+	document.onkeydown = timeAgin;
+	document.onclick = timeAgin;
+	function timeAgin() {
+		time = 120;
+	}
 
-    //$("#tip_div").show();
-
-    //自动倒计时，计时时间为0时，
-    function returnTime() {
-        myVar = setInterval(
-            function () {
-                time--;
-                $("#time").text(time);
-                if (time == 0) {
-                    //跳转页面
-                    window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                }
-            }, 1000);
-    }
-
-    //用户点击或按键等操作时，倒计时重新计时
-    document.onkeydown = timeAgin;
-    document.onclick = timeAgin;
-
-    function timeAgin() {
-        time = window.parent.reTime;
-    }
-
-    returnTime();
-
-    /**
-     * js分页类
-     * @param iAbsolute 每页显示记录数
-     * @param sTableId 分页表格属性ID值，为String
-     * @param sTBodyId 分页表格TBODY的属性ID值,为String,此项为要分页的主体内容
-     * @Version 1.0.0
-     * @author 辛现宝 2007-01-15 created
-     * var __variable__; private
-     * function __method__(){};private
-     */
-    function Page(iAbsolute, sTableId, sTBodyId) {
-        this.absolute = iAbsolute; //每页最大记录数
-        this.tableId = sTableId;
-        this.tBodyId = sTBodyId;
-        this.rowCount = 0; //记录数
-        this.pageCount = 0; //页数
-        this.pageIndex = 0; //页索引
-        this.__oTable__ = null; //表格引用
-        this.__oTBody__ = null; //要分页内容
-        this.__dataRows__ = 0; //记录行引用
-        this.__oldTBody__ = null;
-        this.__init__(); //初始化;
-    }
-    ;
-    /*
-    初始化
-    */
-    Page.prototype.__init__ = function () {
-        this.__oTable__ = document.getElementById(this.tableId); //获取table引用
-        this.__oTBody__ = this.__oTable__.tBodies[this.tBodyId]; //获取tBody引用
-        this.__dataRows__ = this.__oTBody__.rows;
-        this.rowCount = this.__dataRows__.length;
-        try {
-            this.absolute = (this.absolute <= 0) || (this.absolute > this.rowCount) ? this.rowCount : this.absolute;
-            this.pageCount = parseInt(this.rowCount % this.absolute == 0
-                ? this.rowCount / this.absolute : this.rowCount / this.absolute + 1);
-        } catch (exception) {
-        }
-
-        this.__updateTableRows__();
-    };
-    /*
-    下一页
-    */
-    Page.prototype.nextPage = function () {
-        if (this.pageIndex + 1 < this.pageCount) {
-            this.pageIndex += 1;
-            this.__updateTableRows__();
-        }
-    };
-    /*
-    上一页
-    */
-    Page.prototype.prePage = function () {
-        if (this.pageIndex >= 1) {
-            this.pageIndex -= 1;
-            this.__updateTableRows__();
-        }
-    };
-    /*
-    首页
-    */
-    Page.prototype.firstPage = function () {
-        if (this.pageIndex != 0) {
-            this.pageIndex = 0;
-            this.__updateTableRows__();
-        }
-    };
-    /*
-    尾页
-    */
-    Page.prototype.lastPage = function () {
-        if (this.pageIndex + 1 != this.pageCount) {
-            this.pageIndex = this.pageCount - 1;
-            this.__updateTableRows__();
-        }
-    };
-    /*
-    页定位方法
-    */
-    Page.prototype.aimPage = function (iPageIndex) {
-        if (iPageIndex > this.pageCount - 1) {
-            this.pageIndex = this.pageCount - 1;
-        } else if (iPageIndex < 0) {
-            this.pageIndex = 0;
-        } else {
-            this.pageIndex = iPageIndex;
-        }
-        this.__updateTableRows__();
-    };
-    /*
-    执行分页时，更新显示表格内容
-    */
-    Page.prototype.__updateTableRows__ = function () {
-        var iCurrentRowCount = this.absolute * this.pageIndex;
-        var iMoreRow = this.absolute + iCurrentRowCount > this.rowCount ? this.absolute + iCurrentRowCount - this.rowCount : 0;
-        var tempRows = this.__cloneRows__();
-        //alert(tempRows === this.dataRows);
-        //alert(this.dataRows.length);
-        var removedTBody = this.__oTable__.removeChild(this.__oTBody__);
-        var newTBody = document.createElement("TBODY");
-        newTBody.setAttribute("id", this.tBodyId);
-
-        for (var i = iCurrentRowCount; i < this.absolute + iCurrentRowCount - iMoreRow; i++) {
-            newTBody.appendChild(tempRows[i]);
-        }
-        this.__oTable__.appendChild(newTBody);
-        /*
-        this.dataRows为this.oTBody的一个引用，
-        移除this.oTBody那么this.dataRows引用将销失,
-        code:this.dataRows = tempRows;恢复原始操作行集合.
-        */
-        this.__dataRows__ = tempRows;
-        this.__oTBody__ = newTBody;
-        //alert(this.dataRows.length);
-        //alert(this.absolute+iCurrentRowCount);
-        //alert("tempRows:"+tempRows.length);
-
-    };
-    /*
-    克隆原始操作行集合
-    */
-    Page.prototype.__cloneRows__ = function () {
-        var tempRows = [];
-        for (var i = 0; i < this.__dataRows__.length; i++) {
-            /*
-            code:this.dataRows[i].cloneNode(param),
-            param = 1 or true:复制以指定节点发展出去的所有节点,
-            param = 0 or false:只有指定的节点和它的属性被复制.
-            */
-            tempRows[i] = this.__dataRows__[i].cloneNode(1);
-        }
-        return tempRows;
-    };
-
-
-    $("#main").bind("click dbclick", function () {
-        if (typeof ($.session) != "undefined"){
-            $.session.clear();
-        }
-        window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-    });
-    $("#pre").bind("click dbclick", function () {
-        window.history.back();
-    });
-    $("#tip_s").on("click", function () {
-        $("#tip_div").hide();
-        window.history.go(-1);
-    });
-
-
-    function stepshow() {
-        $("#stepByKeshi").show();
-        $(function () {
-            stepBar.init("stepByKeshi", {
-                step: 2,
-                change: false,
-                animation: false
-            });
-        });
-        getDoctor();
-    }
-
-    function getDateAfterNumber(AddDayCount) {
-        var dd = new Date();
-        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
-        var y = dd.getFullYear();
-        var m = (dd.getMonth()+1)<10 ? ('0'+(dd.getMonth()+1)) : (dd.getMonth()+1);
-        var d = dd.getDate() <10 ? ('0'+ dd.getDate()) :dd.getDate();
-        return y+"-"+m+"-"+d;
-    }
-    /*
-            今天的现在时间
-    */
-    function getFormatDate() {
-        var date = new Date();
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        if (month >= 1 && month <= 9) {
-            month = "0" + month;
-        }
-        if (strDate >= 0 && strDate <= 9) {
-            strDate = "0" + strDate;
-        }
-        var currentDate = date.getFullYear() + "-" + month + "-" + strDate
-            + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        return currentDate;
-    }
-
-    function getDoctor() {
-        var timeKssj00 = getFormatDate();
-        var timeJssj00 = getFormatDate().split(" ")[0] + " 23:59:59";
-
-        var datas = {
-            "funcid": "M07.02.04.04",
-            "mzksbh": $.session.get('ksid00'),
-            "hbbm00": $.session.get("setParamHbbm00"),
-            "kscxdm": "",
-            "kssj00": timeKssj00, //挂号入参当前时刻，预约入参明天日期 +00：00：00
-            "jssj00": timeJssj00, //当日挂号传"2019-03-19 23:59:59"，预约传10日后日期+23：59：59
-            "yywbmc": "",
-            "sfxsqb": "1",
-            "dqcxy0": "",
-            "pageSize": ""
-        };
-        $.ajax({
-            async: true,
-            type: "post",
-            data: datas,
-            dataType: "json",
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            url: window.parent.serverUrl + "?method=ApplyAction",
-            //url:"${pageContext.request.contextPath}/Test/test.do",
-            success: function (json) {
-                $("#jz").hide();
-                Data = eval(json);
-                if (Data.retcode == "0") {
-                    var length = Data.retbody.length;
-                    // for (var i = 0; i < length; i++) {
-                    //     if (typeof (Data.retbody[i].mzyszc) == "undefined") {
-                    //         Data.retbody[i].mzyszc = "无";
-                    //     }
-                    //     $("#info1").append(
-                    //         "<tr style=\"height:80px;border:1px solid black;\">"
-                    //         + "<td style=\"width:190px;height:60px;border:1px solid black;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:35px;text-align:center\">" + Data.retbody[i].mzysxm + "</td>"
-                    //         + "<td style=\"width:190px;height:60px;border:1px solid black;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:35px;text-align:center\">" + Data.retbody[i].mzyszc + " </td>"
-                    //         // + "<td style=\"width:190px;height:60px;border:1px solid black;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:35px;text-align:center\">" + "</td>"
-                    //         + "<td style=\"width:190px;height:60px;border:1px solid black;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:35px;text-align:center\">" + Data.retbody[i].syghs0 + " </td>"
-                    //         + "<td style=\"width:190px;height:80px;border:1px solid black;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center\"><button value=" + Data.retbody[i].mzysxm + "-" + Data.retbody[i].mzyszc + "-" + Data.retbody[i].hyzs00 + "-" + Data.retbody[i].syghs0 + "*" + Data.retbody[i].mzysbh + " class=\"layui-btn layui-btn-primary\" style=\"font-size:35px;height:50px;width:160px;background-color:#4d9cfa\" onclick=\"dateOrTime(this)\">" + "选择" + "</button></td>"
-                    //         + "</tr>");
-                    // }
-                    // page = new Page(3, "doctor1", "info1");
-
-                    for (var i = 0; i < length; i = i + 4) {
-                        if (typeof (Data.retbody[i].mzyszc) == "undefined") {
-                            Data.retbody[i].mzyszc = " ";
-                        }
-                        if (i + 3 < length) {
-                            $("#info1").append(
-                                "<tr style=\"height:80px;\">"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i].mzysxm + "-" + Data.retbody[i].mzyszc + "-" + Data.retbody[i].hyzs00 + "-" + Data.retbody[i].syghs0 + "*" + Data.retbody[i].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i+1].mzysxm + "-" + Data.retbody[i+1].mzyszc + "-" + Data.retbody[i+1].hyzs00 + "-" + Data.retbody[i+1].syghs0 + "*" + Data.retbody[i+1].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i+1].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i+1].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i+2].mzysxm + "-" + Data.retbody[i+2].mzyszc + "-" + Data.retbody[i+2].hyzs00 + "-" + Data.retbody[i+2].syghs0 + "*" + Data.retbody[i+2].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i+2].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i+2].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i+3].mzysxm + "-" + Data.retbody[i+3].mzyszc + "-" + Data.retbody[i+3].hyzs00 + "-" + Data.retbody[i+3].syghs0 + "*" + Data.retbody[i+3].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i+3].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i+3].mzyszc+"</span></button></td>"
-				//+ "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"></td>"
-                                + "</tr>"
-                            );
-                        } else if (i + 2 < length) {
-                            $("#info1").append(
-                                "<tr style=\"height:80px;\">"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i].mzysxm + "-" + Data.retbody[i].mzyszc + "-" + Data.retbody[i].hyzs00 + "-" + Data.retbody[i].syghs0 + "*" + Data.retbody[i].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i].mzysxm +"<br>" + " <span style='font-size: small'>"+Data.retbody[i].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i+1].mzysxm + "-" + Data.retbody[i+1].mzyszc + "-" + Data.retbody[i+1].hyzs00 + "-" + Data.retbody[i+1].syghs0 + "*" + Data.retbody[i+1].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i+1].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i+1].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i+2].mzysxm + "-" + Data.retbody[i+2].mzyszc + "-" + Data.retbody[i+2].hyzs00 + "-" + Data.retbody[i+2].syghs0 + "*" + Data.retbody[i+2].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i+2].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i+2].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"></td>"
-                                + "</tr>"
-                            );
-                        } else if (i + 1 < length) {
-                            $("#info1").append(
-                                "<tr style=\"height:80px;\">"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i].mzysxm + "-" + Data.retbody[i].mzyszc + "-" + Data.retbody[i].hyzs00 + "-" + Data.retbody[i].syghs0 + "*" + Data.retbody[i].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i+1].mzysxm + "-" + Data.retbody[i+1].mzyszc + "-" + Data.retbody[i+1].hyzs00 + "-" + Data.retbody[i+1].syghs0 + "*" + Data.retbody[i+1].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i+1].mzysxm +"<br>" + " <span style='font-size: small'>"+ Data.retbody[i+1].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"></td>"
-                                + "</tr>"
-                            );
-                        } else if (i < length) {
-                            $("#info1").append(
-                                "<tr style=\"height:80px;\">"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"><button class=\"layui-btn layui-btn-primary\" style=\"font-size:24px;width:250px;height:80px;\" value=\"" + Data.retbody[i].mzysxm + "-" + Data.retbody[i].mzyszc + "-" + Data.retbody[i].hyzs00 + "-" + Data.retbody[i].syghs0 + "*" + Data.retbody[i].mzysbh + "\" onclick=\"clickKeshi(this)\">" + Data.retbody[i].mzysxm +"<br>" + " <span style='font-size: small'>"+Data.retbody[i].mzyszc+"</span></button></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"></td>"
-                                + "<td style=\"width:190px;height:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:25px;text-align:center\"></td>"
-                                + "</tr>"
-                            );
-                        }
-
-
-                    }
-                    page = new Page(5, "doctor1", "info1");
-                } else {
-                    //log.WriteLog("卡号为:"+cardNo+"获取医生列表失败");
-                    $("#tip_div").show();
-                    $("#error").text(Data.retmsg);
-                }
-            },
-            error: function () {
-                $("#jz").hide();
-                $("#tip_div").show();
-                $("#error").text("系统异常,请稍后再试!");
-            }
-        });
-    }
-
-
-    function clickKeshi(obj) {
-        //alert($(obj).val());
-        doctor = $(obj).val().split("-")[0];
-        // console.log(doctor);
-        ghzfy0 = $(obj).val().split("-")[1];
-        // console.log(ghzfy0)
-        ysid00 = $(obj).val().split("-")[2];
-        // console.log(ysid00)
-        pbid00 = $(obj).val().split("-")[3];
-        // console.log(pbid00)
-        mzysbh = $(obj).val().split("*")[1];
-        // console.log(mzysbh)
-
-        //医生剩余号源
-        var doctoryMessage = $(obj).val().split("*");
-        var docInfo = doctoryMessage[0];
-        var strings1 = docInfo.split("-");
-        var doctroyResidueNum = strings1[3];
-
-        //将医生编号放入session 中
-        $.session.set('doctor', doctor);
-        $.session.set('ghzfy0', ghzfy0);
-        $.session.set('ysid00', ysid00);
-        $.session.set('pbid00D', pbid00);
-        $.session.set("mzysbh", mzysbh);
-
-        //医生剩余号>0 跳转到日期,增加提示效果
-        if (doctroyResidueNum > 0) {
-            window.location.href = "${pageContext.request.contextPath}/jsp/mzyy/yyriqi.jsp";
-        } else {
-            //返回页面
-            //window.history.go(-1);
-            //window.location.href = "${pageContext.request.contextPath}/jsp/mzyy/yytime.jsp";
-            $("#tip_div").show();
-            $("#error").text("暂无号源");
-            $("#tip_s").bind("click dbclick",function () {
-                $("#tip_div").hide();
-            })
-        }
-    }
-
-    function dateOrTime(obj) {
-        doctor = $(obj).val().split("-")[0];
-        ghzfy0 = $(obj).val().split("-")[1];
-        ysid00 = $(obj).val().split("-")[2];
-        pbid00 = $(obj).val().split("-")[3];
-        mzysbh = $(obj).val().split("*")[1];
-
-        //医生剩余号源
-        var doctoryMessage = $(obj).val().split("*");
-        var docInfo = doctoryMessage[0];
-        var strings1 = docInfo.split("-");
-        var doctroyResidueNum = strings1[3];
-
-        //将医生编号放入session 中
-        $.session.set('doctor', doctor);
-        $.session.set('ghzfy0', ghzfy0);
-        $.session.set('ysid00', ysid00);
-        $.session.set('pbid00D', pbid00);
-        $.session.set("mzysbh", mzysbh);
-
-        //医生剩余号>0 跳转到日期,增加提示效果
-        if (doctroyResidueNum > 0) {
-            window.location.href = "${pageContext.request.contextPath}/jsp/mzyy/yyriqi.jsp";
-        } else {
-            alert("医生剩余号源不足");
-            //返回页面
-            window.history.go(-1);
-            //window.location.href = "${pageContext.request.contextPath}/jsp/mzyy/yytime.jsp";
-        }
-    }
-
-    stepshow();
+	function clickDoctor(obj) {
+		keshi = obj.children[0].innerHTML.toLowerCase().split("<br>")[0];//医生姓名
+		var pbid00 = obj.children[5].innerText;
+		var sysl = $.trim(obj.children[3].innerText);
+		if(sysl == "已满"){
+			$("#tip_div").show();
+			$("#error").text("当前预约已满，请重新选择。");
+			return;
+		}
+		
+		$.session.set('yydoctor', keshi);
+		$.session.set('pbid00', pbid00);
+		window.location.href = "yytime.jsp";
+		$("#waiting").show();
+	}
+	
+	
+	
+	//获取预约医生信息
+	function getDoctors() {
+		var datas = {
+				"funcid" : "M07.02.04.04",
+				"mzksbh" : $.session.get('ksbh00'),
+				"yyrq00" : $.session.get('yydate')//挂号类别，挂号类别0=普通，1=急诊，2=专家，3=点名专家，4=特殊挂号，5=义诊，6=外宾挂号,7=免挂号费, 8=免费挂号 
+				
+			/* 	
+				"funcid" : "M07.02.04.02",
+				"ghyylx" : "G",
+				"ksid00" : $.session.get('ksid00'),
+				"ksmc00" : $.session.get('keshi'),
+				"sjdbh0" : $.session.get('sjdbh0'),
+				"sjdms01" : $.session.get('sjdms01'),
+				"pbbz00" : "",
+				"ksczrq" : $.session.get('ksczrq'),
+				"jsczrq" : $.session.get('jsczrq')
+			 */	
+		};
+			$.ajax({
+				async : true,
+				type : "post",
+				data : datas,
+				dataType : "json",
+				contentType : "application/x-www-form-urlencoded; charset=utf-8",
+				url : window.parent.serverUrl + "?method=ApplyAction",
+				//url:"${pageContext.request.contextPath}/Test/test.do",
+				success : function(json) {
+					$("#waiting").hide();
+					//$.getJSON("../mzgh/yydoctors.json",function(json){//测试数据
+					var Data = eval(json);
+					if (Data.retcode == "0") {
+						var length = Data.retbody.length;
+						for (var i = 0; i < length; i = i + 3) {
+							if (i + 2 < length) {
+								var ss = Data.retbody[i].syghs0=="0"?"已满":"剩余"+Data.retbody[i].syghs0+"号";
+								var ss1 = Data.retbody[i+1].syghs0=="0"?"已满":"剩余"+Data.retbody[i+1].syghs0+"号";
+								var ss2 = Data.retbody[i+2].syghs0=="0"?"已满":"剩余"+Data.retbody[i+2].syghs0+"号";
+								$("#info_t").append(
+										"<tr>"
+										+"<td><div class=\"models\" onclick=\"clickDoctor(this)\">"
+										+"<div class=\"mzysxm\">" + Data.retbody[i].mzysxm + "</div>" 
+										+"<div class=\"mzyszc\">" + Data.retbody[i].mzyszc + "</div>" 
+										+"<div class=\"noon\">" + Data.retbody[i].yywbmc +"</div>"
+										+"<div class=\"syghs0\">"+ ss + "</div>"
+										+"<div class=\"ghfei0\">挂号费：" +Data.retbody[i].ghfei0 + "元</div>"
+										+"<span class=\"pbid00\" style=\"display:none;\">"+Data.retbody[i].pbid00+"</span>"
+										+"</div></td>"
+										
+										+"<td><div class=\"models\" onclick=\"clickDoctor(this)\">"
+										+"<div class=\"mzysxm\">" + Data.retbody[i+1].mzysxm + "</div>" 
+										+"<div class=\"mzyszc\">" + Data.retbody[i+1].mzyszc + "</div>" 
+										+"<div class=\"noon\">" + Data.retbody[i+1].yywbmc +"</div>"
+										+"<div class=\"syghs0\">"+ ss1 + "</div>"
+										+"<div class=\"ghfei0\">挂号费：" +Data.retbody[i+1].ghfei0 + "元</div>"
+										+"<span class=\"pbid00\" style=\"display:none;\">"+Data.retbody[i+1].pbid00+"</span>"
+										+"</div></td>"
+										
+										+"<td><div class=\"models\" onclick=\"clickDoctor(this)\">"
+										+"<div class=\"mzysxm\">" + Data.retbody[i+2].mzysxm + "</div>" 
+										+"<div class=\"mzyszc\">" + Data.retbody[i+2].mzyszc + "</div>" 
+										+"<div class=\"noon\">" + Data.retbody[i+2].yywbmc +"</div>"
+										+"<div class=\"syghs0\">"+ ss2 + "</div>"
+										+"<div class=\"ghfei0\">挂号费：" +Data.retbody[i+2].ghfei0 + "元</div>"
+										+"<span class=\"pbid00\" style=\"display:none;\">"+Data.retbody[i+2].pbid00+"</span>"
+										+"</div></td>"
+										
+										+"</tr>");
+							} else if (i + 1 < length) {
+								var sss = Data.retbody[i].syghs0=="0"?"已满":"剩余"+Data.retbody[i].syghs0+"号";
+								var sss1 = Data.retbody[i+1].syghs0=="0"?"已满":"剩余"+Data.retbody[i+1].syghs0+"号";
+								$("#info_t").append(
+										"<tr>"
+										+"<td><div class=\"models\" onclick=\"clickDoctor(this)\">"
+										+"<div class=\"mzysxm\">" + Data.retbody[i].mzysxm + "</div>" 
+										+"<div class=\"mzyszc\">" + Data.retbody[i].mzyszc + "</div>" 
+										+"<div class=\"noon\">" + Data.retbody[i].yywbmc +"</div>"
+										+"<div class=\"syghs0\">"+ sss + "</div>"
+										+"<div class=\"ghfei0\">挂号费：" +Data.retbody[i].ghfei0 + "元</div>"
+										+"<span class=\"pbid00\" style=\"display:none;\">"+Data.retbody[i].pbid00+"</span>"
+										+"</div></td>"
+										
+										+"<td><div class=\"models\" onclick=\"clickDoctor(this)\">"
+										+"<div class=\"mzysxm\">" + Data.retbody[i+1].mzysxm + "</div>" 
+										+"<div class=\"mzyszc\">" + Data.retbody[i+1].mzyszc + "</div>" 
+										+"<div class=\"noon\">" + Data.retbody[i+1].yywbmc +"</div>"
+										+"<div class=\"syghs0\">"+ sss1 + "</div>"
+										+"<div class=\"ghfei0\">挂号费：" +Data.retbody[i+1].ghfei0 + "元</div>"
+										+"<span class=\"pbid00\" style=\"display:none;\">"+Data.retbody[i+1].pbid00+"</span>"
+										+"</div></td>"
+										+"</tr>");
+							} else if (i < length) {
+								var ssss = Data.retbody[i].syghs0=="0"?"已满":"剩余"+Data.retbody[i].syghs0+"号";
+								$("#info_t").append(
+										"<tr>"
+										+"<td><div class=\"models\" onclick=\"clickDoctor(this)\">"
+										+"<div class=\"mzysxm\">" + Data.retbody[i].mzysxm + "</div>" 
+										+"<div class=\"mzyszc\">" + Data.retbody[i].mzyszc + "</div>" 
+										+"<div class=\"noon\">" + Data.retbody[i].yywbmc +"</div>"
+										+"<div class=\"syghs0\">"+ ssss + "</div>"
+										+"<div class=\"ghfei0\">挂号费：" +Data.retbody[i].ghfei0 + "元</div>"
+										+"<span class=\"pbid00\" style=\"display:none;\">"+Data.retbody[i].pbid00+"</span>"
+										+"</div></td>"
+										+"</tr>");
+							}
+						}
+						page = new Page(2, "keshi_t", "info_t");
+						$('#confirmBtn').text((page.pageIndex+1)+"/"+page.pageCount);
+						
+						$(".models").bind("click", function(){
+							clickDoctor(this);
+						});
+				} else {
+					$("#tip_div").show();
+					$("#error").text(Data.retmsg);			
+				}
+				
+			//});
+			},
+			error : function() {
+				$("#tip_div").show();
+				$("#error").text("系统异常,请稍后再试!");		
+			}
+		}); 
+	}	
+	//根据input框内容是否存在值，确认是否进行过该页面的操作，如果有操作，可以进行修改，如果没有，置灰 不可修改
+	function initStyle(){
+		var inputs = $(".chooseContent");
+		$.each(inputs,function(index,temp){
+			if(temp.value){
+				$(this).parent().css("border","1px #599CE0 solid");
+				$(this).parent().prev().removeClass();
+				$(this).parent().prev().addClass("chooseType1");//蓝色可点击  
+				$(this).next().removeClass();
+				$(this).next().addClass("modifys");
+				$(this).next().click(goModify);
+			}else{
+				$(this).parent().css("border","1px grey solid");
+				$(this).parent().prev().removeClass();
+				$(this).parent().prev().addClass("chooseType");
+				$(this).next().removeClass();
+				$(this).next().addClass("modifys1");//置灰不可点击
+				$(this).next().unbind();//不可点击
+			}
+		});
+	}
+	function goModify(){
+		var pageName = $(this).attr("id");
+		window.location.href = "${pageContext.request.contextPath}/jsp/mzyy/"+pageName+".jsp";
+		$("#waiting").show();
+	}
+	/**
+	*初始化操作
+	**/
+	var init = function(){
+		
+		$("#waiting").show();
+		setTimeout("getDoctors();",500);
+		//getDoctors();
+		$("#chooseKb").val($.session.get('kebie'));
+		$("#chooseKs").val($.session.get('keshi'));
+		$("#chooseNoon").val($.session.get('yydate'));
+		initStyle();
+		returnTime();//倒计时
+		$("#btnMain").bind("click dbclick", function() {//返回主页
+			$.session.clear();
+			window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+		});
+		$("#btnReturn").bind("click dbclick", function() {//返回上一级
+			window.location.href = "yydate.jsp";
+			$("#waiting").show();
+		});
+		$("#tip_s").on("click", function() {
+			$("#tip_div").hide();
+		});
+		
+		$("#cusName").text(window.parent.xming0);
+		$("#cusCardNo").text(window.parent.cardNo);
+		$("#cusBalance").text(window.parent.yjjye0);
+	}
+	init();
 </script>
 </html>
-
-
-
-

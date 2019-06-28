@@ -65,4 +65,16 @@ public class OccupyRegPointServiceImpl  implements OccupyRegPointService {
         occupyRegPointMapper.updateReg(regNo,paymentWay,fee,settleDate,tradeSerialNumber,new Date());
 
     }
+
+    /**
+     * 查询是否已支付
+     * @param regNo
+     * @param fee
+     * @return
+     */
+    @Override
+    public int selectGH(String regNo, String fee) {
+        int a=occupyRegPointMapper.selectGH(regNo,fee);
+        return a;
+    }
 }

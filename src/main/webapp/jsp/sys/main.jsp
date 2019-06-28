@@ -182,7 +182,7 @@
                     <span>支付对账</span>
                     <!--二级-->
                     <ul>
-                        <li data-options="attributes:{url:'jsp/sys/login.jsp'}">挂号费对账</li>
+                        <li data-options="attributes:{url:'jsp/sys/ReconReg.jsp'}">挂号费对账</li>
                         <li data-options="attributes:{url:'http://www.jd.com'}">门诊费对账</li>
                     </ul>
                 </li>

@@ -156,7 +156,12 @@
             <artifactId>jdom</artifactId>
             <version>1.0</version>
         </dependency>
-
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.10</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -181,6 +186,7 @@
     </dependencies>
 
 	<build>
+		<finalName>fsxrmyy</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

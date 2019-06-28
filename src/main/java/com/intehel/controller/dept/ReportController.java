@@ -4,6 +4,7 @@ import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
 import com.intehel.common.util.XmlJsonUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +32,8 @@ public class ReportController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetPacsReportList",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetPacsReportList",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetPacsReportList(String RegNos,String InpatientSeriNos,String OutPatientIds,String TestDateStart,String TestDateEnd,String UpdateDateStart,String UpdateDateEnd) {
         String str="";
         try {
@@ -91,7 +93,8 @@ public class ReportController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetPacsReport",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetPacsReport",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetPacsReport(String ReportId,String InpatientSeriNo,String OutpatientId,String CheckTime,String CheckPoint,String MachineCode) {
         String str="";
         try {
@@ -153,7 +156,8 @@ public class ReportController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetLisReportList",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetLisReportList",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetLisReportList(String RegNos,String InpatientSeriNos,String OutPatientIds,String TestDateStart,String TestDateEnd,String UpdateDateStart,String UpdateDateEnd) {
         String str="";
         try {
@@ -213,7 +217,8 @@ public class ReportController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetLisReport",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetLisReport",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetLisReport(String RegNo,String CheckTime,String MachineCode,String ReportId,String SampleId) {
         String str="";
         try {

@@ -20,7 +20,7 @@ public class Login {
     //进入登陆页面
     @RequestMapping("tologin")
     public String toLogin() {
-        return "sys/login";
+        return "jsp/sys/login";
     }
 
 
@@ -62,6 +62,6 @@ public class Login {
     @RequestMapping("tomain")
     public String toMain() {
         System.out.println();
-        return "sys/main";
+        return "jsp/sys/main";
     }
 }

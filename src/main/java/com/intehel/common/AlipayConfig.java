@@ -26,10 +26,10 @@ public class AlipayConfig {
     public static String alipay_public_key ="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAovjc5mZij+9oxwcvksWFEGJGXyYQVcBH6oGW7mSC9UmeJpAP+lej9PpXYD1EOv6/iGh/VwqmvEDKRTaGZ4vIqTWTOflb+TuDVx9pFrgXafk5jSvTYAuVQxT0/PsLumnwesinqCjPxxSfXDA0ZNi9nH5iESXYUEgSQQqEQ+ACo7+T3P7wjHF/2mkfWClWL+z2FZKmSSpkJgb0ffTBLO6Ow7fe35HpAVXXvIfjoh7gE74v0QDphL8jA9Oc4OrdXdRitHjFJCPQADBKxUNoWY9fgk/zHMXFxUQG7s4ysLofLiqsx0e4XSMpSBA2R0Eb9Q9mcRrhKgQJmxHc9pViErwJdQIDAQAB";
 
     // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-    public static String notify_url = "http://boyi.natapp1.cc/notify_url";
+    public static String notify_url = "";
 
     // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-    public static String return_url = "http://boyi.natapp1.cc/jsp/alipay/return_url.jsp";
+    public static String return_url = "";
 
     // 签名方式
     public static String sign_type = "RSA2";

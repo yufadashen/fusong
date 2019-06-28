@@ -2,8 +2,10 @@ package com.intehel.controller.dept;
 
 import com.intehel.common.util.*;
 import com.intehel.service.OccupyRegPointService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +19,36 @@ import java.util.Map;
 
 @Controller
 public class GetRegistrationController {
+    Logger logger = Logger.getLogger(this.getClass().getName());
+
+
+    /**
+     * 微信查询是否已支付
+     * @param RegNo 挂号流水号
+     * @param Fee   金额
+     * @param RecipeNos 门诊号集合
+     * @param InpatientSeriNo 住院流水号
+     * @return
+     */
+    @ResponseBody
+    @CrossOrigin
+    @RequestMapping(value = "/WxIsFee",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public String WxIsFee(String RegNo,String RecipeNos,String InpatientSeriNo,String Fee) {
+        //挂号
+        if (RegNo!=null||RecipeNos==null){
+           int a= occupyRegPointService.selectGH(RegNo,Fee);
+        }else if (RegNo!=null||RecipeNos!=null){
+
+            //门诊
+        }else if (InpatientSeriNo!=null){
+
+            //住院
+        }
+        return "";
+    }
+
+
+
 
     /**
      * 查询排班数据
@@ -27,9 +59,11 @@ public class GetRegistrationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetSchedules",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetSchedules",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetSchedules(String OperatorType,String DeptId,Integer day) {
         //获取当前时间
+        logger.info("查询排班信息");
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
         Date date=new Date();
         String DateStart=df.format(date)+"000000";// new Date()为获取当前系统时间
@@ -49,6 +83,7 @@ public class GetRegistrationController {
                             "<DateStart>"+DateStart+"</DateStart>" +
                             "<DateEnd>"+DateEnd+"</DateEnd></ScheduleRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);
+            logger.info("查询排班信息"+str);
             System.err.println(strURL);
 //            System.err.println(str);
         }catch (Exception e){
@@ -61,6 +96,7 @@ public class GetRegistrationController {
             return "{\"Message\":\"获取失败\",\"Code\":\"-1\"}";
         }
         // 解析XML
+        logger.info("查询排班信息");
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));
         return JsonUtil.toString(map);
@@ -87,7 +123,8 @@ public class GetRegistrationController {
     OccupyRegPointService occupyRegPointService;
 
     @ResponseBody
-    @RequestMapping(value = "/OccupyRegPoint",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/OccupyRegPoint",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String OccupyRegPoint(String ScheduleTime,String ScheduleId,String OutpatientId,String RegLevelId,String DeptId,
                                  String VisitTime) {
         if (VisitTime==null){VisitTime="";}
@@ -135,7 +172,8 @@ public class GetRegistrationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/ReleaseRegPoint",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/ReleaseRegPoint",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String ReleaseRegPoint(String RegNo) {
         String str="";
         try {
@@ -178,7 +216,8 @@ public class GetRegistrationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/PayForAppointment",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/PayForAppointment",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String PayForAppointment(String RegNo,String Fee,String SettleDate,String TradeSerialNumber) {
         String str="";
         try {
@@ -227,7 +266,8 @@ public class GetRegistrationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetPatientIsSee",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetPatientIsSee",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetPatientIsSee(String RegNos) {
         String str="";
         try {
@@ -269,7 +309,8 @@ public class GetRegistrationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetRegInfos",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetRegInfos",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetRegInfos(String RegNos,String OutpatientIds,String RegDateStart,String RegDateEnd,String IsNiox,String IsSee,String UpdateDateStart,String UpdateDateEnd) {
         String str="";
         if (IsNiox==null){IsNiox="";}
@@ -337,7 +378,8 @@ public class GetRegistrationController {
      */
 //<?xml version="1.0" encoding="utf-8"?><RegInfosRequest><RegNos>6118003</RegNos><OutpatientIds>0051522299</OutpatientIds><RegDateStart>20190602</RegDateStart><RegDateEnd>20190606</RegDateEnd><IsNiox></IsNiox><IsSee>false</IsSee><UpdateDateStart>20120101</UpdateDateStart><UpdateDateEnd>20190605</UpdateDateEnd></RegInfosRequest>
     @ResponseBody
-    @RequestMapping(value = "/ReconReg",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/ReconReg",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String ReconReg(String RegNo,int Fee) {
         String str="";
         try {
@@ -365,8 +407,15 @@ public class GetRegistrationController {
         return JsonUtil.toString(map);
     }
 
+
+    /**
+     * 退号
+     * @param RegNo
+     * @return
+     */
    @ResponseBody
-    @RequestMapping(value = "/AbortReg",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+   @CrossOrigin
+    @RequestMapping(value = "/AbortReg",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String AbortReg(String RegNo) {
         String str="";
         try {

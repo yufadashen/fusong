@@ -47,7 +47,7 @@ public class XmlJsonUtils {
 
     public static List<Map> getNodes(Element node){
         List<Map>list=new ArrayList<>();
-        Map map = new HashMap();
+//        Map map = new HashMap();
 
         System.out.println("--------------------");
         //当前节点的名称、文本内容和属性
@@ -67,16 +67,16 @@ public class XmlJsonUtils {
         List<Map>list=new ArrayList<>();
         Map map = new HashMap();
 
-        System.out.println("-----------123---------");
+//        System.out.println("-----------123---------");
         //当前节点的名称、文本内容和属性
-        System.out.println(e.getName()+":"+e.getTextTrim());//当前节点名称
+//        System.out.println(e.getName()+":"+e.getTextTrim());//当前节点名称
         map.put(e.getName(),e.getTextTrim());
 //        map.put(e.getName(),e.getTextTrim());
         List<Element> listAttr=e.attributes();//当前节点的所有属性的list
         for(Element attr:listAttr){//遍历当前节点的所有属性
-            String name=attr.getName();//属性名称
-            String value=attr.getTextTrim();//属性的值
-            System.out.println("属性名称："+name+"属性值："+value);
+//            String name=attr.getName();//属性名称
+//            String value=attr.getTextTrim();//属性的值
+//            System.out.println("属性名称："+name+"属性值："+value);
             map.put(attr.getName(),attr.getTextTrim());
         }
         //递归遍历当前节点所有的子节点

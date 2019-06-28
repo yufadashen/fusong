@@ -1,457 +1,339 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <html>
 <head>
-    <object width="0" height="0" name="plugin"
-            classid="clsid:4C5F4B81-B044-4C45-AC9A-26864D324EBA"></object>
-    <object width="0" height="0" id="printer"
-            classid="clsid:01678147-0761-4E43-AA5C-C96BAEF52461"></object>
-    <object width="0" height="0" id="AVFOCX"
-            classid="clsid:83B1BDC2-E546-4910-9E05-8B352F3FD5BA"></object>
-    <title>微信充值</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/js/jquery-1.11.2.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/js/jquery.qrcode.min.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/DriverJS/json2.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jqsession.js"></script>
-    <meta http-equiv="X-UA-Compatible" content="IE=8">
-    <!--以IE8模式渲染-->
-    <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <!--以IE7模式渲染-->
-    <style>
-        body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: url(${pageContext.request.contextPath}/images/bj.jpg) no-repeat;
-        }
-    </style>
+<object width="0" height="0" name="plugin"
+	classid="clsid:4C5F4B81-B044-4C45-AC9A-26864D324EBA"> </object>
+<object width="0" height="0" id="printer"
+	classid="clsid:01678147-0761-4E43-AA5C-C96BAEF52461"> </object>
+<object width="0" height="0" id="AVFOCX"
+	classid="clsid:83B1BDC2-E546-4910-9E05-8B352F3FD5BA"> </object>
+
+<title>微信充值</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.11.2.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/DriverJS/json2.js"></script>
+<script src="${pageContext.request.contextPath}/js/jqsession.js"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<!--以IE8模式渲染-->
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<!--以IE7模式渲染-->
+<style type="text/css">
+body {
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	text-align: center;
+	background-color: #62BA90;
+	background: url(${pageContext.request.contextPath}/images/bgn.jpg)
+		no-repeat; 
+}
+
+#bottomArea {
+	background-color: #3f7dac;
+	width: 100%;
+	height: 80px;
+	margin-left: -8px;
+	text-align: left;
+	font-size: 50px;
+	color: white;
+	margin-top: 700px;
+	line-height: 60px;
+}
+
+#money {
+	background-color: #B2CFEB;
+	border: 1px solid black;
+	top: 325px;
+	left: 370px;
+	padding-top: 3px;
+	padding-left: 3px;
+}
+</style>
 </head>
-<body scroll="no" id="info">
-<!-- 显示返回主页面倒计时时间 -->
-<div id="time" style="position:absolute;top:20px;right:40px;font-size:60px;color: #FF0000;">
-</div>
-<div id="tip_div"
-     style="z-index:1000;display:none;width:659px;height:243px;background-image:url('${pageContext.request.contextPath}/images/dck2.png');position:absolute;left:312px;top:465px;">
-    <div id="tip_divInfo" style="text-align:center;position:relative;top:82px">
-        <span id="error" style="font-size:30px;color:#EE7700;"><strong>充值成功，请在下方取走凭条</strong></span>
-    </div>
-    <img id="tip_s" src="${pageContext.request.contextPath}/images/qdmix.png"
-         width="90" height="43" style="position:relative;top:125px;left:286px"/>
-</div>
-<div id="cardinfo" style="position:absolute;top:290px;left:285px">
-    <span style="font-size:40px">姓名:</span><span id="xming0" style="font-size:40px;color:#0000FF"></span>
-    <span style="font-size:40px">卡号:</span><span id="carNo" style="font-size:40px;color:#0000FF"></span>
-    <span style="font-size:40px">支付金额:</span><span id="zfye" style="font-size:40px;color:#0000FF"></span>
-</div>
-<div id="title"
-     style="z-index:60;display:block;position:absolute;top:160px;left:490px;">
-    <img id="tip1"
-         src="${pageContext.request.contextPath}/images/smpaytitle.png"/>
-</div>
-<div id="word" style="width:100%;z-index:60;position:absolute;top:680px;left:180px;">
-    <span style="width:100%;font-size:40px;text-align:center;color:red">请在倒计时结束前完成支付，倒计时结束请勿支付</span>
-</div>
-<div id="shuru"
-     style="display:none;position:absolute;left:300px;top:1303px;">
-    <span id="tip2" style="font-size:40px;color:#EE7700">需支付金额为:</span>
-</div>
-<div id="inputmoney"
-     style="display:none;position:absolute;left:610px;top:300px;">
-    <input name="value" id="value" type="text" maxlength="7"
-           style="width:200px;height:50px;text-align:center;font-size:40px">
-</div>
-<div id="erweima"
-     style="z-index:60;display:none;position:absolute;top:374px;left:500px;">
-</div>
-<div id="quxiao"
-     style="z-index:60;display:none;position:absolute;top:750px;left:564px;">
-    <img id="tip3"
-         src="${pageContext.request.contextPath}/images/quxiao.png"
-         res_img="${pageContext.request.contextPath}/images/quxiao1.png" height="" width=""/>
-</div>
-<div id="main" style="position:absolute;top:845px;left:520px;">
-    <img src="${pageContext.request.contextPath}/images/main.png"
-         res_img="${pageContext.request.contextPath}/" height="" width=""/>
-</div>
-<%--进度条logo--%>
-<div id="jz" style="width:1280px;height:1024px;backgroud:#fff;position:absolute;top:0px;left:0px;z-index:100">
-    <img src="${pageContext.request.contextPath}/images/huanchong.gif" height="300" width="300"
-         style="position: absolute;top:320px;left:490px;"/>
-    <br><span style="font-size:50px;color:#EE7700;position: absolute;top:620px;left:420px;">正在加载请稍后......</span>
-</div>
+<!-- <body scroll="no" id="info"> -->
+<body>
+	<div id="title"
+		style="z-index:60;display:block;position:absolute;width:1024px;top:0px;left:0px;background-color: #3f7dac">
+		<img id="tip1" style="margin-left: -618px;"
+			src="${pageContext.request.contextPath}/images/wxpaytitle.png" /> <span
+			id="time"
+			style="position:absolute;top:20px;right:75px;font-size:60px;color: red;">
+		</span>
+	</div>
+	<div id="tip_div"
+		style="z-index:1000;display:none;width:659px;height:243px;background-image:url('${pageContext.request.contextPath}/images/dck2.png');position:absolute;left:212px;top:365px;">
+		<div id="tip_divInfo"
+			style="text-align:center;position:relative;top:82px">
+			<span id="error" style="font-size:30px;color:#EE7700;"><strong>充值成功，请在下方取走凭条</strong></span>
+		</div>
+		<img id="tip_s"
+			src="${pageContext.request.contextPath}/images/qdmix.png" width="90"
+			height="43" style="position:relative;top:125px;left:260px" />
+	</div>
+
+	<div id="erweima" class="erweima"
+		style="z-index:60;display:none;position:absolute;top:300px;left:420px;margin-top:-24px;">
+	</div>
+	<div id="cancel"
+		style="z-index:60;display:none;position:absolute;top:501px;left:420px;margin-top:-24px;">
+		<img id="tip3"
+			src="${pageContext.request.contextPath}/images/msgbox_button_cancel_down.jpg"
+			res_img="${pageContext.request.contextPath}/images/msgbox_button_cancel_downs.jpg"
+			height="" width="200" />
+	</div>
+	<div id="zhuyitingxing"style="z-index:60;display:none;position:absolute;top:160px;left:140px;">
+		<span style="font-size:25px;color:red;">请您打开微信手机客户端，使用扫一扫功能扫描下方二维码进行支付</span>
+		<br/><br/>
+		<span style="font-size:25px;color:red;"> 温馨提示:扫码的退款业务是原路返回,二维码充值<span style="font-size:35px;color:blue;">勿让他人代充</span>.</span>
+	</div>
+	<div id="cardinfo" style="position:absolute;top:100px;left:200px">
+		<span style="font-size:35px">姓名:</span><span id="xming0" style="font-size:35px;color:#0000FF"></span> 
+		<span style="font-size:35px;margin-left: 88px;">支付金额:</span><span id="zfye" style="font-size:35px;color:#0000FF"></span>
+	</div>
+
+	<div id="bottomArea" style="position:absolute;">
+		<div style="margin:-21px 0px 0px 666px;line-height: 78px;display: inline;position: absolute;">
+			<img id="main" style="margin-top:-8px;" src="${pageContext.request.contextPath}/images/index.png"/>
+		</div>
+		<div style="margin:-22px 0px 0px 850px;line-height: 78px;display: inline;position: absolute;">
+			<img id="pre" style="margin-top:-8px;"src="${pageContext.request.contextPath}/images/return.png"/>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
-    //初始化倒计时时间：60秒
-    var time = 180;
-    var queryOrderTimeout;
-    //自动倒计时，计时时间为0时，
-    function returnTime() {
-        myVar = setInterval(
-            function () {
-                time--;
-                $("#time").text(time);
-                  if(time<4 && time>0){
-                    cancleOrder();
-                    queryOrderTimeout = setTimeout("queryOrder()", 1000);//查询订单状态
-                }else if(time==0){
-                    //跳转页面
-                   // cancleOrder();
-                    window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                }
-            }, 1000);
-    }
-
-    //用户点击或按键等操作时，倒计时重新计时
-    document.onkeydown = timeAgin;
-    document.onclick = timeAgin;
-
-    function timeAgin() {
-        time = 180;
-    }
-
-    returnTime();
-
-    //定义
-    var value = window.parent.money;//充值金额
-    var jylsh = ""; //交易流水号
-    var yhkhao = ""; //银行卡号
-    var xming0 = window.parent.xming0;	//姓名
-    var brid00 = window.parent.brid00;  //病人ID
-    var xbie00 = window.parent.xbie00;//病人性别
-    var cardNo = window.parent.cardNo; //卡号
-    var cardtype = window.parent.cardtype; //卡类型
-    var ptqqls;//平台请求流水
-    var jylsh0;//交易流水号
-    var xtgzh0;//系统跟踪号
-    var ptddls;//平台订单流水
-    var czztbz;//充值状态标识  返回czztbz=3则付款成功跳到成功界面，czztbz=5则支付成功但是HIS充值失败，打印失败凭条；czztbz=其他继续等待
-    var czsucc;//充值成功   1为成功
-    var cztype = window.parent.cztype;//1.正常充值  2.结算时金额不足充值   3.挂号时挂号费不足充值  4.取号时金额不足充值  5预约时金额不足充值
-    var yjjye0 = window.parent.yjjye0;//院内账户余额
-
- 	//阻止键盘退格事件
-    $(document).keydown(function(event){
-        if(event.keyCode==8){
-		return false;	
-        }
-    })
-
-
-    //微信充值下单
-    function wxorder() {
-        $("#xming0").text(window.parent.xming0);
-        $("#carNo").text(window.parent.brid00);
-        if(window.parent.cardtype==0){
-        	//$("#zfye").text(window.parent.money+"元，基金支付:"+$.session.get("jjzfe0"));
-		$("#zfye").html(window.parent.money+"元，<br>基金支付:"+$.session.get("jjzfe0")+"  账户支付:"+$.session.get("zhzfe0"));
-        }else{
-        	$("#zfye").text(window.parent.money);
-        }
-        var datas = {
-            "funcid": "M07.02.03.29",
-            "cxdm00": cardNo,
-            "cxfs00": cardtype,
-            "brid00": brid00,
-            "czje00": value,
-            "cardno": "",
-            "sfzhao": "",
-            "xming0": xming0,
-            "xbie00": xbie00,
-            "ddbt00": "",
-            "bankid": "",
-            "czmzzy": "01",
-            "klxbh0": "",
-            "yylsh0":$.session.get("yylsh0")
-        };
-        $.ajax({
-            async: true,
-            type: "post",
-            data: datas,
-            dataType: "json",
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            url: window.parent.serverUrl + "?method=ApplyAction",
-            //url:"${pageContext.request.contextPath}/Test/test.do",
-            success: function (json) {
-                $("#jz").hide();
-                Data = eval(json);
-                if (Data.retcode == "0") {
-                    //log.WriteLog("微信下单成功，金额为"+value);
-                    var qrcode = Data.retbody[0].qrcode;//二维码串
-                    ptddls = Data.retbody[0].ptddls;//平台订单流水
-                    jylsh0 = Data.retbody[0].jylsh0;//交易流水号
-                    xtgzh0 = Data.retbody[0].xtgzh0;//系统跟踪号
-                    ptqqls = Data.retbody[0].ptqqls;//平台请求流水
-                    cgjysj = Data.retbody[0].cgjysj;//交易时间
-                    pjh000 = Data.retbody[0].pjh000;//票据号
-                    $.session.set('ptqqls', ptqqls);
-                    $.session.set('ptddls', ptddls);
-                    $.session.set('jylsh0', jylsh0);
-                    //将二维码串转换为图片
-                    $("#erweima").qrcode({
-                        render: "table",
-                        width: 300,
-                        height: 300,
-                        text: qrcode
-                    })
-                    $("#shuru").hide();
-                    $("#inputmoney").hide();
-                    $("#money").hide();
-                    $("#erweima").show();
-                    $("#quxiao").show();
-                    queryOrderTimeout = setTimeout("queryOrder()", 1000);//查询订单状态
-                } else {
-                    $("#tip_div").show();
-                    $("#error").text("扫码付下单失败，请重试");
-                    $("#tip_s").on("click", function () {
-                        $("#tip_div").hide();
-                        window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                    });
-                }
-            },
-            error: function () {
-                $("#jz").hide();
-                $("#tip_div").show();
-                $("#error").text("系统异常，请稍后再试！");
-                $("#tip_s").on("click", function () {
-                    $("#tip_div").hide();
-                    window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                });
-            }
-        });
-    }
-
-    //微信充值查询订单状态
-    function queryOrder() {
-        //$("#jz").show();
-        var datas = {
-            "funcid": "M07.02.03.30",
-            "cxdm00": cardNo,
-            "cxfs00": cardtype,
-            "brid00": brid00,
-            "czje00": value,
-            "klxbh0": "",
-            "xming0": xming0,
-            "sfzhao": "",
-            "ptqqls": ptqqls,
-            "khsrpz": "",
-            "cshsj0": "",
-            "jylsh0": jylsh0,
-            "xtgzh0": xtgzh0,
-            "ddlx00": "0",
-	    "czmzzy": "01",
-	    "yylsh0":$.session.get("yylsh0")
-        };
-        $.ajax({
-            async: true,
-            type: "post",
-            data: datas,
-            dataType: "json",
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            url: window.parent.serverUrl + "?method=ApplyAction",
-            //url:"${pageContext.request.contextPath}/Test/test.do",
-            success: function (json) {
-                $("#jz").hide();
-                Data = eval(json);
-                if (Data.retcode == "0") {
-                    czztbz = Data.retbody[0].czztbz;//充值状态标识
-                    switch (czztbz) {
-                        case "3":
-                            window.parent.sffs = "17";
-                            //log.WriteLog("卡号"+cardNo+"成功通过过微信充值"+value+"元");
-                            $("#erweima").hide();
-                            $("#quxiao").hide();
-                            time = 90;
-			    var sendInfoToPlantForm = $.session.get("sendInfoToPlantForm");//是否发送数据到平台标识符
-                            if (sendInfoToPlantForm == "1") { //如果是通过门诊结算进入此方法，则不发送数据到平台
-                            }else{//如果是通过挂号，预约进入此页面，则发送数据到平台
-                                sendInfoToPlatForm()
-                            }
-                            getNewInfo();
-                            break;
-                        case "5":
-                            //微信充值成功但his充值失败，打印失败凭条
-                            $("#erweima").hide();
-                            $("#quxiao").hide();
-                            $("#tip_div").show();
-                            $("#error").text("微信充值成功但HIS充值失败，请取走凭条");
-                            $("#tip_s").on("click", function () {
-                                window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                            });
-                            //log.WriteLog("卡号"+cardNo+"成功通过过微信充值"+value+"元,，但HIS充值失败");
-                            //print();
-                            break;
-                        default:
-                            if (time == 0) {
-                                cancleOrder(0);
-                                window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                            } else {
-                                queryOrderTimeout = setTimeout("queryOrder()", 1000);
-                            }
-                    }
-                } else {
-                    $("#erweima").hide();
-                    $("#quxiao").hide();
-                    $("#tip_div").show();
-                    $("#error").text(Data.retmsg);
-                    $("#tip_s").on("click", function () {
-                        window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                    });
-                }
-            },
-            error: function () {
-                $("#jz").hide();
-                //log.WriteLog("卡号"+cardNo+"查询订单状态失败");
-                $("#tip_div").show();
-                $("#error").text("系统异常，请稍后再试！");
-                $("#tip_s").on("click", function () {
-                    $("#tip_div").hide();
-                    window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                });
-            }
-        });
-    }
-
-
-    function sendInfoToPlatForm() {
-        var datas = {
-            "funcid": "M07.02.04.13",
-            "cxdm00": cardNo,
-            "cxfs00": cardtype,
-            "yylsh0": $.session.get("yylsh0"),//
-            "jyzflx": "ONE_QR",
-            "ptqqls": ptqqls,//
-            "czje00": window.parent.money,
-            "brid00": window.parent.brid00
-        };
-        $.ajax({
-            async: true,
-            type: "post",
-            data: datas,
-            dataType: "json",
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            url: window.parent.serverUrl + "?method=ApplyAction",
-            success: function (json) {
-            },
-            error: function (json) {
-
-            }
-        })
-    }
-
-    function getNewInfo() {
-        if (cztype == 1) {
-            czsucc = 1;
-            window.parent.czsucc = czsucc;//充值成功
-            window.location.href = "${pageContext.request.contextPath}/jsp/yyqh/qhsucc.jsp";
-        } else if (cztype == 2) {
-            czsucc = 1;
-            window.parent.czsucc = czsucc;//充值成功
-            window.location.href = "${pageContext.request.contextPath}/jsp/yyqh/yyqh.jsp";
-        } else if (cztype == 3) {
-            czsucc = 1;
-            window.parent.czsucc = czsucc;//充值成功
-            window.location.href = "${pageContext.request.contextPath}/jsp/yyqh/qhsucc.jsp";
-        } else if (cztype == 4) {//充值缴费功能flag,充值完成之后再跳转到 mzjs 页面
-            czsucc = 1;
-            window.parent.czsucc = czsucc;//充值成功
-            window.location.href = "${pageContext.request.contextPath}/jsp/mzjs/mzjs.jsp";
-        } else if (cztype == 5) {
-            czsucc = 1;
-            window.parent.czsucc = czsucc;//充值成功
-            window.location.href = "${pageContext.request.contextPath}/jsp/mzyy/yyinfo.jsp";
-        } else if (cztype == 6) {
-            czsucc = 1;
-            window.parent.czsucc = czsucc;//充值成功
-            window.location.href = "${pageContext.request.contextPath}/jsp/zzfk/fkkf.jsp";
-        }
-    }
-
-
-    $("#quxiao").bind("click dbclick", function () {
-        $("#erweima").hide();
-        $("#quxiao").hide();
-        //关闭定时器查询
-	
-//1为用户主动撤销，0为定时器到时
-        cancleOrder(1);
-    });
-
-    //微信充值撤销订单
-    function cancleOrder(flag) {
-        
-        $("#jz").show();
-        var datas = {
-            "funcid": "M07.02.03.31",
-            "cxdm00": cardNo,
-            "cxfs00": cardtype,
-            "jylsh0": jylsh0,
-            "ptqqls": ptqqls,
-            "czje00": value,
-            "brid00": brid00,
-            "czmzzy": "01"
-        };
-        $.ajax({
-            async: false,
-            type: "post",
-            data: datas,
-            dataType: "json",
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            url: window.parent.serverUrl + "?method=ApplyAction",
-            //url:"${pageContext.request.contextPath}/Test/test.do",
-            success: function (json) {
-                $("#jz").hide();
-                Data = eval(json);
-                //Data = {"retbody":[{"ynzhye":"0","cgjysj":"20180924060812","ptddls":"20180924061719003587","jylsh0":"2018112010049H"}],"retmsg":"","retcode":"0"};
-                if (Data.retcode == "0") {
-			clearTimeout(queryOrderTimeout);
-                    
-			if(flag==1){
-			$("#tip_div").show();
-                    $("#error").text("取消订单成功");
-                    $("#tip_s").on("click", function () {
-                        $("#tip_div").hide();
-                        window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                    });
+	var init = function() {
+		$("#xming0").text(window.parent.Name);
+		$("#zfye").text($.session.get("TotalFee")+" 元");
+		returnTimeStart(); //倒计时
+		wxorder();//下单
+	}
+	var time = 120;
+	function returnTimeStart() {
+		time = 120;
+		function returnTime() {
+			myVar=setInterval(
+				function(){
+					time--;
+					$("#time").text(time);
+					if(time==0){
+						$.session.clear();
+						//跳转页面
+						window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+					}
+				},1000);
+		}
+		//用户点击或按键等操作时，倒计时重新计时
+		document.onkeydown = timeAgin;
+		document.onclick = timeAgin;
+		function timeAgin() {
+			time = 120;
+		}
+		returnTime();
+	}
+	function message(msg){
+		$("#tip_div").show();
+		$("#error").text(msg);
+		$("#tip_s").off().on("click", function() {
+			$("#tip_div").hide();
+			window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+		});
+	}
+	//微信充值下单
+	var aa;
+	var bb;
+	var cc;
+	var outTradeNo;//微信订单流水
+	function wxorder() {
+		var datas = {
+			"RegNo" : $.session.get("RegNo"),
+			//"RegNo" : "6118173",
+			"Fee" : $.session.get("TotalFee")
+		};
+		$.ajax({
+			async : true,
+			type : "post",
+			data : datas,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			url:window.parent.serverUrl+"WxPayGH",
+			success : function(json) {
+				var Data = JSON.parse(json)
+				if (Data.Code == "0") {
+					var qrcode = Data.retBody.url; //二维码串
+					outTradeNo = Data.retBody.outTradeNo; //微信订单流水
+					//将二维码串转换为图片
+					$("#erweima").qrcode({
+						render: "canvas",
+						width : 200,
+						height : 200,
+						text : qrcode
+					})
+					$("#erweima").show();
+					$("#cancel").show();
+					$("#zhuyitingxing").show();
+					aa = setTimeout("queryOrder()", 2000); //查询订单状态							
+				} else {
+					message("微信下单失败，请重试");
+				}
+			},
+			error : function() {
+				message("系统异常，请稍后再试！");
 			}
+		});
+	}
+	//微信充值查询订单状态
+	function queryOrder() {
+		if(outTradeNo){
+			var datas = {
+				"outTradeNo" : outTradeNo,
+				"RegNo" : $.session.get("RegNo"),
+				"opType" : window.parent.ttype //1挂号，  2缴费
+			};
+			
+			if(window.parent.ttype == 2){//缴费需要增加参数
+				datas.RecipeNos = $.session.get("RecipeNos");
+			}
+			$.ajax({
+				async : false,
+				type : "post",
+				data : datas,
+				dataType : "json",
+				contentType : "application/x-www-form-urlencoded; charset=utf-8",
+				url:window.parent.serverUrl+"WxPayIsFee",
+				success : function(json) {
+					var Data = JSON.parse(json)
+					if (Data.Code == "0") {
+						var czztbz = Data.retBody.trade_state; //充值状态标识
+						if(czztbz == "SUCCESS"){//支付成功
+							if(bb){
+								clearTimeout(bb);
+							}
+							//打印凭条 跳转成功页面 进行打印凭条
+							if(window.parent.ttype==1){//挂号
+								window.location.href = "${pageContext.request.contextPath}/jsp/mzgh/ghsuccess.jsp";
+							}else if(window.parent.ttype==2){//门诊缴费
+								window.location.href = "${pageContext.request.contextPath}/jsp/mzjf/mzjfsuccess.jsp";
+							}
+						}else if(czztbz == "NOTPAY"){//未支付
+							bb = setTimeout("queryOrder()", 800);
+						}else if(czztbz == "HISFAIL"){//充值成功，his挂号失败
+							//处理退费打印凭条，还是打印凭条，窗口退费
+							$("#erweima").hide();
+							$("#cancel").hide();
+							if($.session.get("RegNo") && window.parent.ttype == 1){
+								sfzhOp();///撤销订单 如果是挂号，同时进行释放号点操作
+							}
+							alert("his返回失败！打印失败凭条或退费");
+							//printFail();
+							window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+						}
+					} else {
+						message("查询订单信息失败！");
+					}
+				},
+				error : function() {
+					message("系统异常，请稍后再试！");
+				}
+			});
+		}else{
+			message("微信订单流水获取失败！"+outTradeNo);
+		}
+	}
+	
+	//微信充值撤销订单
+	function cancleOrder() {
+		if($.session.get("RegNo") && window.parent.ttype == 1){///撤销订单 如果是挂号缴费，同时进行释放号点操作
+			sfzhOp();
+		}
+		var datas = {
+			"outTradeNo":outTradeNo
+		};
+		$.ajax({
+			async : false,
+			type : "post",
+			data : datas,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			url:window.parent.serverUrl+"WxCloseorder",
+			success : function(json) {
+				var Data = JSON.parse(json)
+				if (Data.Code == "0") {
+					message("取消订单成功");
+				} else {
+					message(Data.retmsg);
+				}
+			},
+			error : function() {
+				message("系统异常，请稍后再试！");
+			}
+		});
+	}
 
-                    /*$("#tip_div").show();
-                    $("#error").text("取消订单成功");
-                    $("#tip_s").on("click", function () {
-                        $("#tip_div").hide();
-                        window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                    });*/
-                } else {
-                    //$("#tip_div").show();
-                    //$("#error").text("取消订单失败");
-                   // $("#tip_s").on("click", function () {
-                      //  $("#tip_div").hide();
-                       // window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                   // });
-                }
-            },
-            error: function () {
-                $("#jz").hide();
-                $("#tip_div").show();
-                $("#error").text("系统异常，请稍后再试！");
-                $("#tip_s").on("click", function () {
-                    $("#tip_div").hide();
-                    window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-                });
-            }
-        });
-    }
+		$("#cancel").bind("click dbclick", function() {
+			$("#erweima").hide();
+			$("#cancel").hide();
+			clearTimeout(aa);
+			clearTimeout(bb);
+			cancleOrder();
+			$.session.clear();
+		});
 
-    $("#main").bind("click dbclick", function () {
-        cancleOrder();
-        //window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
-    });
+		$("#main").bind("click dbclick", function() {
+			if ($("#erweima")[0].style.display == "none") {
+				window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+			} else {
+				$("#erweima").hide();
+				$("#cancel").hide();
+				clearTimeout(aa);
+				clearTimeout(bb);
+				cancleOrder();
+				$.session.clear();
+			}
+		});
 
-    wxorder();
+		$("#pre").bind("click dbclick", function() {
+			if ($("#erweima")[0].style.display == "none") {
+				window.location.href = "${pageContext.request.contextPath}/jsp/pay/lypayway.jsp";
+			} else {
+				$("#erweima").hide();
+				$("#cancel").hide();
+				clearTimeout(aa);
+				clearTimeout(bb);
+				cancleOrder();
+				$.session.clear();
+			}
+		});
+		//释放占号
+		function sfzhOp(){
+			var datas = {
+				"RegNo" : $.session.get("RegNo")
+			};
+			$.ajax({
+				async : false,
+				type : "post",
+				data : datas,
+				dataType : "json",
+				contentType : "application/x-www-form-urlencoded; charset=utf-8",
+				url:window.parent.serverUrl+"ReleaseRegPoint",
+				success : function(json) {
+					var Data = JSON.parse(json)
+					if (Data.Code == "0") {
+						//log("释放成功！号点："+RegNo);
+					}	
+				},
+				error : function() {
+					message("释放号点时系统异常,请稍后再试!");		
+				}
+			}); 
+		}
+	init();
 </script>
 </html>
 

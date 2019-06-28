@@ -5,15 +5,14 @@ import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
 import com.intehel.common.util.XmlJsonUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 住院
@@ -25,49 +24,33 @@ public class InHospitalController {
     /**
      * 查询住院流水号
      * @param InpatientNo   住院号
-     * @param Name  患者姓名
-     * @param BirthDate 出生日期
-     * @param PapersType    证件类型
-     * @param PapersNo  证件号
-     * @param PhoneNo   电话号
-     * @param Gender    性别
+//     * @param Name  患者姓名
+//     * @param BirthDate 出生日期
+//     * @param PapersType    证件类型
+//     * @param PapersNo  证件号
+//     * @param PhoneNo   电话号
+//     * @param Gender    性别
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetInPatientSeriNos",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
-    public String GetInPatientSeriNos(String InpatientNo,String Name,String BirthDate,Integer PapersType,String PapersNo,String PhoneNo,Integer Gender) {
-//        //获取当前时间
-//        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
-//        Date date=new Date();
-//        String DateStart=df.format(date)+"000000";// new Date()为获取当前系统时间
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(date);
-//        cal.add(Calendar.DATE, day);//获取day天的排班信息
-//        String DateEnd = df.format(cal.getTime())+"000000";
+    @CrossOrigin
+    @RequestMapping(value = "/GetInPatientSeriNos",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public String GetInPatientSeriNos(String InpatientNo) {
         String str="";
-//        System.err.println(DateStart);
-//        System.err.println(DateEnd);
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetInPatientSeriNos?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                            "<GetInpatientSeriNoRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
+                            "<GetInpatientSeriNoRequest>" +
                             "<HospId/>" +
-                            "<InpatientNo/>" +
+                            "<InpatientNo>" +InpatientNo+"</InpatientNo>" +
                             "<PatientInfo>" +
-                            "<BirthDate/>" +
-                            "<Gender>0" +
-                            "</Gender>" +
-                            "<Name/>" +
-                            "<PapersNo/>" +
-                            "<PapersType>0</PapersType>" +
-                            "<PhoneNo/>" +
+                            "<BirthDate></BirthDate>" +
+                            "<Gender>0</Gender>" +
+                            "<Name></Name>" +
+                            "<PapersNo></PapersNo>" +
+                            "<PapersType>1</PapersType>" +
+                            "<PhoneNo></PhoneNo>" +
                             "</PatientInfo>" +
-                            "<ExtParams>" +
-                            "        <ExtItem>" +
-                            "            <Key>x</Key>" +
-                            "            <Value />" +
-                            "        </ExtItem>" +
-                            "    </ExtParams>" +
                             "</GetInpatientSeriNoRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);
             System.err.println(strURL);
@@ -96,8 +79,11 @@ public class InHospitalController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetInpatientFeeList",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetInpatientFeeList",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetInpatientFeeList(String InpatientSeriNo,String UpdateDateStart,String UpdateDateEnd) {
+        System.err.println("123InpatientSeriNo="+InpatientSeriNo+"   UpdateDateStart="+UpdateDateStart+"   UpdateDateEnd"+UpdateDateEnd);
+
         String str="";
         try {
             String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetInpatientFeeList?xmltxt="+
@@ -128,6 +114,8 @@ public class InHospitalController {
         }
         // 解析XML
         Map<String,Map> map=XmlJsonUtils.readStringXmlOut(str.replace("xsi:nil=\"true\"",""));
+
+
         System.err.println(JsonUtil.toString(map));
         return JsonUtil.toString(map);
     }
@@ -143,7 +131,8 @@ public class InHospitalController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/InpatientFeePrepay",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/InpatientFeePrepay",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String InpatientFeePrepay(String InpatientSeriNo,String PaymentWay,String SettleDate,String TotalFee,String TradeSerialNumber) {
         String str="";
         try {
@@ -187,7 +176,8 @@ public class InHospitalController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetFeePrepayRecord",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetFeePrepayRecord",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetFeePrepayRecord(String InpatientSeriNo,String InpatientNo,String DateStart,String DateEnd) {
         String str="";
         try {
@@ -231,7 +221,8 @@ public class InHospitalController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/GetInpatientDetail",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    @CrossOrigin
+    @RequestMapping(value = "/GetInpatientDetail",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public String GetInpatientDetail(String InpatientSeriNos) {
         String str="";
         try {
@@ -240,15 +231,8 @@ public class InHospitalController {
                             "<InpatientDetailRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId/>" +
                             "<InpatientSeriNos>" +
-                            "<string>ZY010000000569</string>" +
-                            "<string>ZY010000000561</string>" +
+                            "<string>"+InpatientSeriNos+"</string>" +
                             "</InpatientSeriNos>" +
-                            "<ExtParams>" +
-                            "<ExtItem>" +
-                            "<Key>x</Key>" +
-                            "<Value />" +
-                            "</ExtItem>" +
-                            "</ExtParams>" +
                             "</InpatientDetailRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);
             System.err.println(strURL);

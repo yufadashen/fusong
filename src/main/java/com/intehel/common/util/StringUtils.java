@@ -4,7 +4,7 @@ public class StringUtils {
 
     private static String str="";
     public static String stringArrar(String arrar){
-        String[] strings=arrar.replace("{","").replace("}","").split(",");
+        String[] strings=arrar.replace("{","").replace("}","").replace("[","").replace("]","").split(",");
         for (String st:strings) {
             str=str+"<string>"+st+"</string>";
         }
