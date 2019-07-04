@@ -3,6 +3,7 @@ package com.intehel.controller.dept;
 import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
 import com.intehel.common.util.XmlJsonUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,8 @@ import java.util.Map;
 @Controller
 public class ReportController {
 
-
+    @Value("${hisUrl}")
+    private String hisUrl="http://192.9.10.42:10110";
     /**
      * 查询PACS报告列表
      * @param RegNos    挂号流水号集合
@@ -37,7 +39,7 @@ public class ReportController {
     public String GetPacsReportList(String RegNos,String InpatientSeriNos,String OutPatientIds,String TestDateStart,String TestDateEnd,String UpdateDateStart,String UpdateDateEnd) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetPacsReportList?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetPacsReportList?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                             "<ReportInfoRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId />" +
@@ -98,7 +100,7 @@ public class ReportController {
     public String GetPacsReport(String ReportId,String InpatientSeriNo,String OutpatientId,String CheckTime,String CheckPoint,String MachineCode) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetPacsReport?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetPacsReport?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                             "<ReportInfoRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId />" +
@@ -161,7 +163,7 @@ public class ReportController {
     public String GetLisReportList(String RegNos,String InpatientSeriNos,String OutPatientIds,String TestDateStart,String TestDateEnd,String UpdateDateStart,String UpdateDateEnd) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetLisReportList?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetLisReportList?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                             "<ReportInfoRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId />" +
@@ -222,7 +224,7 @@ public class ReportController {
     public String GetLisReport(String RegNo,String CheckTime,String MachineCode,String ReportId,String SampleId) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetLisReport?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetLisReport?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                             "<LisReportResponse xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<Code>0</Code>" +

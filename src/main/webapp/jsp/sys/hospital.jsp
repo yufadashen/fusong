@@ -5,7 +5,7 @@
 <html>
 <head>
     <%--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />--%>
-    <title>挂号支付对账</title>
+    <title>住院预交金对账</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript"
@@ -45,23 +45,6 @@
             }
 
 
-
-            $(document).ready(function(){
-            var date = new Date();
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate1 = date.getFullYear() + month  + strDate+"000000";
-            var currentdate2 = date.getFullYear() + month  + strDate+"235959";
-                $("#sj1").val(currentdate1);
-                $("#sj2").val(currentdate2);
-            alert(currentdate);
-            })
         </script>
 
 </head>
@@ -74,8 +57,8 @@
             <a class="prints_btn_com" onclick="javascript:window.print()" >打印</a>
         </div>
         <div style="font-size:20px; font-weight:bold; line-height:30px; text-align:center;">
-            <span style="text-decoration: underline;">自助机挂号支付对账</span>
-            <h2 style="font-size: 20px; letter-spacing:10px; text-align:center">挂号支付记录表</h2>
+            <span style="text-decoration: underline;">自助机住院预交金对账</span>
+            <h2 style="font-size: 20px; letter-spacing:10px; text-align:center">住院预交金支付记录表</h2>
         </div>
         <div >请输查询时间：</div>
         <div>
@@ -92,7 +75,7 @@
         <table id="excelstyles" align="center" valign="center"  width="90%" border="1" cellspacing="0" cellpadding="0" class="comtbl">
             <thead>
             <tr>
-                <th align="center">挂号流水号</th>
+                <th align="center">住院号</th>
                 <th align="center">患者id</th>
                 <th align="center">商户订单号 </th>
                 <th align="center">支付金额</th>
@@ -113,7 +96,6 @@
 </div>
 </body>
 <script type="text/javascript">
-
 
     var date = new Date();
     var month = date.getMonth() + 1;
@@ -150,10 +132,11 @@ function goNext() {
     };
     $.ajax({
         type: 'post',
-        url: '/ReconciliationGH',
+        url: '/ReconciliationZY',
         dataType: 'json',
         data : datas,
         success: function (data) {
+            // debugger;
             var Data = JSON.parse(data);
             var table = document.getElementById("excelstyles");
             var nbody = document.createElement("tbody");
@@ -163,9 +146,10 @@ function goNext() {
                 var length = Data.list.length;
                 for (var i = 0; i < length; i++) {
                     var  pay = Data.list[i].paymentWay=="12"?"微信":"支付宝";
+                   var InpatientSeriNo= (Data.list[i].inpatientSeriNo+"").slice(4);
                     $("#info_t").append(
                         "<tr class=\"tb_tr\">"
-                        + "<td>"+Data.list[i].regNo+"</td>"
+                        + "<td>"+InpatientSeriNo+"</td>"
                         + "<td>"+Data.list[i].outpatientId+"</td>"
                         + "<td>"+Data.list[i].outTradeNo+"</td>"
                         + "<td>"+ parseFloat(Data.list[i].totalFee)/100 +"</td>"

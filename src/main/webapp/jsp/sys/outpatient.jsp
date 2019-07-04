@@ -5,7 +5,7 @@
 <html>
 <head>
     <%--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />--%>
-    <title>挂号支付对账</title>
+    <title>门诊支付对账</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript"
@@ -46,22 +46,6 @@
 
 
 
-            $(document).ready(function(){
-            var date = new Date();
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate1 = date.getFullYear() + month  + strDate+"000000";
-            var currentdate2 = date.getFullYear() + month  + strDate+"235959";
-                $("#sj1").val(currentdate1);
-                $("#sj2").val(currentdate2);
-            alert(currentdate);
-            })
         </script>
 
 </head>
@@ -74,8 +58,8 @@
             <a class="prints_btn_com" onclick="javascript:window.print()" >打印</a>
         </div>
         <div style="font-size:20px; font-weight:bold; line-height:30px; text-align:center;">
-            <span style="text-decoration: underline;">自助机挂号支付对账</span>
-            <h2 style="font-size: 20px; letter-spacing:10px; text-align:center">挂号支付记录表</h2>
+            <span style="text-decoration: underline;">自助机门诊缴费对账</span>
+            <h2 style="font-size: 20px; letter-spacing:10px; text-align:center">门诊记录表</h2>
         </div>
         <div >请输查询时间：</div>
         <div>
@@ -114,7 +98,6 @@
 </body>
 <script type="text/javascript">
 
-
     var date = new Date();
     var month = date.getMonth() + 1;
     var strDate = date.getDate();
@@ -129,6 +112,7 @@
     $("#sj1").val(currentdate1);
     $("#sj2").val(currentdate2);
     goNext();
+
 function goCX(){
 
 
@@ -150,7 +134,7 @@ function goNext() {
     };
     $.ajax({
         type: 'post',
-        url: '/ReconciliationGH',
+        url: '/ReconciliationMZ',
         dataType: 'json',
         data : datas,
         success: function (data) {

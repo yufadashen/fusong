@@ -17,6 +17,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -34,7 +35,8 @@ public class WXController {
     //http://boyi.natapp1.cc/WXtest
     Logger logger = Logger.getLogger(this.getClass().getName());
 
-
+    @Value("${hisUrl}")
+    private String hisUrl="http://192.9.10.42:10110";
     /**
      * 微信退款
      * @param outTradeNo 订单号
@@ -119,7 +121,7 @@ public class WXController {
     @ResponseBody
     @CrossOrigin
     @RequestMapping(value = "/WxPayIsFee",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
-    public String WxPayIsFee(String outTradeNo,String RegNo,Integer opType,String RecipeNos,String InpatientSeriNo)  {
+    public String WxPayIsFee(HttpServletRequest requests,String outTradeNo,String RegNo,Integer opType,String RecipeNos,String InpatientSeriNo)  {
         String url=null;
         try {
             MyConfig config = new MyConfig();
@@ -133,11 +135,13 @@ public class WXController {
             data.put("sign",s);
             Map<String, String> resp = wxpay.orderQuery(data);
             if (resp.get("trade_state").equals("SUCCESS")){
+                //获取终端地址
+                String addr=requests.getRemoteAddr();
                 //支付成功
                 if (opType==1) {
                     //挂号信息入库
                     try {
-                       Map<String,Object> maps= PayForAppointment(RegNo, resp.get("total_fee"), resp.get("time_end"), resp.get("transaction_id"), "1","12",resp.get("out_trade_no"));
+                       Map<String,Object> maps= PayForAppointment(RegNo, resp.get("total_fee"), resp.get("time_end"), resp.get("transaction_id"), "1","12",resp.get("out_trade_no"),addr);
 
 
                        if (maps.get("Code").toString().equals("0")){
@@ -167,7 +171,7 @@ public class WXController {
                     try {
 //                    System.err.println("门诊信息回调+"+resp.get("total_fee"));
 
-                    Map s1 = PayForRecipes(RegNo, RecipeNos, resp.get("total_fee"), resp.get("time_end"), resp.get("transaction_id"), "2", "12",resp.get("out_trade_no"));
+                    Map s1 = PayForRecipes(RegNo, RecipeNos, resp.get("total_fee"), resp.get("time_end"), resp.get("transaction_id"), "2", "12",resp.get("out_trade_no"),addr);
 //                    System.err.println("门诊缴费成功");
                         if (s1.get("Code").toString().equals("0")){
                             resp.put("trade_state","SUCCESS");
@@ -196,7 +200,7 @@ public class WXController {
                     System.err.println("住院信息回调+"+ resp.get("total_fee"));
 
                     //住院流水号，支付方式ID,第三方清算日期，支付费用总额，第三方交易流水号
-                    Map  maps =   InpatientFeePrepay(InpatientSeriNo,"12",  resp.get("time_end"), resp.get("total_fee"), resp.get("transaction_id"),   "3",resp.get("out_trade_no"));
+                    Map  maps =   InpatientFeePrepay(InpatientSeriNo,"12",  resp.get("time_end"), resp.get("total_fee"), resp.get("transaction_id"),   "3",resp.get("out_trade_no"),addr);
                         if (maps.get("Code").toString().equals("0")){
                             resp.put("trade_state","SUCCESS");
                         }else{
@@ -592,13 +596,13 @@ public class WXController {
     @Autowired
     PayForRecipesMapper payForRecipesMapper;
 
-    public Map<String,Object> PayForAppointment(String RegNo,String Fee,String SettleDate,String TradeSerialNumber,String pay,String paymenyWay,String outTradeNo) throws UnsupportedEncodingException {
+    public Map<String,Object> PayForAppointment(String RegNo,String Fee,String SettleDate,String TradeSerialNumber,String pay,String paymenyWay,String outTradeNo,String addr) throws UnsupportedEncodingException {
         System.err.println("执行挂号支付入库"+RegNo+Fee);
         Fee=String.valueOf(Integer.parseInt(Fee)/100);
         String str="";
 
 
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/PayForAppointment?xmltxt="+
+        String strURL=hisUrl+"/ServiceForXml.asmx/PayForAppointment?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                             "<RegPaymentRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId/>" +
@@ -627,7 +631,7 @@ public class WXController {
             try {
             System.err.println("支付结果入库");
             Fee=""+(Integer.parseInt(Fee)*100);
-            payForRecipesMapper.updatePat(RegNo,paymenyWay,Fee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo);
+            payForRecipesMapper.updatePat(RegNo,paymenyWay,Fee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo,addr);
             logger.info("支付结果成功+RegNo="+RegNo+"  paymenyWay="+paymenyWay+"  Fee"+Fee+"  SettleDate"+SettleDate+"  TradeSerialNumber"+TradeSerialNumber+"  交易时间"+new Date()+" pay"+pay);
             }finally {
                 return map;
@@ -643,12 +647,12 @@ public class WXController {
 //    @RequestMapping(value = "/PayForRecipes",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
     @Transactional
     public Map<String,Object> PayForRecipes(String RegNo,String RecipeNos,String TotalFee,String SettleDate,String TradeSerialNumber,String pay,
-                                String PaymentWay,String outTradeNo) throws UnsupportedEncodingException {
+                                String PaymentWay,String outTradeNo,String addr) throws UnsupportedEncodingException {
         System.err.println("进入接口"+RegNo);
         Double Fee=Double.parseDouble(TotalFee)/100;
         String str="";
 
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/PayForRecipes?xmltxt="+
+        String strURL=hisUrl+"/ServiceForXml.asmx/PayForRecipes?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?><PayForRecipesRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><AppId>100734</AppId><HospId/>" +
                             "<PaymentWay>" +PaymentWay+"</PaymentWay>" +
                             "<RecipeNos>"+StringUtils.stringArrar(RecipeNos)+"</RecipeNos>" +
@@ -665,7 +669,7 @@ public class WXController {
         // 解析XML
         Map<String,Object> map=XmlJsonUtils.readStringXmlOut(str);
         if (map.get("Code").equals("0")){
-            payForRecipesMapper.updatePat(RegNo,PaymentWay,TotalFee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo);
+            payForRecipesMapper.updatePat(RegNo,PaymentWay,TotalFee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo,addr);
 //            patientFee.updatePay(RegNo,RecipeNos,TotalFee,TradeSerialNumber,PaymentWay,SettleDate,pay);
         }
         System.err.println(JsonUtil.toString(map));
@@ -684,10 +688,10 @@ public class WXController {
      */
     @Transactional
     public Map<String,Object> InpatientFeePrepay(String InpatientSeriNo,String PaymentWay,String SettleDate,String TotalFee,
-                                     String TradeSerialNumber,String pay ,String outTradeNo) throws UnsupportedEncodingException {
+                                     String TradeSerialNumber,String pay ,String outTradeNo,String addr) throws UnsupportedEncodingException {
         String str="";
 
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/InpatientFeePrepay?xmltxt="+
+        String strURL=hisUrl+"/ServiceForXml.asmx/InpatientFeePrepay?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<InpatientFeePrepayRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId/>" +
@@ -712,7 +716,7 @@ public class WXController {
         // 解析XML
         Map<String,Object> map=XmlJsonUtils.readStringXmlOut(str);
         if (map.get("Code").equals("0")){
-            payForRecipesMapper.createInpatient(InpatientSeriNo,PaymentWay,TotalFee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo);
+            payForRecipesMapper.createInpatient(InpatientSeriNo,PaymentWay,TotalFee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo,addr);
 //            patientFee.updatePay(RegNo,RecipeNos,TotalFee,TradeSerialNumber,PaymentWay,SettleDate,pay);
         }
         System.err.println(JsonUtil.toString(map));

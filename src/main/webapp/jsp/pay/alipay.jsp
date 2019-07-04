@@ -93,10 +93,10 @@ body {
 	</div>
 
 	<div id="bottomArea" style="position:absolute;">
-		<div style="margin:-21px 0px 0px 666px;line-height: 78px;display: inline;position: absolute;">
+		<div style="margin:-7px 0px 0px 666px;line-height: 78px;display: inline;position: absolute;">
 			<img id="main" style="margin-top:-8px;" src="${pageContext.request.contextPath}/images/index.png"/>
 		</div>
-		<div style="margin:-21px 0px 0px 766px;line-height: 78px;display: inline;position: absolute;">
+		<div style="margin:-8px 0px 0px 839px;line-height: 78px;display: inline;position: absolute;">
 			<img id="pre" style="margin-top:-8px;"src="${pageContext.request.contextPath}/images/return.png"/>
 		</div>
 	</div>
@@ -211,10 +211,13 @@ body {
 								clearTimeout(bb);
 							}
 							//打印凭条 跳转成功页面 进行打印凭条
-							if(window.parent.ttype==1){//挂号
+							if(window.parent.ttype == 1){//挂号
 								window.location.href = "${pageContext.request.contextPath}/jsp/mzgh/ghsuccess.jsp";
-							}else if(window.parent.ttype==2){//门诊缴费
+							}else if(window.parent.ttype == 2){//门诊缴费
 								window.location.href = "${pageContext.request.contextPath}/jsp/mzjf/mzjfsuccess.jsp";
+							}else if(window.parent.ttype == 3){ //住院缴费
+								// TODO  需要获取充值之后的余额
+								window.location.href = "${pageContext.request.contextPath}/jsp/zyyjf/zyPaySuccess.jsp";
 							}
 						}else if(czztbz == "WAIT_BUYER_PAY"){//未支付
 							bb = setTimeout("queryOrder()", 800);
@@ -348,19 +351,74 @@ body {
 					if(msg == "Success"){
 						//log("退费成功！");
 						alert("退费成功！");
+						//printTF();
 					}else{
 						//log("退费失败！");
 						alert("退费失败！");
+						printTFFail();
 					}
 				}else{
 					alert("退费失败！");
+					printTFFail();
 				}
 			},
 			error : function() {
-				message("释放号点时系统异常,请稍后再试!");		
+				message("系统异常，退费失败!");	
+				printTFFail();
 			}
 		}); 
 	}
+	
+    function printTF() {
+        var Printer = window.parent.KPrinter;
+        Printer.SetFontModeAndTypeX(0x08, 0x01);//设置字体
+        Printer.SetTextModeX(1);//设置中文模式
+        Printer.WriteTextLineX("	河北北方学院附属第一医院");
+        Printer.WriteTextLineX("	挂号退费成功");
+        Printer.LFX(2); //多行送纸
+        Printer.PrintBarCodeX(73,100,4,window.parent.brid00);
+        Printer.WriteTextLineX("");
+        Printer.SetFontModeAndTypeX(0x08, 0x00); //设置字体
+        Printer.WriteTextLineX("  患者姓名：" + window.parent.Name);
+        Printer.WriteTextLineX("  ID  号：" + window.parent.OutpatientId);
+ 		Printer.WriteTextLineX("  退费金额：" + $.session.get("TotalFee") + "元");
+		Printer.WriteTextLineX("  终端编号：" + window.parent.ipAddress);//终端编号
+        Printer.WriteTextLineX("  交易流水：" + outTradeNo);
+        Printer.SetFontModeAndTypeX(0x08, 0x00);
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.LFX(2); //多行送纸
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.WriteTextLineX("  注  意：本凭证只作核对作用，不做报销凭证。");
+        Printer.WriteTextLineX("  请妥善保管此凭证，遗失不补.");
+        Printer.LFX(3); //多行送纸
+        Printer.CeTCutX(); //切纸
+    }
+    function printTFFail() {//
+        var Printer = window.parent.KPrinter;
+        Printer.SetFontModeAndTypeX(0x08, 0x01);//设置字体
+        Printer.SetTextModeX(1);//设置中文模式
+        Printer.WriteTextLineX("	河北北方学院附属第一医院");
+        Printer.WriteTextLineX("");
+        Printer.WriteTextLineX("	挂号退费失败！");
+        Printer.LFX(2); //多行送纸
+        Printer.PrintBarCodeX(73,100,4,window.parent.brid00);
+        Printer.WriteTextLineX("");
+        Printer.SetFontModeAndTypeX(0x08, 0x00); //设置字体
+        Printer.WriteTextLineX("  患者姓名：" + window.parent.Name);
+        Printer.WriteTextLineX("  ID  号：" + window.parent.OutpatientId);
+ 		Printer.WriteTextLineX("  退费金额：" + $.session.get("TotalFee") + "元");
+		Printer.WriteTextLineX("  终端编号：" + window.parent.ipAddress);//终端编号
+        Printer.WriteTextLineX("  交易流水：" + outTradeNo);
+        Printer.SetFontModeAndTypeX(0x08, 0x00);
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.LFX(2); //多行送纸
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.WriteTextLineX("  注  意：本凭证只作核对作用，不做报销凭证。");
+        Printer.WriteTextLineX("  请妥善保管此凭证，遗失不补.");
+        Printer.LFX(3); //多行送纸
+        Printer.CeTCutX(); //切纸
+    }
+    
 	init();
 </script>
 </html>

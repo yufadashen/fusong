@@ -5,7 +5,8 @@ server:
   #项目名，如果不设定，默认是 /
   #context-path: /
 
-
+# 连接his地址
+hisUrl: http://172.9.10.42:10110
 spring:
   datasource:
 #    url: jdbc:mysql://localhost:3306/hl_fusong?useSSL=false

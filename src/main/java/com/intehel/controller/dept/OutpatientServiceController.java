@@ -7,6 +7,7 @@ import com.intehel.common.util.XmlJsonUtils;
 import com.intehel.dao.PayForRecipesMapper;
 import com.intehel.service.PatientFeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,8 @@ import java.util.*;
 public class OutpatientServiceController {
 
 
-
+    @Value("${hisUrl}")
+    private String hisUrl="http://192.9.10.42:10110";
     @Autowired
     PatientFeeService patientFee;
 
@@ -59,7 +61,7 @@ public class OutpatientServiceController {
         if(PaymentStatus==null){PaymentStatus="";}
 
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetOutpatientFeeList?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetOutpatientFeeList?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><OutpatientFeeRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><HospId />" +
                             "<RegNos><string>"+RegNos+"</string></RegNos>" +
                             "<RecipeNos><string></string></RecipeNos>" +
@@ -92,7 +94,7 @@ public class OutpatientServiceController {
 
     /**
      * 根据门诊id查询门诊费用
-     * @param RegNos    挂号流水号集合
+//     * @param RegNos    挂号流水号集合
 //     * @param RecipeNos 处方号集合
      * @param OutpatientIds 患者门诊ID集合
 //     * @param VisitDateStart 就诊日期开始（闭区间）
@@ -122,7 +124,7 @@ public class OutpatientServiceController {
         System.err.println(DateEnd);
         if(PaymentStatus==null){PaymentStatus="";}
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetOutpatientIdFeeList?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetOutpatientIdFeeList?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><OutpatientIdFeeRequest>" +
                             "<OutpatientIds><string>"+OutpatientIds+"</string></OutpatientIds>" +
                             "<VisitDateStart>"+df.format(date)+"</VisitDateStart>" +
@@ -193,7 +195,7 @@ public class OutpatientServiceController {
         Double Fee=Double.parseDouble(TotalFee)/100;
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/PayForRecipes?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/PayForRecipes?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?><PayForRecipesRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><AppId>100734</AppId><HospId/>" +
                             "<PaymentWay>" +PaymentWay+"</PaymentWay>" +
                                 "<RecipeNos>"+StringUtils.stringArrar(RecipeNos)+"</RecipeNos>" +
@@ -219,7 +221,7 @@ public class OutpatientServiceController {
         Map<String,Object> map=XmlJsonUtils.readStringXmlOut(str);
         System.err.println(JsonUtil.toString(map));
         if (map.get("Code").equals("0")){
-            payForRecipesMapper.updatePat(RegNo,"12",TotalFee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo);
+            payForRecipesMapper.updatePat(RegNo,"12",TotalFee,SettleDate,TradeSerialNumber,new Date(),pay,outTradeNo,"ipaddr");
 //            patientFee.updatePay(RegNo,RecipeNos,TotalFee,TradeSerialNumber,PaymentWay,SettleDate,pay);
         }
 
@@ -241,7 +243,7 @@ public class OutpatientServiceController {
     public String ReconRecipes(String RegNo,String RecipeNos,String TotalFee) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/ReconRecipes?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/ReconRecipes?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                             "<ReconRecipesRequest>" +
                             "<RegNo>"+RegNo+"</RegNo>" +
@@ -297,7 +299,7 @@ public class OutpatientServiceController {
     public String GetQueueInfo(String OutpatientIds,String SeqNos,String ExecDeptId) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetQueueInfo?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetQueueInfo?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                             "<QueInfoRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
                             "<HospId/>" +

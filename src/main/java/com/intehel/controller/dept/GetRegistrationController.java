@@ -4,6 +4,7 @@ import com.intehel.common.util.*;
 import com.intehel.service.OccupyRegPointService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,8 @@ import java.util.Map;
 @Controller
 public class GetRegistrationController {
     Logger logger = Logger.getLogger(this.getClass().getName());
-
+    @Value("${hisUrl}")
+    private String hisUrl="http://192.9.10.42:10110";
 
     /**
      * 微信查询是否已支付
@@ -75,7 +77,7 @@ public class GetRegistrationController {
         System.err.println(DateStart);
         System.err.println(DateEnd);
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetSchedules?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetSchedules?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><ScheduleRequest>" +
                             "<OperatorType>"+OperatorType+"</OperatorType>" +
                             "<DeptId>"+DeptId+"</DeptId>" +
@@ -131,7 +133,7 @@ public class GetRegistrationController {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/OccupyRegPoint?xmltxt=" +
+            String strURL=hisUrl+"/ServiceForXml.asmx/OccupyRegPoint?xmltxt=" +
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><AppointmentRequest>" +
                     "<ScheduleTime>"+ScheduleTime+"</ScheduleTime>" +
                     "<ScheduleId>"+ScheduleId+"</ScheduleId>" +
@@ -177,7 +179,7 @@ public class GetRegistrationController {
     public String ReleaseRegPoint(String RegNo) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/ReleaseRegPoint?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/ReleaseRegPoint?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><ReleaseRegRequest>" +
                             "<RegNo>"+RegNo+"</RegNo></ReleaseRegRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);
@@ -221,7 +223,7 @@ public class GetRegistrationController {
     public String PayForAppointment(String RegNo,String Fee,String SettleDate,String TradeSerialNumber) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/PayForAppointment?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/PayForAppointment?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                     "<RegPaymentRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                     "<HospId/>" +
@@ -271,7 +273,7 @@ public class GetRegistrationController {
     public String GetPatientIsSee(String RegNos) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetPatientIsSee?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetPatientIsSee?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                             "<VisitInfoRequest>" +
                             "<RegNos>" +
@@ -315,7 +317,7 @@ public class GetRegistrationController {
         String str="";
         if (IsNiox==null){IsNiox="";}
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetRegInfos?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetRegInfos?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                     "<RegInfosRequest>" +
                     "<HospId/>" +
@@ -334,21 +336,7 @@ public class GetRegistrationController {
                     "</ExtItem>" +
                     "</ExtParams>" +
                     "</RegInfosRequest>","utf-8");
-                   /* URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                            "<RegInfosRequest>" +
-                            "<RegNos>" +
-                            "<string>"+RegNos+"</string>" +
-                            "</RegNos>" +
-                            "<OutpatientIds>" +
-                            "<string>"+OutpatientIds+"</string>" +
-                            "</OutpatientIds>" +
-                            "<RegDateStart>"+RegDateStart+"</RegDateStart>" +
-                            "<RegDateEnd>"+RegDateEnd+"</RegDateEnd>" +
-                            "<IsNiox>"+IsNiox+"</IsNiox>" +
-                            "<IsSee>"+IsSee+"</IsSee>" +
-                            "<UpdateDateStart>20120101</UpdateDateStart>" +
-                            "<UpdateDateEnd>"+DateUtil.ymd() +"</UpdateDateEnd>" +
-                            "</RegInfosRequest> ","utf-8");*/
+
             System.err.println(strURL);
             str = HttpUtils.httpGet(strURL);
 
@@ -383,7 +371,7 @@ public class GetRegistrationController {
     public String ReconReg(String RegNo,int Fee) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/ReconReg?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/ReconReg?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                             "<ReconRegRequest>" +
                             "<RegNo>"+RegNo+"</RegNo>" +
@@ -419,7 +407,7 @@ public class GetRegistrationController {
     public String AbortReg(String RegNo) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/AbortReg?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/AbortReg?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                             "<AbortRegRequest><RegNo>"+RegNo+"</RegNo></AbortRegRequest>","utf-8");
             str = HttpUtils.httpGet(strURL);

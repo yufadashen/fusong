@@ -178,60 +178,58 @@ td{
 	}
 	//获取预约信息
 	function getAppInfo() {
-			var datas = {
-				"funcid" : "M07.02.04.08",
-				"cxdm00" : window.parent.cardNo//患者卡号
-			};
-			$.ajax({
-				async : true,
-				type : "post",
-				data : datas,
-				dataType : "json",
-				contentType : "application/x-www-form-urlencoded; charset=utf-8",
-				url:window.parent.serverUrl+"GetRegInfos",
-				success : function(json) {
-					var data = eval(json);
-					var tbody = document.getElementsByTagName("tbody")[1];
-					var table = document.getElementById("keshi_t");
-					table.removeChild(tbody);
-					var nbody = document.createElement("tbody");
-					nbody.id="info_t";
-					table.appendChild(nbody);
-					if (data.retcode == "0") {
-						var length = data.retbody.length;
-						
-						for (var i = 0; i < length; i++) {
-							$("#info_t").append(
-									"<tr class=\"tb_tr\">"
-									+ "<td class=\"tb_td\" style=\"width:50px;\"><div style=\"margin-left: 10px;border-radius:3px;width:30px;background-color:#3f7dac;behavior:url(../../js/PIE.htc);\">"+parseInt(i+1)+"</div></td>"
-									+ "<td class=\"tb_td\">"+data.retbody[i].yyrq00+"</td>"
-									+ "<td class=\"tb_td\">"+data.retbody[i].mzksmc+"</td>"
-									/* + "<td class=\"tb_td\"><input type=\"text\" style=\"background:none;border:0px;\" value=\""+data.retbody[i].mzksmc+"\"></td>" */
-									+ "<td class=\"tb_td\">"+data.retbody[i].mzysxm+"</td>"
-									+ "<td class=\"tb_td\">"+data.retbody[i].yysj00+"</td>"//预约时间
-									
-									+ "<td style=\"display:none;\">"+data.retbody[i].yylsh0+"</td>"//预约号码
-									+ "<td style=\"display:none;\">"+data.retbody[i].ksbh00+"</td>"//his科室编号
-									+ "<td style=\"display:none;\">"+data.retbody[i].ysbh00+"</td>"//his医生编号
-									+ "<td style=\"display:none;\">"+data.retbody[i].yysj00+"</td>"//
-									
-									+ "<td>"
-										+ "<img src=\"../../images/yue/yyqx.jpg\" onclick='qxOperation(this)'></img>"
-									+ "</td>"
-									+ "</tr>")
-						}
-						page = new Page(8, "keshi_t", "info_t");
-						$("#confirmBtn").text((page.pageIndex+1)+"/"+page.pageCount);
-						
+		var datas = {
+			"funcid" : "M07.02.04.08",
+			"cxdm00" : window.parent.cardNo//患者卡号
+		};
+		$.ajax({
+			async : true,
+			type : "post",
+			data : datas,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			url:window.parent.serverUrl+"GetRegInfos",
+			success : function(json) {
+				var data = eval(json);
+				var tbody = document.getElementsByTagName("tbody")[1];
+				var table = document.getElementById("keshi_t");
+				table.removeChild(tbody);
+				var nbody = document.createElement("tbody");
+				nbody.id="info_t";
+				table.appendChild(nbody);
+				if (data.retcode == "0") {
+					var length = data.retbody.length;
+					
+					for (var i = 0; i < length; i++) {
+						$("#info_t").append(
+								"<tr class=\"tb_tr\">"
+								+ "<td class=\"tb_td\" style=\"width:50px;\"><div style=\"margin-left: 10px;border-radius:3px;width:30px;background-color:#3f7dac;behavior:url(../../js/PIE.htc);\">"+parseInt(i+1)+"</div></td>"
+								+ "<td class=\"tb_td\">"+data.retbody[i].yyrq00+"</td>"
+								+ "<td class=\"tb_td\">"+data.retbody[i].mzksmc+"</td>"
+								/* + "<td class=\"tb_td\"><input type=\"text\" style=\"background:none;border:0px;\" value=\""+data.retbody[i].mzksmc+"\"></td>" */
+								+ "<td class=\"tb_td\">"+data.retbody[i].mzysxm+"</td>"
+								+ "<td class=\"tb_td\">"+data.retbody[i].yysj00+"</td>"//预约时间
+								
+								+ "<td style=\"display:none;\">"+data.retbody[i].yylsh0+"</td>"//预约号码
+								+ "<td style=\"display:none;\">"+data.retbody[i].ksbh00+"</td>"//his科室编号
+								+ "<td style=\"display:none;\">"+data.retbody[i].ysbh00+"</td>"//his医生编号
+								+ "<td style=\"display:none;\">"+data.retbody[i].yysj00+"</td>"//
+								
+								+ "<td>"
+									+ "<img src=\"../../images/yue/yyqx.jpg\" onclick='qxOperation(this)'></img>"
+								+ "</td>"
+								+ "</tr>")
+					}
+					page = new Page(8, "keshi_t", "info_t");
+					$("#confirmBtn").text((page.pageIndex+1)+"/"+page.pageCount);
+					
 				} else {
 					goError(data.retmsg);
 				}
 				$("#waiting").hide();
 			},
 			error : function() {
-				$("#waiting").hide();
-				$("#tip_div").show();
-				$("#error").text("系统异常,请稍后再试!");		
+				goError("系统异常,请稍后再试!");		
 			}
 		}); 
 	}	

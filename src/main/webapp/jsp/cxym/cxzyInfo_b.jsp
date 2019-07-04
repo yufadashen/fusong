@@ -60,9 +60,7 @@ img[name=numKey]{
     <img src="../../images/kb2/9.png"res_img="../../../images/kb/9_1.png" value="9"name="numKey"/> 
     <img src="../../images/kb2/close.png"res_img="../../../images/kb/10_1.png" value="10"  id="close"style="margin-top:4px;"/> <br>
     
-    <img src="../../images/kb2/z.jpg"  value="Z" name="numKey"/> 
-    <img src="../../images/kb2/y.jpg"  value="Y" name="numKey"/>
-    <img src="../../images/kb2/0.png" res_img="../../../images/kb/0_1.png" value="0"name="numKey"/> 
+    <img src="../../images/kb2/0.png" style="margin-left: 126px;" res_img="../../../images/kb/0_1.png" value="0"name="numKey"/> 
     <img src="../../images/kb2/sure.png" res_img="../../../images/kb/11_1.png" value="11" id="sure"/>
   </div>
 	
@@ -90,25 +88,78 @@ img[name=numKey]{
 </body>
 <script type="text/javascript">
 	var log = window.parent.Logger;
-    var sfkcz = 0;//TODO
-	function goNext(num){
-    	$.session.set("zyNum",num);
-		window.location.href = "cxzyInfo.jsp";
+	var zylsh;//住院流水号
+	function goNext(){
+		getZyPatientInfo();//获取住院流水号及基本信息 
+		if(window.parent.ttype == 3){//住院充值
+			window.location.href = "../zyyjf/czje.jsp";
+		}else if(window.parent.ttype == 4){//查询住院费用信息
+			window.location.href = "cxzyInfo.jsp";
+		}
 	}
- 
+    //获取住院病人住院流水号
+ 	function getZyPatientInfo(){
+		var datas = {
+			"InpatientNo":	$("#czje").val()
+		};
+		$.ajax({
+			async : false,
+			type : "post",
+			data : datas,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			url:window.parent.serverUrl+"GetInPatientSeriNos",
+			success : function(json) {
+				var data = JSON.parse(json);
+				debugger
+				if (data.Code == "0") {
+					var length = data.Departments.length;
+					if(length > 0){
+						if(window.parent.ttype == 3){//住院充值
+							//0未出院   1已出院
+							$.each(data.Departments,function(index,temp){
+								if(temp.InpatientStatus == "0"){
+									window.parent.Name = temp.Name;
+									$.session.set("zyyeb",temp.Balance);//充值前住院余额
+									$.session.set("zylsh",temp.InpatientSeriNo);//住院流水号
+								}
+							});
+						}
+					}else{
+						message("查询住院流水号为空！请确认住院号！");
+					}
+				} else {
+					message("查询住院流水号失败!");
+				}
+				$("#waiting").hide();
+			},
+			error : function() {
+				goError("系统异常,请稍后再试!");
+			}
+		});
+ 	}
+	//跳转提示页面
+	function goError(msg){
+		$.session.set("errormsg",msg);
+		window.location.href="${pageContext.request.contextPath}/jsp/main/error.jsp";
+	}
 	function initialize	(){
 		$("#qrcz").bind("click dbclick", function() {//确认充值
 			if($("#czje").val()){
-				goNext($("#czje").val());
+				goNext();
 			}else{
-				  message("请输入住院号！")
+				message("请输入住院号！");
 			}
 		});
 		$("#mainPage").bind("click dbclick", function() {//返回主页
 			window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
 		});
 		$("#backPage").bind("click dbclick", function() {//返回上一级
-			window.location.href="${pageContext.request.contextPath}/jsp/cxym/cxmenu.jsp";
+			if(window.parent.ttype == 3){
+				window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+			}else{
+				window.location.href="${pageContext.request.contextPath}/jsp/cxym/cxmenu.jsp";
+			}
 		});
 	}
 	
@@ -138,10 +189,6 @@ img[name=numKey]{
 		}
 		$("#tip_div").show();
 		$("#error").text(message);
-		$("#tip_s").off().on("click", function() {
-			$("#tip_div").hide();
-			window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
-		});
 		return;
 	}
 	/**
@@ -162,7 +209,7 @@ img[name=numKey]{
 		      $("#czje").val($(this).attr("value"));
 		    } else {
 		      $("#czje").val(valStr + $(this).attr("value"));
-		      if (valStr.length > 13) {
+		      if (valStr.length > 9) {
 		        $("#czje").val(valStr);
 		      }
 		    }
@@ -189,9 +236,13 @@ img[name=numKey]{
 	  //确认
 	  $("#sure").bind("click dbclick", function() {
 		  if($("#czje").val()){
-			  goNext($("#czje").val());
+			  goNext();
 		  }else{
-			  message("请输入住院号！")
+			  $("#tip_div").show();
+			  $("#error").text("请输入住院号！");
+			  $("#tip_s").off().on("click", function() {
+				 $("#tip_div").hide();
+			  });
 		  }
 	  });
 	  init();

@@ -9,7 +9,7 @@
                <param name="s1" value="" />
 </object>
 <object width="0" height="0" id="AVFOCXLOG"
-	classid="clsid:83B1BDC2-E546-4910-9E05-8B352F3FD5BA"></object>	
+	classid="clsid:83B1BDC2-E546-4910-9E05-8B352F3FD5BA"></object>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.2.js"></script>
 <script src="${pageContext.request.contextPath}/js/jqsession.js"></script>
@@ -61,8 +61,8 @@
 	</div>	
 	<div id="main_box" style="text-align:center;">
 		<div id="pay" style="display:block;margin-top:300px;">
-			<%-- <img src="${pageContext.request.contextPath}/queding.png" res_img="${pageContext.request.contextPath}/queding1.png" height="" width=""> --%> 
-		</div>	
+			<%-- <img src="${pageContext.request.contextPath}/queding.png" res_img="${pageContext.request.contextPath}/queding1.png" height="" width=""> --%>
+		</div>
 	</div>
 </body>
 <script language="javascript">
@@ -92,20 +92,39 @@
 	});
 
 	//读取身份证信息
-	//var reader=window.parent.Reader;
+	//var idCarder = window.parent.idCarder;
   	function readCard(){
   		window.parent.Name = "岳帅锋";
-  		window.parent.PapersNo = "410327199011276410";
-  		window.parent.Sex = "410327199011276410";
+  		window.parent.idCardNo = "410327199011276410";
+  		window.parent.Sex = "1";
+  		window.parent.brith = "19901127";
   		getBridInfo();
+  		/* 
+		var status=idCarder.OpenDeviceAndReadCard(1001,500);//usb串口
+		//log.WriteLog("打开身份证读卡："+status);
+		if(status=="0"){
+			window.parent.Name = idCarder.GetCardInfo(0);
+			window.parent.Sex = idCarder.GetCardInfo(1);
+			window.parent.idCardNo = idCarder.GetCardInfo(5);
+			window.parent.brith = idCarder.GetCardInfo(3);
+			//log.WriteLog("读取身份证信息："+window.parent.xming0+window.parent.sfzhao);
+			if(window.parent.xming0 && window.parent.sfzhao){
+				getBridInfo();
+			}else{
+				message("身份证读取失败！请联系工作人员！");
+			}
+		}else{
+			setTimeout("readCard();", 1000);
+		}
+		 */
   	}
   	//根据身份证查询基本信息
   	function getBridInfo(){
-		 var datas = {"Name":"岳帅锋",//姓名
-					  "PapersNo":"410327199011276410",//证件号
+		 var datas = {"Name":window.parent.Name,//姓名
+					  "PapersNo":window.parent.idCardNo,//证件号
 					  "PapersType":"1",//证件类型
-				      "PhoneNo":"15517961123",//电话号
-				      "Gender":"1",//性别 1男2女
+				      "PhoneNo":"",//电话号
+				      "Gender":window.parent.Sex,//性别 1男2女
 				      "BirthDate":"19901127"//出生日期格式yyyyMMdd
 				      };
 			$.ajax({
@@ -136,8 +155,7 @@
 							window.location.href="../cxym/cxghInfo.jsp";//查询挂号信息
 						}
 					}else{
-						$("#tip_div").show();
-						$("#error").text(Data.retmsg);
+						message(Data.retmsg);
 					}
 											
 				},
@@ -146,6 +164,18 @@
 				}
 			});
   	}
+	function message(message) { //提示信息
+		if($("#waiting")){
+			$("#waiting").hide();
+		}
+		$("#tip_div").show();
+		$("#error").text(message);
+		$("#tip_s").off().on("click", function() {
+			$("#tip_div").hide();
+			window.location.href = "${pageContext.request.contextPath}/jsp/main/main.jsp";
+		});
+		return;
+	}
 	//跳转提示页面
 	function goError(msg){
 		$.session.set("errormsg",msg);

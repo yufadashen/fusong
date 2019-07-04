@@ -1,9 +1,9 @@
 package com.intehel.controller.dept;
 
-import com.intehel.common.util.GetHttpString;
 import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
 import com.intehel.common.util.XmlJsonUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +19,8 @@ import java.util.Map;
 @Controller
 public class electronicCardController {
 
-
+    @Value("${hisUrl}")
+    private String hisUrl="http://192.9.10.42:10110";
     /**
      * 获取token
      * @param OrgCode   HIS厂商提供医疗机构编码
@@ -31,7 +32,7 @@ public class electronicCardController {
     public String GetAppToken(String OrgCode,String Secret) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetAppToken?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetAppToken?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<AppTokenRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
                             "<OrgCode>" +OrgCode+ "</OrgCode>" +
@@ -67,7 +68,7 @@ public class electronicCardController {
     public String GetUserInfo(String OrgCode,String OrgCodeId) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetUserInfo?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetUserInfo?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<UserInfoRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
                             "<OrgCode>" +OrgCode+ "</OrgCode>" +
@@ -111,7 +112,7 @@ public class electronicCardController {
     public String GetRegister(String Secret,String Username,String Gender,String Nation,String IdCardType,String IdCard,String mobilePhone,String Birth,String Address) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetRegister?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetRegister?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<RegisterRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
                             "<Secret>" +Secret+"<Secret>" +
@@ -157,7 +158,7 @@ public class electronicCardController {
     public String GetInfo(String Secret,String EcardId,String IdCardType,String IdCard,String QrcodeFlag) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetInfo?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetInfo?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<InforRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
                             "<Secret>" +Secret+"</Secret>" +
@@ -199,7 +200,7 @@ public class electronicCardController {
     public String GetQrCode(String Secret,String EcardId,String QrcodeType,String ImagePath,String GenType) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetQrCode?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetQrCode?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<QrCodeRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
                             "<Secret>"+Secret + "</Secret>" +

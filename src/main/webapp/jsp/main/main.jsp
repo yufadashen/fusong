@@ -92,7 +92,6 @@ body {
 		 window.parent.jstype=1;
 		 window.parent.cztype=1;
 		 window.parent.czsucc=0;
-		 //setInterval(checkCardStatus(),3000);
 		 returnTime();//长时间无操作关机判断
 		 document.onkeydown = timeAgin;
 		 document.onclick = timeAgin;
@@ -119,26 +118,15 @@ body {
 		 var h=parseInt(date.getHours());
 		 var m=parseInt(date.getMinutes());
 		 if((h==18 && m>00) ||h>18 || (h==6 && m<25) || h<6){
-			  var reader=window.parent.Reader;//关机前退卡
-				  reader.MoveCardX(2);
-			  shutdown.ShutdownFunc();
+			 shutdown.ShutdownFunc();
 		 }else{
 			 setTimeout(function(){ shutdownt(); }, 1000);
 		 }
 	 }
-	
- 	$('img').mouseover(function() {
-		imgSrc = $(this).attr("src");
-		$(this).attr("src", $(this).attr("res_img"));
-	});
-
-	$('img').mouseout(function() {
-		$(this).attr("src", imgSrc);
-	});
 	$("#tip_s").on("click", function() {
 		$("#tip_div").hide();
 	});
-	//门诊充值
+	//门诊缴费
  	$("#mzcz").bind("click dbclick", function() {
 			window.parent.ttype=2;
 			window.location.href="${pageContext.request.contextPath}/jsp/main/readcard.jsp";
@@ -146,7 +134,7 @@ body {
 			status=KPrinter.GetStatusX();
 			//alert(status);
 			if(status=="00000000" || status=="20000000"|| status=="04000000"|| status=="24000000"){
-				window.parent.ttype=1;
+				window.parent.ttype=2;
 				window.location.href="${pageContext.request.contextPath}/jsp/main/readcard.jsp";
 			}else if(status="01000000"){
 				$.session.set("errormsg","热敏打印机缺纸，请联系工作人员");
@@ -164,16 +152,10 @@ body {
 	$("#mzgh").bind("click dbclick", function() {
 			window.parent.ttype=1; //1挂号， 2缴费
 			window.location.href="../main/readcard.jsp";
-	});
-	//门诊预约
-	$("#mzyy").bind("click dbclick", function() {
-			
-			//window.parent.ttype=2;
-			//window.location.href="../main/readcard4.jsp";
-			status=KPrinter.GetStatusX();
-			
+			/* 
+			var status = KPrinter.GetStatusX();
 			if(status=="00000000" || status=="20000000"|| status=="04000000"|| status=="24000000"){
-				window.parent.ttype=3;
+				window.parent.ttype=1;
 				window.location.href="../main/readcard.jsp";
 			}else if(status="01000000"){
 				$.session.set("errormsg","热敏打印机缺纸，请联系工作人员");
@@ -184,25 +166,20 @@ body {
 			}else{
 				$.session.set("errormsg","热敏打印机脱机，请联系工作人员");
 				window.location.href="${pageContext.request.contextPath}/jsp/main/error.jsp";
-			}
-	});
-	//查询
-	$("#zzcx").bind("click dbclick", function() {
-			window.location.href="${pageContext.request.contextPath}/jsp/cxym/cxmenu.jsp";
-		/*status=KPrinter.GetStatusX();
-		if(status=="00000000" || status=="20000000"|| status=="04000000"|| status=="24000000"){
-			window.parent.ttype=4;
-			window.location.href="${pageContext.request.contextPath}/jsp/main/readcard.jsp";
-		}else{
-			$("#tip_div").show();
-			$("#error").text("打印机缺纸，请联系工作人员");
-		}*/
-	});
-	//住院充值
-	$("#zycz").bind("click dbclick", function() {
-		
+			} */
 	});
 	
+	//住院充值
+	$("#zycz").bind("click dbclick", function() {
+		window.parent.ttype=3;
+		window.location.href="${pageContext.request.contextPath}/jsp/cxym/cxzyInfo_b.jsp";
+	});
+	
+	//查询
+	$("#zzcx").bind("click dbclick", function() {
+		window.parent.ttype=4;
+		window.location.href="${pageContext.request.contextPath}/jsp/cxym/cxmenu.jsp";
+	});
 	
 	/**三秒连点五下打开管理界面****/
  	var cNum = 0;
@@ -261,24 +238,6 @@ body {
 		//timer($(".D"), d);
 		timer($(".H"), h+m+s);
 	}
-
-function getCheckTime(){
-	var date = new Date();
-	var year = date.getFullYear();
-    var month = date.getMonth()+1;
-    var day = date.getDate();
-    var hours=date.getHours();
-    var minutes=date.getMinutes();
-    var seconds=date.getSeconds();
-    if(month<10){
-    	month="0"+month;
-    }      
-    if(day<10){
-    	day="0"+day;
-    }
-    var cTime = year+"-"+month+"-"+day+" 17:30:00";
-    return new Date(cTime.replace(/\-/g,"\/"));
-}	
 
  re();
 </script>

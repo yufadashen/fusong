@@ -194,7 +194,7 @@ body {
 			var datas = {
 				"outTradeNo" : outTradeNo,
 				"RegNo" : $.session.get("RegNo"),
-				"opType" : window.parent.ttype //1挂号，  2缴费
+				"opType" : window.parent.ttype //1挂号，  2缴费   3,住院
 			};
 			
 			if(window.parent.ttype == 2){//缴费需要增加参数
@@ -220,16 +220,21 @@ body {
 								window.location.href = "${pageContext.request.contextPath}/jsp/mzgh/ghsuccess.jsp";
 							}else if(window.parent.ttype==2){//门诊缴费
 								window.location.href = "${pageContext.request.contextPath}/jsp/mzjf/mzjfsuccess.jsp";
+							}else if(window.parent.ttype == 3){ //住院缴费
+								// TODO  需要获取充值之后的余额
+								window.location.href = "${pageContext.request.contextPath}/jsp/zyyjf/zyPaySuccess.jsp";
 							}
 						}else if(czztbz == "NOTPAY"){//未支付
 							bb = setTimeout("queryOrder()", 800);
 						}else if(czztbz == "HISFAIL"){//充值成功，his挂号失败
+							debugger
 							//处理退费打印凭条，还是打印凭条，窗口退费
 							$("#erweima").hide();
 							$("#cancel").hide();
 							if($.session.get("RegNo") && window.parent.ttype == 1){
 								sfzhOp();///撤销订单 如果是挂号，同时进行释放号点操作
 							}
+							refund();//退费
 							alert("his返回失败！打印失败凭条或退费");
 							//printFail();
 							window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
@@ -276,63 +281,151 @@ body {
 		});
 	}
 
-		$("#cancel").bind("click dbclick", function() {
+	$("#cancel").bind("click dbclick", function() {
+		$("#erweima").hide();
+		$("#cancel").hide();
+		clearTimeout(aa);
+		clearTimeout(bb);
+		cancleOrder();
+		$.session.clear();
+	});
+
+	$("#main").bind("click dbclick", function() {
+		if ($("#erweima")[0].style.display == "none") {
+			window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+		} else {
 			$("#erweima").hide();
 			$("#cancel").hide();
 			clearTimeout(aa);
 			clearTimeout(bb);
 			cancleOrder();
 			$.session.clear();
-		});
-
-		$("#main").bind("click dbclick", function() {
-			if ($("#erweima")[0].style.display == "none") {
-				window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
-			} else {
-				$("#erweima").hide();
-				$("#cancel").hide();
-				clearTimeout(aa);
-				clearTimeout(bb);
-				cancleOrder();
-				$.session.clear();
-			}
-		});
-
-		$("#pre").bind("click dbclick", function() {
-			if ($("#erweima")[0].style.display == "none") {
-				window.location.href = "${pageContext.request.contextPath}/jsp/pay/lypayway.jsp";
-			} else {
-				$("#erweima").hide();
-				$("#cancel").hide();
-				clearTimeout(aa);
-				clearTimeout(bb);
-				cancleOrder();
-				$.session.clear();
-			}
-		});
-		//释放占号
-		function sfzhOp(){
-			var datas = {
-				"RegNo" : $.session.get("RegNo")
-			};
-			$.ajax({
-				async : false,
-				type : "post",
-				data : datas,
-				dataType : "json",
-				contentType : "application/x-www-form-urlencoded; charset=utf-8",
-				url:window.parent.serverUrl+"ReleaseRegPoint",
-				success : function(json) {
-					var Data = JSON.parse(json)
-					if (Data.Code == "0") {
-						//log("释放成功！号点："+RegNo);
-					}	
-				},
-				error : function() {
-					message("释放号点时系统异常,请稍后再试!");		
-				}
-			}); 
 		}
+	});
+
+	$("#pre").bind("click dbclick", function() {
+		if ($("#erweima")[0].style.display == "none") {
+			window.location.href = "${pageContext.request.contextPath}/jsp/pay/lypayway.jsp";
+		} else {
+			$("#erweima").hide();
+			$("#cancel").hide();
+			clearTimeout(aa);
+			clearTimeout(bb);
+			cancleOrder();
+			$.session.clear();
+		}
+	});
+	//释放占号
+	function sfzhOp(){
+		var datas = {
+			"RegNo" : $.session.get("RegNo")
+		};
+		$.ajax({
+			async : false,
+			type : "post",
+			data : datas,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			url:window.parent.serverUrl+"ReleaseRegPoint",
+			success : function(json) {
+				var Data = JSON.parse(json)
+				if (Data.Code == "0") {
+					//log("释放成功！号点："+RegNo);
+				}	
+			},
+			error : function() {
+				message("释放号点时系统异常,请稍后再试!");		
+			}
+		}); 
+	}
+	//微信退费
+	function refund(){
+		var datas = {
+			"outTradeNo" : outTradeNo,
+			"Fee" : $.session.get("TotalFee")
+		};
+		$.ajax({
+			async : false,
+			type : "post",
+			data : datas,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			url:window.parent.serverUrl+"WxRefund",
+			success : function(json) {
+				debugger
+				var Data = JSON.parse(json)
+				if (Data.Code == "0") {
+					var msg = Data.retBody.msg;
+					if(msg == "Success"){
+						//log("退费成功！");
+						alert("退费成功！");
+						//printTF();
+					}else{
+						//log("退费失败！");
+						alert("退费失败！");
+						printTFFail();
+					}
+				}else{
+					alert("退费失败！");
+					printTFFail();
+				}
+			},
+			error : function() {
+				message("系统异常，退费失败!");	
+				printTFFail();
+			}
+		}); 
+	}
+	
+    function printTF() {
+        var Printer = window.parent.KPrinter;
+        Printer.SetFontModeAndTypeX(0x08, 0x01);//设置字体
+        Printer.SetTextModeX(1);//设置中文模式
+        Printer.WriteTextLineX("	河北北方学院附属第一医院");
+        Printer.WriteTextLineX("	挂号退费成功");
+        Printer.LFX(2); //多行送纸
+        Printer.PrintBarCodeX(73,100,4,window.parent.brid00);
+        Printer.WriteTextLineX("");
+        Printer.SetFontModeAndTypeX(0x08, 0x00); //设置字体
+        Printer.WriteTextLineX("  患者姓名：" + window.parent.Name);
+        Printer.WriteTextLineX("  ID  号：" + window.parent.OutpatientId);
+ 		Printer.WriteTextLineX("  退费金额：" + $.session.get("TotalFee") + "元");
+		Printer.WriteTextLineX("  终端编号：" + window.parent.ipAddress);//终端编号
+        Printer.WriteTextLineX("  交易流水：" + outTradeNo);
+        Printer.SetFontModeAndTypeX(0x08, 0x00);
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.LFX(2); //多行送纸
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.WriteTextLineX("  注  意：本凭证只作核对作用，不做报销凭证。");
+        Printer.WriteTextLineX("  请妥善保管此凭证，遗失不补.");
+        Printer.LFX(3); //多行送纸
+        Printer.CeTCutX(); //切纸
+    }
+    function printTFFail() {//
+        var Printer = window.parent.KPrinter;
+        Printer.SetFontModeAndTypeX(0x08, 0x01);//设置字体
+        Printer.SetTextModeX(1);//设置中文模式
+        Printer.WriteTextLineX("	河北北方学院附属第一医院");
+        Printer.WriteTextLineX("");
+        Printer.WriteTextLineX("	挂号退费失败！");
+        Printer.LFX(2); //多行送纸
+        Printer.PrintBarCodeX(73,100,4,window.parent.brid00);
+        Printer.WriteTextLineX("");
+        Printer.SetFontModeAndTypeX(0x08, 0x00); //设置字体
+        Printer.WriteTextLineX("  患者姓名：" + window.parent.Name);
+        Printer.WriteTextLineX("  ID  号：" + window.parent.OutpatientId);
+ 		Printer.WriteTextLineX("  退费金额：" + $.session.get("TotalFee") + "元");
+		Printer.WriteTextLineX("  终端编号：" + window.parent.ipAddress);//终端编号
+        Printer.WriteTextLineX("  交易流水：" + outTradeNo);
+        Printer.SetFontModeAndTypeX(0x08, 0x00);
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.LFX(2); //多行送纸
+        Printer.SetTextModeX(1); //设置中文模式
+        Printer.WriteTextLineX("  注  意：本凭证只作核对作用，不做报销凭证。");
+        Printer.WriteTextLineX("  请妥善保管此凭证，遗失不补.");
+        Printer.LFX(3); //多行送纸
+        Printer.CeTCutX(); //切纸
+    }
 	init();
 </script>
 </html>

@@ -1,18 +1,7 @@
 package com.intehel;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.intehel.common.alipay.AliPayUtil;
-import com.intehel.common.util.GetHttpString;
-import com.intehel.common.util.HttpUtils;
-import com.intehel.common.util.JsonUtil;
-import com.intehel.common.util.XmlJsonUtils;
-import org.dom4j.*;
-
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class test {
 
@@ -21,7 +10,6 @@ public class test {
         String orderMoney="12546789";//金额
         String orderName="抚松县人民医院";//标题
        System.err.println( AliPayUtil.pay(orderId,orderMoney,orderName));
-//        System.err.println((""+v+"").split(".")[0]);
 
 
 

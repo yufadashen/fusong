@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.beans.factory.annotation.Value;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -35,6 +35,9 @@ public class GetPatientMainController {
      * @param BirthDate 出生日期
      * @return
      */
+
+    @Value("${hisUrl}")
+    private String hisUrl="http://192.9.10.42:10110";
     @ResponseBody
     @CrossOrigin
     @RequestMapping(value = "/FindPatient",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
@@ -42,7 +45,7 @@ public class GetPatientMainController {
                               String BirthDate) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/FindPatient?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/FindPatient?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?> <PatientRequest><Create>1</Create> <PatientInfo> <Name>" +
                             Name +"</Name>  <PapersNo>" +
                             PapersNo +"</PapersNo> <PapersType>" +
@@ -99,7 +102,7 @@ public class GetPatientMainController {
                               String BirthDate) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetOutpatientCardInfos?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetOutpatientCardInfos?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"utf-8\"?><OutpatientCardRequest>" +
                             "<CardType>"+CardType+"</CardType> " +
                             "<CardNo>"+CardNo+"</CardNo>" +

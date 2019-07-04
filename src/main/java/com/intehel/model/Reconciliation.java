@@ -54,6 +54,44 @@ public class Reconciliation {
     @Column(name = "outTradeNo")
     private String outTradeNo;
 
+    @Column(name = "addr")
+    private String addr;
+
+    @Column(name = "count")
+    private String count;
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getSum() {
+        return sum;
+    }
+
+    public void setSum(String sum) {
+        this.sum = sum;
+    }
+
+    @Column(name = "sum")
+    private String sum;
+
+
+
+
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+
     public String getId() {
         return id;
     }

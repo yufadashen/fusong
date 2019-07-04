@@ -240,10 +240,10 @@ td{
 			contentType : "application/x-www-form-urlencoded; charset=utf-8",
 			url:window.parent.serverUrl+"GetOutpatientIdFeeList",
 			success : function(json) {
-				Data = JSON.parse(json);
+				var Data = JSON.parse(json);
 				if (Data.Code == "0") {
 					var temp = Data.Departments;
-					if(temp){
+					if(!$.isEmptyObject(temp)){
 						var j = 0;
 						for(var key in temp){
 							j++;

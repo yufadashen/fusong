@@ -4,6 +4,7 @@ package com.intehel.controller.dept;
 import com.intehel.common.util.HttpUtils;
 import com.intehel.common.util.JsonUtil;
 import com.intehel.common.util.XmlJsonUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,8 @@ import java.util.*;
 @Controller
 public class InHospitalController {
 
-
+    @Value("${hisUrl}")
+    private String hisUrl="http://192.9.10.42:10110";
     /**
      * 查询住院流水号
      * @param InpatientNo   住院号
@@ -38,7 +40,7 @@ public class InHospitalController {
     public String GetInPatientSeriNos(String InpatientNo) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetInPatientSeriNos?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetInPatientSeriNos?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<GetInpatientSeriNoRequest>" +
                             "<HospId/>" +
@@ -86,7 +88,7 @@ public class InHospitalController {
 
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetInpatientFeeList?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetInpatientFeeList?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                             "<InpatientFeesRequest>\n" +
                             "<HospId/>" +
@@ -136,7 +138,7 @@ public class InHospitalController {
     public String InpatientFeePrepay(String InpatientSeriNo,String PaymentWay,String SettleDate,String TotalFee,String TradeSerialNumber) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/InpatientFeePrepay?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/InpatientFeePrepay?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                             "<InpatientFeePrepayRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId/>" +
@@ -181,7 +183,7 @@ public class InHospitalController {
     public String GetFeePrepayRecord(String InpatientSeriNo,String InpatientNo,String DateStart,String DateEnd) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetFeePrepayRecord?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetFeePrepayRecord?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                             "<FeePrepayRecordRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId/>" +
@@ -226,7 +228,7 @@ public class InHospitalController {
     public String GetInpatientDetail(String InpatientSeriNos) {
         String str="";
         try {
-            String strURL="http://192.9.10.42:10110/ServiceForXml.asmx/GetInpatientDetail?xmltxt="+
+            String strURL=hisUrl+"/ServiceForXml.asmx/GetInpatientDetail?xmltxt="+
                     URLEncoder.encode("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                             "<InpatientDetailRequest xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
                             "<HospId/>" +

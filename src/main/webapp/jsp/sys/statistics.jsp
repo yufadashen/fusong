@@ -5,7 +5,7 @@
 <html>
 <head>
     <%--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />--%>
-    <title>挂号支付对账</title>
+    <title>对账统计</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript"
@@ -46,22 +46,7 @@
 
 
 
-            $(document).ready(function(){
-            var date = new Date();
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate1 = date.getFullYear() + month  + strDate+"000000";
-            var currentdate2 = date.getFullYear() + month  + strDate+"235959";
-                $("#sj1").val(currentdate1);
-                $("#sj2").val(currentdate2);
-            alert(currentdate);
-            })
+
         </script>
 
 </head>
@@ -71,11 +56,11 @@
         <div class="print_info_btns text_r">
             <!-- <a class="prints_btn_com" id="exportList" >导出EXCEL</a> -->
             <span>&nbsp;&nbsp;</span>
-            <a class="prints_btn_com" onclick="javascript:window.print()" >打印</a>
+            <button class="prints_btn_com" onclick="javascript:window.print()" >打印</button>
         </div>
         <div style="font-size:20px; font-weight:bold; line-height:30px; text-align:center;">
-            <span style="text-decoration: underline;">自助机挂号支付对账</span>
-            <h2 style="font-size: 20px; letter-spacing:10px; text-align:center">挂号支付记录表</h2>
+            <span style="text-decoration: underline;">对账统计</span>
+            <h2 style="font-size: 20px; letter-spacing:10px; text-align:center">对账统计表</h2>
         </div>
         <div >请输查询时间：</div>
         <div>
@@ -88,32 +73,29 @@
             <input  id="sj2" value="">
 
         <span id="sjcx">&nbsp;&nbsp; <button id="sjcx01" onclick="goCX()">查询</button></span>
+
         </div>
         <table id="excelstyles" align="center" valign="center"  width="90%" border="1" cellspacing="0" cellpadding="0" class="comtbl">
             <thead>
             <tr>
-                <th align="center">挂号流水号</th>
-                <th align="center">患者id</th>
-                <th align="center">商户订单号 </th>
-                <th align="center">支付金额</th>
-                <th align="center">支付方式</th>
-                <th align="center">第三方支付时间</th>
-                <th align="center">第三方支付流水号</th>
-                <th align="center">支付状态</th>
-                <th align="center">终端ip</th>
+                <th align="center">部门\类别</th>
+                <th align="center">缴费次数</th>
+                <th align="center">总金额 </th>
             </tr>
             </thead>
             <tbody id="info_t"  >
+
             </tbody>
         </table>
+
+    </div>
+    <div id="popResetPsw" style="text-align:right;">
+        <a href="#" onclick="doExport()">导出Excel表格</a>
     </div>
 </div>
-<div id="popResetPsw" style="text-align:right;">
-    <a href="#" onclick="doExport()">导出Excel表格</a>
-</div>
+
 </body>
 <script type="text/javascript">
-
 
     var date = new Date();
     var month = date.getMonth() + 1;
@@ -128,7 +110,6 @@
     var currentdate2 = date.getFullYear() + month  + strDate+"235959";
     $("#sj1").val(currentdate1);
     $("#sj2").val(currentdate2);
-    goNext();
 function goCX(){
 
 
@@ -142,15 +123,13 @@ function goCX(){
     });
 }
 function goNext() {
-    
-
     var datas ={
-        "startTime":$("#sj1").val(),
-        "endTime":$("#sj2").val()
+        "startTime":$("#sj1").val()==""?currentdate1:$("#sj1").val(),
+        "endTime":$("#sj2").val()==""?currentdate2:$("#sj2").val()
     };
     $.ajax({
         type: 'post',
-        url: '/ReconciliationGH',
+        url: '/ReconciliationTJ',
         dataType: 'json',
         data : datas,
         success: function (data) {
@@ -158,32 +137,38 @@ function goNext() {
             var table = document.getElementById("excelstyles");
             var nbody = document.createElement("tbody");
             $("#info_t").empty();
+
             nbody.id="info_t";
             table.appendChild(nbody);
-                var length = Data.list.length;
-                for (var i = 0; i < length; i++) {
-                    var  pay = Data.list[i].paymentWay=="12"?"微信":"支付宝";
+
                     $("#info_t").append(
-                        "<tr class=\"tb_tr\">"
-                        + "<td>"+Data.list[i].regNo+"</td>"
-                        + "<td>"+Data.list[i].outpatientId+"</td>"
-                        + "<td>"+Data.list[i].outTradeNo+"</td>"
-                        + "<td>"+ parseFloat(Data.list[i].totalFee)/100 +"</td>"
-                        + "<td>"+pay+"</td>"
-                        + "<td>'"+Data.list[i].settleDate+"</td>"
-                        + "<td>'"+Data.list[i].tradeSerialNumber+"</td>"
-                        + "<td>"+Data.list[i].ifFee+"</td>"
-                        + "<td>"+Data.list[i].addr+"</td>"
-                        + "</tr>")
-                }
-                // page = new Page(8, "excelstyles", "info_t");
-                // $("#confirmBtn").text((page.pageIndex+1)+"/"+page.pageCount);
+                        "<tr>" +
+                        "                <th align=\"center\">挂号缴费</th>" +
+                        "                <td align=\"center\" id=\"gh1\">"+Data.info.gh1.ghCount+"</td>" +
+                        "                <td align=\"center\" id=\"gh2\">"+parseFloat(Data.info.gh1.ghSum)/100 +"</td>" +
+                        "            </tr>" +
+                        "            <tr>" +
+                        "                <th align=\"center\">门诊缴费</th>" +
+                        "                <td align=\"center\" id=\"mz1\">"+Data.info.mz2.mzCount+"</td>" +
+                        "                <td align=\"center\" id=\"mz2\">"+parseFloat(Data.info.mz2.mzSum)/100+"</td>" +
+                        "            </tr>" +
+                        "            <tr>" +
+                        "                <th align=\"center\">住院预交金</th>" +
+                        "                <td align=\"center\" id=\"zy1\">"+Data.info.zy3.zyCount+"</td>" +
+                        "                <td align=\"center\" id=\"zy2\">"+parseFloat(Data.info.zy3.zySum)/100+"</td>" +
+                        "            </tr>" +
+                        "            <tr>" +
+                        "                <th align=\"center\">合计</th>" +
+                        "                <td align=\"center\" id=\"hj1\">"+Data.info.hj.count+"</td>" +
+                        "                <td align=\"center\" id=\"hj2\">"+parseFloat(Data.info.hj.sum)/100+"</td>" +
+                        "            </tr>");
+
             $("#waiting").hide();
             console.log(Data);
         }
     });
 }
-
+goNext();
 
 
 </script>

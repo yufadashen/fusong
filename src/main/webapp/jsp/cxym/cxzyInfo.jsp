@@ -251,7 +251,7 @@ td{
 		var startTime = $("#qsrq00").val().replace(reg, "");
 		var endTime  = $("#jzrq00").val().replace(reg, "");
 		var datas = {
-			"InpatientSeriNo" : $.session.get("zyNum"),//住院号
+			"InpatientSeriNo" : $.session.get("zylsh"),//住院号
 			"UpdateDateStart" : startTime,//时间段开始
 			"UpdateDateEnd" : endTime//时间段结束
 			//"UpdateDateStart" : "20130727",//时间段开始
@@ -318,7 +318,7 @@ td{
 	*初始化操作
 	**/
 	var init = function(){
-		$("#zyNum").text($.session.get("zyNum"));
+		$("#zyNum").text($.session.get("zylsh"));
 		$("#btnMain").bind("click dbclick", function() {//返回主页
 			$.session.clear();
 			window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";

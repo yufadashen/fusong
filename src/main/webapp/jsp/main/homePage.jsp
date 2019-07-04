@@ -46,11 +46,13 @@
  </body>
  
  <script type="text/javascript">
- var serverUrl = "http://127.0.0.1:8888/";
+ var serverUrl = "http://127.0.0.1:8080/";
  var reTime = 120;//倒计时时间
  var OutpatientId;//病人id
  var Name;
  var Sex;
+ var idCardNo;
+ var brith;
  var PapersNo;
  var ttype;//操作类型
  
