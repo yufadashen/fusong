@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>门诊挂号</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+
+<link rel="stylesheet" href="/css/layui.css" media="all">
+<link rel="stylesheet" href="/css/control.css" media="all">
+<link rel="stylesheet" href="/css/mzgh/ghdoctor2.css" media="all">
+
+</head>
+<body scroll="no"  onselectstart="return false">
+   <div id="waiting"  style="margin: 229px 0px 0px 0px;display:block;z-index:9001;width:576px;height:321px;background-image:url('/images/waiting.gif');position:absolute;left:212px;">
+   </div>
+<div id="time" style="position:absolute;top:3px;left:900px;font-size:60px;color: #FF0000;"></div>
+	<div id="titleArea">
+		<font style="margin-left:40px;">选择挂号医生</font>
+	</div>
+	<div id="showArea">
+		<div style="font-size:44px;margin-top:3px;"><span style="margin-left:-170px;">请选择要挂号的医生!</span></div>
+		<table id="keshi_t" style="table-layout:fixed;cellspacing:20px;margin-left:15px;">
+			<tbody id="info_t" >
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="" style="width:200px;height:80px;font-size:30px;color:white; text-align:center;">
+						<div class="pageButton" onclick="page.prePage($('#confirmBtn'))">上一页</div>
+					</td>
+					<td colspan="" style="width:200px;height:80px;font-size:30px; text-align:center;">
+						<div id="confirmBtn" ></div>
+					</td>
+					<td colspan="" style="width:200px;height:80px;font-size:30px;color:white; text-align:center;">
+						<div class="pageButton" onclick="page.nextPage($('#confirmBtn'))">下一页</div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div style="position: absolute;margin:-569px 0px 0px 720px;width:350px;">
+		<div class="modifyInput">
+			<span class="chooseType">选择挂号科别</span>
+			<div class="contentBox">
+				<input class="chooseContent" id="chooseKb" type="text"  readonly="readonly">
+				<div class="modifys1" id="ghkebie">修改</div>
+			</div>
+		</div>
+
+		<div class="modifyInput">
+			<span class="chooseType" >选择挂号医生</span>
+			<div class="contentBox">
+				<input class="chooseContent" id="chooseDoc" type="text"  readonly="readonly">
+				<div class="modifys" id="ghdoctor2">修改</div>
+			</div>
+		</div>
+	
+	</div>
+	
+	<div id="bottomArea">
+		<span style="margin-left:20px;">姓名：<span id="cusName"></span></span>
+		<span style="margin-left:60px;">患者编号：<span id="cusBalance"></span></span>
+		<div style="margin-left:50px;position:absolute;margin: -62px 0px 0px 700px;">
+			<img id="btnMain" style="margin-top:8px;" src="/images/yue/mzgh_index_y.png" res_img="" height="" width=""/>
+		</div>
+		<div style="margin-left:20px;position:absolute;margin: -61px 0px 0px 855px;">
+			<img id="btnReturn" style="margin-top:6px;" src="/images/yue/mzgh_return_y.png" res_img="" height="" width=""/>
+		</div>
+	</div>
+	
+	<div id="tip_div"  style="margin: -529px 0px 0px 0px;display:none;z-index:1000;width:659px;height:243px;background-image:url('/images/dck2.png');position:absolute;left:212px;">
+         <div id="tip_divInfo" style="text-align:center;position:relative;top:82px">
+           <span id="error" style="font-size:30px;color:#EE7700;"><strong></strong></span>
+         </div>
+      <img id="tip_s" src="/images/qdmix.png" 
+        width="90" height="43" style="position:relative;top:125px;left:4px" />
+   </div> 
+ 
+</body>
+<script type="text/javascript" src="/js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="/js/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/easing.js"></script>
+<script type="text/javascript" src="/js/jqsession.js"></script>
+<script type="text/javascript" src="/js/pageOper.js"></script>
+<script type="text/javascript" src="/js/mzgh/ghdoctor2.js"></script>
+</html>
