@@ -1,0 +1,160 @@
+@charset "utf-8";
+body {
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	text-align: center;
+	background:url(../../images/yue/bgn.jpg) no-repeat;
+}
+#titleArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:44px;
+	color:white;
+	margin-top:0px;
+}
+#bottomArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:24px;
+	color:white;
+	margin-top:40px;
+	line-height:60px;
+}
+#showArea{
+	border:1px black solid; 
+	border-radius:10px; 
+	width:995px;
+	height:570px;
+	margin-left:11px;
+	margin-top:20px;
+	behavior:url(../../js/PIE.htc);
+}
+.models{
+	width:210px;
+	height:190px;
+	background-color:#599CE0;
+	border-radius:10px;
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 22px;
+    behavior:url(../../js/PIE.htc);
+}
+td{
+	padding:7px;
+}
+.pageButton{
+	width:180px;
+	height:60px;
+	border:1px black solid; 
+	border-radius:10px; 
+	background-color:#85c531;
+	line-height:60px;
+	margin-left:20px;
+	behavior:url(../../js/PIE.htc);
+}
+#confirmBtn{
+	border:2px solid #3f7dac;
+	width:180px;
+	height:60px;
+	line-height:60px;
+	border-radius:10px; 
+	margin-left:20px;
+	behavior:url(../../js/PIE.htc);
+}
+.modifyInput{
+	margin:4px 0px 0px 0px;
+	height: 105px;
+	width: 350px;
+}
+.chooseType{
+	margin: 0px 0px 0px -180px;
+	font-size: 28px;
+	color: grey;
+}
+.chooseType1{
+	margin: 0px 0px 0px -180px;
+	font-size: 28px;
+	color: #599CE0;
+}
+.modifys{
+	background-color:#599CE0;
+	position:absolute;
+	height:60px;
+	width:91px;
+	margin:-55px 0px 0 189px;
+	font-size:30px;
+	color:white;
+	line-height:55px;
+}
+.modifys1{
+	background-color:grey;
+	position:absolute;
+	height:60px;
+	width:91px;
+	margin:-55px 0px 0 189px;
+	font-size:30px;
+	color:white;
+	line-height:55px;
+}
+.chooseContent{
+	width:182px;
+	height:40px;
+	margin-left:-93px;
+	border:none;
+	font-size:28px;
+	margin-top:15px;
+}
+.contentBox{
+	position:absolute;
+	height:60px;
+	width:280px;
+	border-radius:5px;
+	border:1px #599CE0 solid;
+	margin-top:0px;
+	behavior:url(../../js/PIE.htc);
+}
+/*医生姓名*/
+.DrName{
+	position:absolute;
+	color:#04fd02;
+	font-size: 33px;
+    margin: -96px 0px 0px 52px;
+    text-align: center;
+    width:120px;
+}
+/*医生职称*/
+.RegLevelName{
+	position:absolute;
+	margin:-39px 0px 0px 47px;
+	color: red;
+	text-align: center;
+	font-size:20px;
+	width:126px;
+}
+/*午别*/
+.noon{
+	position:absolute;
+	margin: -6px 0px 0px 35px;
+	color:blue;
+	text-align: center;
+	font-size:21px;
+}
+/*剩余挂号数*/
+.syghs0{
+	position:absolute;
+	margin: 24px 0px 0px 60px;
+	color: #00fdff;
+	text-align: center;
+}
+/*挂号费*/
+.TotalFee{
+	position:absolute;
+	margin: 60px 0px 0px 40px;
+	color: white;
+}

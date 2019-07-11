@@ -1,0 +1,89 @@
+@charset "utf-8";
+body {
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	text-align: center;
+	background:url(../../images/yue/bgn.jpg) no-repeat;
+}
+#titleArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:44px;
+	color:white;
+	margin-top:0px;
+}
+#bottomArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:24px;
+	color:white;
+	margin-top:35px;
+	line-height:60px;
+}
+#showArea{
+	border:1px black solid; 
+	border-radius:10px; 
+	width:995px;
+	height:570px;
+	margin-left:11px;
+	margin-top:20px;
+	behavior:url(../../js/PIE.htc);
+}
+.models{
+	width:210px;
+	height:80px;
+	background-color:#599CE0;
+	border-radius:10px;
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 22px;
+    behavior:url(../../js/PIE.htc);
+}
+.pageButton{
+	width:260px;
+	height:60px;
+	border-radius:10px; 
+	background-color:#85c531;
+	line-height:60px;
+	font-size:30px;
+	color:white;
+	behavior:url(../../js/PIE.htc);
+}
+
+#showArea{
+	
+}
+#wxts{
+	position: absolute;
+    font-size: 30px;
+    margin-left: 63px;
+    margin-top: 84px;
+}
+#yycg{
+	position: absolute;
+    margin-left: 268px;
+    font-size: 40px;
+    margin-top: 209px;
+}
+#confirmApp{
+	margin-top: 450px;
+    margin-left: 355px;
+}
+#btn_tk{
+	width:260px;
+	height:60px;
+	border-radius:10px; 
+	background-color:#f37208;
+	margin-left:533px;
+	margin-top: -60px;
+	line-height:60px;
+	font-size:30px;
+	color:white;
+	behavior:url(../../js/PIE.htc);
+}
