@@ -15,7 +15,7 @@ body {
 	width: 1024px;
 	height: 768px;
 	overflow: hidden;
-	background: url(${pageContext.request.contextPath}/images/bg_nn.png)
+	background: url(${pageContext.request.contextPath}/images/FUSONG.png)
 		no-repeat;
 }
 
@@ -77,12 +77,15 @@ body {
 
 </body>
 <script type="text/javascript">
+var  IPHlpOcx = window.parent.IPHlpOcx;
+if(IPHlpOcx.contentDocument){
+	window.parent.ipAddress = IPHlpOcx.GetHostIP();//获取本机ip地址
+}
 	 $.session.clear();
 	 var shutdown=window.parent.shutdown;
 	 var KPrinter=window.parent.KPrinter;
 	 var zdbh00 = window.parent.zdbh00;
 	 var logger = window.parent.Logger;//日志OCX对象
-	 var status;
 	 //初始化倒计时时间：60秒
 	 var time = window.parent.reTime;
 	 
@@ -117,7 +120,7 @@ body {
 		 var date=new Date();
 		 var h=parseInt(date.getHours());
 		 var m=parseInt(date.getMinutes());
-		 if((h==18 && m>00) ||h>18 || (h==6 && m<25) || h<6){
+		 if((h==17 && m>00) ||h>17 || (h==6 && m<25) || h<6){
 			 shutdown.ShutdownFunc();
 		 }else{
 			 setTimeout(function(){ shutdownt(); }, 1000);
@@ -131,7 +134,7 @@ body {
 			window.parent.ttype=2;
 			window.location.href="${pageContext.request.contextPath}/jsp/main/readcard.jsp";
 		/* 	
-			status=KPrinter.GetStatusX();
+			var status=KPrinter.GetStatusX();
 			//alert(status);
 			if(status=="00000000" || status=="20000000"|| status=="04000000"|| status=="24000000"){
 				window.parent.ttype=2;

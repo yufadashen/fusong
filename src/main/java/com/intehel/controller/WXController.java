@@ -339,8 +339,9 @@ public class WXController {
     @ResponseBody
     @CrossOrigin
     @RequestMapping(value = "/WxPayGH",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
-    public String WxPayGH(String RegNo,String Fee)  {
+    public String WxPayGH(String RegNo,String Fee,String ipAddress)  {
         logger.info("微信支付+挂号流水号="+RegNo+"  金额="+Fee);
+        if (ipAddress==null){ipAddress="001";}
         String url=null;
         Fee=String.valueOf((int)( Double.parseDouble(Fee)*100));
         String outTradeNo=null;
@@ -386,60 +387,6 @@ public class WXController {
         logger.info("微信支付订单生成成功+"+map1);
         return JSON.toJSONString(map);
     }
-
-    /**
-     * weixin支付门诊费
-     * @param RegNo 挂号流水号
-     * @param Fee   金额
-     * @return
-     */
-   /* @ResponseBody
-    @CrossOrigin
-    @RequestMapping(value = "/WxPayMZ",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
-    public String WxPayMZ(String RegNo,String Fee)  {
-        logger.info("微信支付门诊费+挂号流水号="+RegNo+" 金额="+Fee);
-        String url=null;
-        Fee=String.valueOf((int)( Double.parseDouble(Fee)*100));
-        String outTradeNo=null;
-        try {
-            //获取本机的ip地址
-            InetAddress addr = null;
-            addr = InetAddress.getLocalHost();
-            String spbill_create_ip = addr.getHostAddress();
-            MyConfig config = new MyConfig();
-            WXPay wxpay = new WXPay(config);
-            Map<String,String> data = new HashMap<>();
-            data.put("appid",config.getAppID());
-            data.put("mch_id",config.getMchID());         //商户号
-            data.put("trade_type","NATIVE");                         //支付场景 APP 微信app支付 JSAPI 公众号支付  NATIVE 扫码支付
-            data.put("notify_url","http://boyi.natapp1.cc/WXtest");                     //回调地址
-            data.put("spbill_create_ip",spbill_create_ip);             //终端ip
-            data.put("total_fee",Fee);       //订单总金额
-            data.put("fee_type","CNY");                           //默认人民币
-            data.put("attach","支付门诊费zheshiyigegeng"+RegNo);
-            String st=WXPayUtil.generateNonceStr();
-            outTradeNo=WXPayUtil.generateNonceStr();
-            data.put("out_trade_no",outTradeNo);   //交易号
-            data.put("body","支付门诊费");
-            data.put("nonce_str",st);   // 随机字符串小于32位
-            String s = WXPayUtil.generateSignature(data,config.getKey(), WXPayConstants.SignType.MD5);  //签名
-            data.put("sign",s);
-            Map<String, String> resp = wxpay.unifiedOrder(data);
-            System.out.println(resp);
-            url=resp.get("code_url");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Map<String , Object> map=new HashMap();
-        Map<String , String> map1=new HashMap();
-        map.put("Message","成功");
-        map.put("Code","0");
-        map1.put("url",url);
-        map1.put("outTradeNo",outTradeNo);
-        map.put("retBody",map1);
-        logger.info("微信支付门诊费订单生成成功+"+map1);
-        return JSON.toJSONString(map);
-    }*/
 
 
 

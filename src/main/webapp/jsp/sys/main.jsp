@@ -5,13 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
     <!--引入主题样式-->
-    <link rel="stylesheet" type="text/css" href="themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/themes/default/easyui.css" />
     <!--引入图标样式-->
-    <link rel="stylesheet" type="text/css" href="themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="/themes/icon.css" />
     <!--引入jQuery文件-->
-    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <!--引入EasyUi的js文件-->
-    <script src="js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
     <!--
         主页面:
             1 引入EasyUI插件
@@ -155,10 +155,10 @@
 
 <body class="easyui-layout">
 <!--布局：北-->
-<div data-options="region:'north'" style="height: 50%;background-image: url(images/layout-browser-hd-bg.gif);">
+<div data-options="region:'north'" style="height: 50%;background-image: url(/images/layout-browser-hd-bg.gif);">
     <!--添加网站Logo-->
     <span id="n_logo" style="margin-left: 20px;">
-				<img src="images/body.jpg" width="35px" style="margin-top: 5px;"/>
+				<img src="/images/body.jpg" width="35px" style="margin-top: 5px;"/>
 				<font color="white" size="4px">抚松县人医院自助机管理系统</font>
 			</span>
     <span id="n_title" style="float: right;">
@@ -182,10 +182,10 @@
                     <span>支付对账</span>
                     <!--二级-->
                     <ul>
-                        <li data-options="attributes:{url:'jsp/sys/statistics.jsp'}">对账统计</li>
-                        <li data-options="attributes:{url:'jsp/sys/ReconReg.jsp'}">挂号费对账</li>
-                        <li data-options="attributes:{url:'jsp/sys/outpatient.jsp'}">门诊费对账</li>
-                        <li data-options="attributes:{url:'jsp/sys/hospital.jsp'}">住院预交金对账</li>
+                        <li data-options="attributes:{url:'/jsp/sys/statistics.jsp'}">对账统计</li>
+                        <li data-options="attributes:{url:'/jsp/sys/ReconReg.jsp'}">挂号费对账</li>
+                        <li data-options="attributes:{url:'/jsp/sys/outpatient.jsp'}">门诊费对账</li>
+                        <li data-options="attributes:{url:'/jsp/sys/hospital.jsp'}">住院预交金对账</li>
                     </ul>
                 </li>
                 <li>

@@ -62,6 +62,6 @@ public class Login {
     @RequestMapping("tomain")
     public String toMain() {
         System.out.println();
-        return "jsp/sys/main";
+        return "jsp/sys/main.jsp";
     }
 }

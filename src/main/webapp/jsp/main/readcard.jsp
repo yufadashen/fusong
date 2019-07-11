@@ -22,30 +22,40 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background: url(../../images/yue/ypushcard.jpg) no-repeat; 
+        background: url(../../images/yue/bgn.jpg) no-repeat; 
     }
     </style>
 </head>
 
 <body scroll=no>
 	<!-- 显示返回主页面倒计时时间 -->
- 	<div id="time" style="position:absolute;top:1130px;right:80px;font-size:60px;color: #FF0000;">
+ 	<div id="time" style="position:absolute;top:507px;right:224px;font-size:60px;color: #FF0000;">
    	</div>
-   	<div style="width:283px;height:360px;margin: 177px 0px 0px 360px;position:absolute;">
-   		<img style="width:288px;height:365px;" src="../../images/yue/ckTips.gif">
+   	
+   	<div style="position:absolute;top:130px;left:220px;font-size:40px;color:#3f7dac;letter-spacing:11px;">请按照范例完成身份验证！</div>
+   	
+   	
+   	
+   	<div style="width:283px;height:360px;margin: 221px 0px 0px 360px;position:absolute;">
+   		<img style="width:199px;" src="../../images/yue/putIdCard.gif">
    	</div>
    	<!-- 返回 -->
-   	<div id="fanhui" style="width:237px;height:57px;margin: 575px 0px 0px 387px;position:absolute;"></div>
+   	<div id="fanhui" style="width:237px;height:57px;margin: 575px 0px 0px 387px;position:absolute; ">
+   		<img style="width:199px;" src="../../images/btn_cancel.png">
+   	</div>
+	<div style="width:198px;position:absolute;top:369px;left:610px;font-size:22px;text-align:left;line-height:31px;">请使用二代身份证完成验证，并确保身份证在感应器上方。</div>
+	<div style="position:absolute;top:521px;left:143px;font-size:40px;color:#FFA042;letter-spacing:6px;">正在读取身份证信息，剩余&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 秒！</div>
+   	
    	
 	<div id="tip_div"
-		style="z-index:1000;display:none;width:659px;height:243px;background-image:url('${pageContext.request.contextPath}/images/dck2.png');position:absolute;left:212px;top:1365px;">
+		style="z-index:1000;display:none;width:659px;height:243px;background-image:url('${pageContext.request.contextPath}/images/dck2.png');position:absolute;left:150px;top:266px;">
 		<div id="tip_divInfo"
 			style="text-align:center;position:relative;top:82px">
-			<span id="error" style="font-size:30px;color:#EE7700;"><strong></strong></span>
+			<strong><span id="error" style="font-size:30px;color:#EE7700;"></span></strong>
 		</div>
 		<img id="tip_s"
 			src="${pageContext.request.contextPath}/images/qdmix.png" width="90"
-			height="43" style="position:relative;top:160px;left:300px" />
+			height="43" style="position:relative;top:148px;left:300px" />
 	</div>
 	<div id="pay" style="display:block;margin-top:1200px; ">
 	</div>	
@@ -61,13 +71,13 @@
 	</div>	
 	<div id="main_box" style="text-align:center;">
 		<div id="pay" style="display:block;margin-top:300px;">
-			<%-- <img src="${pageContext.request.contextPath}/queding.png" res_img="${pageContext.request.contextPath}/queding1.png" height="" width=""> --%>
-		</div>
+			<%-- <img src="${pageContext.request.contextPath}/queding.png" res_img="${pageContext.request.contextPath}/queding1.png" height="" width=""> --%> 
+		</div>	
 	</div>
 </body>
 <script language="javascript">
 	//初始化倒计时时间：60秒
-	var time = window.parent.reTime;
+	var time = 30;
 	//自动倒计时，计时时间为0时，
 	function returnTime(){
 		myVar=setInterval(
@@ -87,9 +97,6 @@
 		time = window.parent.reTime;
 	}
 	returnTime();
-	$("#tip_s").on("click", function() {
-		window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
-	});
 
 	//读取身份证信息
 	//var idCarder = window.parent.idCarder;
@@ -99,8 +106,9 @@
   		window.parent.Sex = "1";
   		window.parent.brith = "19901127";
   		getBridInfo();
+  		
   		/* 
-		var status=idCarder.OpenDeviceAndReadCard(1001,500);//usb串口
+		var status=idCarder.OpenDeviceAndReadCard(1001,200);//usb串口
 		//log.WriteLog("打开身份证读卡："+status);
 		if(status=="0"){
 			window.parent.Name = idCarder.GetCardInfo(0);
@@ -114,7 +122,7 @@
 				message("身份证读取失败！请联系工作人员！");
 			}
 		}else{
-			setTimeout("readCard();", 1000);
+			setTimeout("readCard();", 800);
 		}
 		 */
   	}
@@ -125,7 +133,7 @@
 					  "PapersType":"1",//证件类型
 				      "PhoneNo":"",//电话号
 				      "Gender":window.parent.Sex,//性别 1男2女
-				      "BirthDate":"19901127"//出生日期格式yyyyMMdd
+				      "BirthDate":window.parent.brith//出生日期格式yyyyMMdd
 				      };
 			$.ajax({
 				async:true,
@@ -155,7 +163,7 @@
 							window.location.href="../cxym/cxghInfo.jsp";//查询挂号信息
 						}
 					}else{
-						message(Data.retmsg);
+						message("失败！");
 					}
 											
 				},

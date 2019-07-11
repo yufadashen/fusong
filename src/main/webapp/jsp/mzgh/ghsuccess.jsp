@@ -218,9 +218,12 @@ body {
 		printer.WriteTextLineX("      抚松县人民医院自助挂号凭条");
 		printer.SetTextModeX(0);	
 		printer.WriteTextLineX("      —————————————————————");
+		Printer.PrintBarCodeX(73,100,4,window.parent.OutpatientId);
 		printer.WriteTextLineX("          ");
 		printer.SetTextModeX(1);	
 		printer.WriteTextLineX("      姓名："+window.parent.Name+"  性别: "+window.parent.Sex);
+		printer.WriteTextLineX("          ");
+		Printer.WriteTextLineX("  	  ID号：" + window.parent.OutpatientId);
 		printer.WriteTextLineX("          ");
 		printer.SetTextModeX(0);
 		printer.WriteTextLineX("      挂号日期：" + currDate);

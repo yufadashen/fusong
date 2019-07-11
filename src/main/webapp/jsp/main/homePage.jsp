@@ -24,7 +24,7 @@
 	  
 
 
-    <title>吉林大学白求恩第一医院—首页</title>
+    <title>抚松县人民医院—首页</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.2.js"></script>
    	
@@ -46,7 +46,7 @@
  </body>
  
  <script type="text/javascript">
- var serverUrl = "http://127.0.0.1:8080/";
+ var serverUrl = "http://boyi.natapp1.cc/";
  var reTime = 120;//倒计时时间
  var OutpatientId;//病人id
  var Name;
@@ -55,7 +55,7 @@
  var brith;
  var PapersNo;
  var ttype;//操作类型
- 
+ var ipAddress = "0.0.0.0";//本机ip
  var CardNo;//卡号
  var CardType;//医院定义的卡类型
  var CardNo;//卡号
@@ -77,9 +77,9 @@
 
  function openDevices(){
 
-	 var aa = Reader.OpenCardReader(2,4);
 	 var bb = KPrinter.OpenAndSetCOMX("COM1",19200);
 	 var cc = idCarder.OpenDeviceAndReadCard(4,10);
+	 var aa = Reader.OpenCardReader(2,4);
   
  } 
  //硬件状态结束*-***********************

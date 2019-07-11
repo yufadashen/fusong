@@ -290,7 +290,7 @@ td{
 						$("#confirmBtn").text((page.pageIndex+1)+"/"+page.pageCount);
 					}else{
 						$("#info_t").empty();
-						message("未查询住院信息！");
+						message("未查询到7天内的信息！");
 					}
 					
 				} else {

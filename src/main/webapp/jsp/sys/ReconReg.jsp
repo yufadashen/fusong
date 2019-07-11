@@ -18,7 +18,7 @@
             src="${pageContext.request.contextPath}/DriverJS/PinPad.js"></script>
     <script src="${pageContext.request.contextPath}/js/layui.js"
             charset="utf-8"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/DriverJS/UserIDCard.js"></script>
+    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/DriverJS/UserIDCard.js"></script>--%>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jqsession.js"></script>
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/css/layui.css" media="all">
@@ -48,6 +48,7 @@
 
             $(document).ready(function(){
             var date = new Date();
+                date.setTime(date.getTime()-24*60*60*1000);
             var month = date.getMonth() + 1;
             var strDate = date.getDate();
             if (month >= 1 && month <= 9) {
@@ -56,6 +57,9 @@
             if (strDate >= 0 && strDate <= 9) {
                 strDate = "0" + strDate;
             }
+
+
+            // var currentdate1 = day1.getFullYear()+"-" + (day1.getMonth()+1) + "-" + day1.getDate();
             var currentdate1 = date.getFullYear() + month  + strDate+"000000";
             var currentdate2 = date.getFullYear() + month  + strDate+"235959";
                 $("#sj1").val(currentdate1);

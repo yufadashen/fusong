@@ -102,6 +102,11 @@ body {
 	</div>
 </body>
 <script type="text/javascript">
+var  log = window.parent.Logger;
+function log(Info){
+	log.WriteLog(Info);
+}
+
 	var init = function() {
 		$("#xming0").text(window.parent.Name);
 		$("#zfye").text($.session.get("TotalFee")+" 元");
@@ -143,14 +148,14 @@ body {
 	var aa;
 	var bb;
 	var cc;
-	var outTradeNo;//微信订单流水
+	var outTradeNo;//支付宝订单流水
 	function wxorder() {
 		var datas = {
 			"RegNo" : $.session.get("RegNo"),
-			"ipAddress":"",
-			//"RegNo" : "6118173",
+			"ipAddress":window.parent.ipAddress,
 			"Fee" : $.session.get("TotalFee")
 		};
+		//log("支付宝充值下单：  挂号流水号=="+$.session.get("RegNo") +"    金额:"+$.session.get("TotalFee"));
 		$.ajax({
 			async : true,
 			type : "post",
@@ -173,12 +178,15 @@ body {
 					$("#erweima").show();
 					$("#cancel").show();
 					$("#zhuyitingxing").show();
+					//log("支付宝下单成功：  挂号流水号=="+$.session.get("RegNo") +"    金额:"+$.session.get("TotalFee"));
 					aa = setTimeout("queryOrder()", 2000); //查询订单状态							
 				} else {
-					message("微信下单失败，请重试");
+					//log("支付宝下单失败：  挂号流水号=="+$.session.get("RegNo") +"    金额:"+$.session.get("TotalFee"));
+					message("支付宝下单失败，请重试");
 				}
 			},
 			error : function() {
+				//log("支付宝下单系统异常：  挂号流水号=="+$.session.get("RegNo") +"    金额:"+$.session.get("TotalFee"));
 				message("系统异常，请稍后再试！");
 			}
 		});
@@ -195,6 +203,7 @@ body {
 			if(window.parent.ttype == 2){//缴费需要增加参数
 				datas.RecipeNos = $.session.get("RecipeNos");
 			}
+			//log("支付宝充值查询订单状态：  挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：window.parent.ttype=="+window.parent.ttype+"  (1挂号，  2缴费 , 3住院)");
 			$.ajax({
 				async : false,
 				type : "post",
@@ -207,6 +216,7 @@ body {
 					if (Data.Code == "0") {
 						var czztbz = Data.retBody.trade_status; //充值状态标识
 						if(czztbz == "TRADE_SUCCESS"){//支付成功
+							//log("支付宝充值查询订单状态 支付成功：  挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：window.parent.ttype=="+window.parent.ttype+"  (1挂号，  2缴费 , 3住院)");
 							if(bb){
 								clearTimeout(bb);
 							}
@@ -222,13 +232,15 @@ body {
 						}else if(czztbz == "WAIT_BUYER_PAY"){//未支付
 							bb = setTimeout("queryOrder()", 800);
 						}else if(czztbz == "HISFAIL"){//充值成功，his挂号失败
+							//log("支付宝充值查询订单状态 充值成功his失败：  挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：window.parent.ttype=="+window.parent.ttype+"  (1挂号，  2缴费 , 3住院)");
 							//处理退费打印凭条，还是打印凭条，窗口退费
 							$("#erweima").hide();
 							$("#cancel").hide();
-							sfzhOp();//如果是挂号 	释放占号
+							if($.session.get("RegNo") && window.parent.ttype == 1){
+								sfzhOp();//如果是挂号 	释放占号
+							}
 							refund();//退费
-							alert("his返回失败！打印失败凭条或退费");
-							window.location.href="${pageContext.request.contextPath}/jsp/main/main.jsp";
+							message("由于his系统挂号失败，您的费用将原途径退费，如果退费失败，请凭借退费失败凭条到窗口进行咨询人工退费，谢谢您的配合！");
 						}
 					} else {
 						message("查询订单信息失败！");
@@ -257,14 +269,18 @@ body {
 			contentType : "application/x-www-form-urlencoded; charset=utf-8",
 			url:window.parent.serverUrl+"AlipayQX",
 			success : function(json) {
+				//log("微信充值撤销订单：交易流水号="+outTradeNo);
 				var Data = JSON.parse(json)
 				if (Data.Code == "0") {
+					//log("微信充值撤销订单     成功：交易流水号="+outTradeNo);
 					message("取消订单成功");
 				} else {
+					//log("微信充值撤销订单    失败："+Data.retmsg+"   交易流水号="+outTradeNo);
 					message(Data.retmsg);
 				}
 			},
 			error : function() {
+				//log("微信充值撤销订单    系统异常："+Data.retmsg+"   交易流水号="+outTradeNo);
 				message("系统异常，请稍后再试！");
 			}
 		});
@@ -321,10 +337,13 @@ body {
 				success : function(json) {
 					var Data = JSON.parse(json);
 					if (Data.Code == "0") {
-						//log("释放成功！号点："+RegNo);
-					}	
+						//log("释放成功！号点："+$.session.get("RegNo"));
+					}else{
+						//log("释放失败！号点："+$.session.get("RegNo"));
+					}		
 				},
 				error : function() {
+					log("释放号点时系统异常！"+$.session.get("RegNo"));
 					message("释放号点时系统异常,请稍后再试!");
 				}
 			}); 
@@ -344,25 +363,23 @@ body {
 			contentType : "application/x-www-form-urlencoded; charset=utf-8",
 			url:window.parent.serverUrl+"AlipayTF",
 			success : function(json) {
-				debugger
 				var Data = JSON.parse(json)
 				if (Data.Code == "0") {
 					var msg = Data.retBody.msg;
 					if(msg == "Success"){
-						//log("退费成功！");
-						alert("退费成功！");
-						//printTF();
+						//log("支付宝退费成功："+msg+"  挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：window.parent.ttype=="+window.parent.ttype+"  (1挂号，  2缴费 , 3住院)");
+						printTF();
 					}else{
-						//log("退费失败！");
-						alert("退费失败！");
+						//log("支付宝退费失败："+msg+"  挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：window.parent.ttype=="+window.parent.ttype+"  (1挂号，  2缴费 , 3住院)");
 						printTFFail();
 					}
 				}else{
-					alert("退费失败！");
+					//log("支付宝退费失败："+Data.Code+"  挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：window.parent.ttype=="+window.parent.ttype+"  (1挂号，  2缴费 , 3住院)");
 					printTFFail();
 				}
 			},
 			error : function() {
+				//log("支付宝退费系统异常： 挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：window.parent.ttype=="+window.parent.ttype+"  (1挂号，  2缴费 , 3住院)");
 				message("系统异常，退费失败!");	
 				printTFFail();
 			}
@@ -370,13 +387,23 @@ body {
 	}
 	
     function printTF() {
+    	var type = window.parent.ttype;//1挂号，  2缴费 , 3住院
+    	//log("打印退费成功凭条： 挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：type=="+type+"  (1挂号，  2缴费 , 3住院)");
+    	var title = "";
+    	if(type == 1){
+    		title = "支付宝挂号退费成功!";
+    	}else if(type == 2){
+    		title = "支付宝门诊缴费退费成功!";
+    	}else if(type == 3){
+    		title = "支付宝住院充值退费成功!";
+    	}
         var Printer = window.parent.KPrinter;
         Printer.SetFontModeAndTypeX(0x08, 0x01);//设置字体
         Printer.SetTextModeX(1);//设置中文模式
         Printer.WriteTextLineX("	河北北方学院附属第一医院");
-        Printer.WriteTextLineX("	挂号退费成功");
+        Printer.WriteTextLineX("	"+title);
         Printer.LFX(2); //多行送纸
-        Printer.PrintBarCodeX(73,100,4,window.parent.brid00);
+        Printer.PrintBarCodeX(73,100,4,window.parent.OutpatientId);
         Printer.WriteTextLineX("");
         Printer.SetFontModeAndTypeX(0x08, 0x00); //设置字体
         Printer.WriteTextLineX("  患者姓名：" + window.parent.Name);
@@ -394,14 +421,24 @@ body {
         Printer.CeTCutX(); //切纸
     }
     function printTFFail() {//
+    	var type = window.parent.ttype;//1挂号，  2缴费 , 3住院
+    	//log("打印退费失败凭条： 挂号流水号=="+$.session.get("RegNo") +"    交易流水号:"+outTradeNo + "   操作类型：type=="+type+"  (1挂号，  2缴费 , 3住院)");
+    	var title = "";
+    	if(type == 1){
+    		title = "微信挂号退费失败!";
+    	}else if(type == 2){
+    		title = "微信门诊缴费退费失败!";
+    	}else if(type == 3){
+    		title = "微信住院充值退费失败!";
+    	}
         var Printer = window.parent.KPrinter;
         Printer.SetFontModeAndTypeX(0x08, 0x01);//设置字体
         Printer.SetTextModeX(1);//设置中文模式
         Printer.WriteTextLineX("	河北北方学院附属第一医院");
         Printer.WriteTextLineX("");
-        Printer.WriteTextLineX("	挂号退费失败！");
+        Printer.WriteTextLineX("	"+title);
         Printer.LFX(2); //多行送纸
-        Printer.PrintBarCodeX(73,100,4,window.parent.brid00);
+        Printer.PrintBarCodeX(73,100,4,window.parent.OutpatientId);
         Printer.WriteTextLineX("");
         Printer.SetFontModeAndTypeX(0x08, 0x00); //设置字体
         Printer.WriteTextLineX("  患者姓名：" + window.parent.Name);

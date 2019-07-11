@@ -26,11 +26,11 @@
     <!--引入主题样式-->
     <link rel="stylesheet" type="text/css" href="/themes/default/easyui.css"/>
     <!--引入图标样式-->
-    <link rel="stylesheet" type="text/css" href="themes/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="/themes/icon.css"/>
     <!--引入jQuery文件-->
-    <script src="js/jquery1.7.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery1.7.js" type="text/javascript" charset="utf-8"></script>
     <!--引入EasyUi的js文件-->
-    <script src="static/lib/jquery-easyui-1.3.2/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/lib/jquery-easyui-1.3.2/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
     <!--声明css代码域-->
     <style type="text/css">
         table {
@@ -90,7 +90,8 @@
                         alert("验证码错误");
                         jfslk;
                     }else if(data*1==0){
-                        window.location.href="tomain";
+                        debugger
+                        window.location.href="jsp/sys/main.jsp";
                     }
                 }
             )

@@ -238,6 +238,7 @@ td{
 			data : datas,
 			dataType : "json",
 			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			// url:window.parent.serverUrl+"GetOutpatientIdFeeList",
 			url:window.parent.serverUrl+"GetOutpatientIdFeeList",
 			success : function(json) {
 				var Data = JSON.parse(json);

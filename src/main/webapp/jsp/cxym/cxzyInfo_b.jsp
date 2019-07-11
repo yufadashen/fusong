@@ -26,7 +26,6 @@ body {
 div{
 	position: absolute;
 	text-align: center;
-	border:1px red solid;
 }
 img[name=numKey]{
 	margin-top:4px;
@@ -60,7 +59,9 @@ img[name=numKey]{
     <img src="../../images/kb2/9.png"res_img="../../../images/kb/9_1.png" value="9"name="numKey"/> 
     <img src="../../images/kb2/close.png"res_img="../../../images/kb/10_1.png" value="10"  id="close"style="margin-top:4px;"/> <br>
     
-    <img src="../../images/kb2/0.png" style="margin-left: 126px;" res_img="../../../images/kb/0_1.png" value="0"name="numKey"/> 
+    <img src="../../images/kb2/blank.png" style=""/>
+    <img src="../../images/kb2/blank.png" style="margin-left:0px;"/>
+    <img src="../../images/kb2/0.png" style="margin-left:0px;" res_img="../../../images/kb/0_1.png" value="0"name="numKey"/> 
     <img src="../../images/kb2/sure.png" res_img="../../../images/kb/11_1.png" value="11" id="sure"/>
   </div>
 	
@@ -89,12 +90,18 @@ img[name=numKey]{
 <script type="text/javascript">
 	var log = window.parent.Logger;
 	var zylsh;//住院流水号
+	var zyFlag = false;//在院信息
 	function goNext(){
 		getZyPatientInfo();//获取住院流水号及基本信息 
-		if(window.parent.ttype == 3){//住院充值
-			window.location.href = "../zyyjf/czje.jsp";
-		}else if(window.parent.ttype == 4){//查询住院费用信息
-			window.location.href = "cxzyInfo.jsp";
+		if(zyFlag){
+			$.session.set("srzyh",$("#czje").val());
+			if(window.parent.ttype == 3){//住院充值
+				window.location.href = "../zyyjf/czje.jsp";
+			}else if(window.parent.ttype == 4){//查询住院费用信息
+				window.location.href = "cxzyInfo.jsp";
+			}
+		}else{
+			message("未查到住院信息，请确认住院号！");
 		}
 	}
     //获取住院病人住院流水号
@@ -111,25 +118,22 @@ img[name=numKey]{
 			url:window.parent.serverUrl+"GetInPatientSeriNos",
 			success : function(json) {
 				var data = JSON.parse(json);
-				debugger
 				if (data.Code == "0") {
 					var length = data.Departments.length;
 					if(length > 0){
-						if(window.parent.ttype == 3){//住院充值
-							//0未出院   1已出院
-							$.each(data.Departments,function(index,temp){
-								if(temp.InpatientStatus == "0"){
-									window.parent.Name = temp.Name;
-									$.session.set("zyyeb",temp.Balance);//充值前住院余额
-									$.session.set("zylsh",temp.InpatientSeriNo);//住院流水号
-								}
-							});
-						}
+						$.each(data.Departments,function(index,temp){
+							if(temp.InpatientStatus == "0"){//0未出院   1已出院
+								window.parent.Name = temp.Name;
+								$.session.set("zyyeb",temp.Balance);//充值前住院余额
+								$.session.set("zylsh",temp.InpatientSeriNo);//住院流水号
+								zyFlag = true;
+							}
+						});
 					}else{
 						message("查询住院流水号为空！请确认住院号！");
 					}
 				} else {
-					message("查询住院流水号失败!");
+					message("未找到住院信息!");
 				}
 				$("#waiting").hide();
 			},
@@ -191,6 +195,9 @@ img[name=numKey]{
 		$("#error").text(message);
 		return;
 	}
+	$("#tip_s").off().on("click", function() {
+		 $("#tip_div").hide();
+    });
 	/**
 	*初始化操作
 	**/
