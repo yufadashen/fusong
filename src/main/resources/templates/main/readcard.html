@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>读卡</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8"/> <!--以IE8模式渲染-->
+<meta http-equiv="X-UA-Compatible" content="IE=7"/> <!--以IE7模式渲染-->
+<style>
+    body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: url(/images/yue/bgn.jpg) no-repeat;
+    }
+</style>
+</head>
+
+<body scroll="no" id="saasfassa">
+	<!-- 显示返回主页面倒计时时间 -->
+ 	<div id="time" style="position:absolute;top:507px;right:224px;font-size:60px;color: #FF0000;">
+   	</div>
+   	
+   	<div style="position:absolute;top:130px;left:220px;font-size:40px;color:#3f7dac;letter-spacing:11px;">请按照范例完成身份验证！</div>
+   	
+   	
+   	
+   	<div style="width:283px;height:360px;margin: 221px 0px 0px 360px;position:absolute;">
+   		<img style="width:199px;" src="/images/yue/putIdCard.gif"/>
+   	</div>
+   	<!-- 返回 -->
+   	<div id="fanhui" style="width:237px;height:57px;margin: 575px 0px 0px 387px;position:absolute; ">
+   		<img style="width:199px;" src="/images/btn_cancel.png" />
+   	</div>
+	<div style="width:198px;position:absolute;top:369px;left:610px;font-size:22px;text-align:left;line-height:31px;">请使用二代身份证完成验证，并确保身份证在感应器上方。</div>
+	<div style="position:absolute;top:521px;left:143px;font-size:40px;color:#FFA042;letter-spacing:6px;">正在读取身份证信息，剩余&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 秒！</div>
+   	
+   	
+	<div id="tip_div"
+		style="z-index:1000;display:none;width:659px;height:243px;background-image:url('/images/dck2.png');position:absolute;left:150px;top:266px;">
+		<div id="tip_divInfo"
+			style="text-align:center;position:relative;top:82px">
+			<strong><span id="error" style="font-size:30px;color:#EE7700;"></span></strong>
+		</div>
+		<img id="tip_s"
+             src="/images/qdmix.png" width="90"
+             height="43" style="position:relative;top:148px;left:300px" />
+	</div>
+</body>
+<script type="text/javascript" src="/js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="/js/jqsession.js"></script>
+<script type="text/javascript" src="/js/main/readcard.js"></script>
+</html>

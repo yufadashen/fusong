@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>充值方式</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="/css/pay/lypayway.css" media="all"/>
+</head>
+<body onscroll=on>
+<div>
+    <div id="time"
+         style="position:absolute;top:10px;right:37px;font-size:60px;color: #FF0000;">
+    </div>
+
+    <div id="zfbpay" style="position:absolute;left:133px;top:255px;px; width:301px;height:142px;">
+        <img src="/images/alipay.png"/>
+    </div>
+
+    <div id="wxpay" style="position:absolute;left:587px;top:255px;px; width:301px;height:142px;">
+        <img src="/images/wxpay.png"/>
+    </div>
+    <div id="main"
+         style="position: absolute;top:708px;left:683px;width:148px;height:50px;">
+    </div>
+    <div id="pre"
+         style="position: absolute;top:708px;left:852px;width:148px;height:50px;">
+    </div>
+</div>
+<div id="tip_div"
+     style="z-index:1000;display:none;width:659px;height:243px;margin-top:-100px;background-image:url('/images/dck2.png');position:absolute;left:212px;top:365px;">
+    <div id="tip_divInfo"
+         style="text-align:center;position:relative;top:82px">
+        <span id="error" style="font-size:30px;color:#EE7700;"><strong>充值成功，请在下方取走凭条</strong></span>
+    </div>
+    <img id="tip_s"
+         src="/images/qdmix.png" width="90"
+         height="43" style="position:relative;top:125px;left:260px;padding-left: 214px;" />
+</div>
+</body>
+
+<script type="text/javascript" src="/js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="/DriverJS/json2.js"></script>
+<script src="/js/jqsession.js"></script>
+<script src="/js/pay/lypayway.js"></script>
+</html>

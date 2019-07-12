@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>输入充值金额</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/control.css" media="all"/>
+    <link rel="stylesheet" href="/css/zyyjf/czje.css" media="all"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <!--以IE8模式渲染-->
+    <meta http-equiv="X-UA-Compatible" content="IE=7"/>
+    <!--以IE7模式渲染-->
+
+</head>
+<body scroll="no" onselectstart="return false">
+<div id="time" style="position:absolute;top:3px;left:900px;font-size:60px;color: #FF0000;"></div>
+
+<div id="money"  style="z-index:1000; width:272px; position:absolute;top:248px;left:620px;background-color: black;">
+    <img src="/images/kb2/1.png" res_img="/images/kb/1_1.png" value="1" name="numKey" />
+    <img src="/images/kb2/2.png" res_img="/images/kb/2_1.png" value="2" name="numKey" />
+    <img src="/images/kb2/3.png" res_img="/images/kb/3_1.png" value="3"  name="numKey"/>
+    <img src="/images/kb2/delete.png" res_img="/images/kb/10_1.png" value="10"  id="modify" style="margin-top:4px;"/><br/>
+
+    <img src="/images/kb2/4.png" res_img="/images/kb/4_1.png" value="4" name="numKey"  />
+    <img src="/images/kb2/5.png" res_img="/images/kb/5_1.png" value="5" name="numKey" />
+    <img src="/images/kb2/6.png" res_img="/images/kb/6_1.png" value="6" name="numKey" />
+    <img src="/images/kb2/reinput.png" res_img="/images/kb/10_1.png" value="10" id="reinput" style="margin-top:4px;"/> <br/>
+
+    <img src="/images/kb2/7.png" res_img="/images/kb/7_1.png" value="7" name="numKey" />
+    <img src="/images/kb2/8.png" res_img="/images/kb/8_1.png" value="8" name="numKey" />
+    <img src="/images/kb2/9.png" res_img="/images/kb/9_1.png" value="9" name="numKey"/>
+    <img src="/images/kb2/close.png" res_img="/images/kb/10_1.png" value="10"  id="close" style="margin-top:4px;"/> <br/>
+
+    <img src="/images/kb2/0.png" res_img="/images/kb/0_1.png" value="0" name="numKey" style="width:122px;height:53px;"/>
+    <img src="/images/kb2/sure.png" res_img="/images/kb/11_1.png" value="11" id="sure" style="width:146px;height:53px;margin-top:4px;" />
+</div>
+
+
+<div id="name" style="margin:130px 0px 0px 262px;font-size:33px;color:red;">1111</div>
+<div id="ynye" style="margin:133px 0px 0px 642px;font-size:33px;color:red;">222</div>
+<div style="margin:207px 0px 0px 402px;font-size:33px;">
+    <input id="czje" value="" style="letter-spacing:4px; width:200px;height:35px;background-color:#28FF28;" />
+</div>
+<div id="openkb" style="margin:214px 0px 0px 634px;height: 30px;width: 43px;"></div>
+<div id="qrcz" style="margin:213px 0px 0px 702px;height: 32px;width: 119px;"></div>
+
+<div id="wsy" style="margin:279px 0px 0px 201px;height:76px;width:192px;"></div>
+<div id="yby" style="margin:279px 0px 0px 416px;height:76px;width:192px;"></div>
+<div id="eby" style="margin:279px 0px 0px 631px;height:76px;width:192px;"></div>
+
+<div id="sby" style="margin:389px 0px 0px 201px;height:76px;width:192px;"></div>
+<div id="wby" style="margin:389px 0px 0px 416px;height:76px;width:192px;"></div>
+<div id="yqy" style="margin:389px 0px 0px 631px;height:76px;width:192px;"></div>
+
+
+
+<div id="mainPage" style="width: 149px;height: 50px;margin:708px 0px 0px 683px;"> </div>
+<div id="backPage" style="width: 149px;height: 50px;margin:708px 0px 0px 851px;"> </div>
+<div id="tip_div"  style="margin:229px 0px 0px 0px;display:none;z-index:1000;width:659px;height:243px;background-image:url('/images/dck2.png');position:absolute;left:212px;">
+    <div id="tip_divInfo" style="text-align:center;position:relative;top:82px">
+        <span id="error" style="font-size:30px;color:#EE7700;"><strong></strong></span>
+    </div>
+    <img id="tip_s" src="/images/qdmix.png"
+         style="position:relative;top:100px;left:4px" />
+
+    <img id="tip_c" src="/images/cancle1.png"
+         style="position:relative;top:104px;left:4px;width:136px;display: none;" />
+</div>
+<div id="waiting" style="display:none;margin:199px 0px 0px 212px;z-index:100;width:576px;height:321px;background-image:url('/images/waiting.gif');position:absolute;"></div>
+</body>
+
+<script type="text/javascript" src="/js/jquery-1.11.2.js"></script>
+<script src="/js/jqsession.js"></script>
+
+<script type="text/javascript" src="/js/zyyjf/czje.js"></script>
+</html>

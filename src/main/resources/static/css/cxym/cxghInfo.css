@@ -1,0 +1,77 @@
+@charset "utf-8";
+body {
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	text-align: center;
+	behavior:url(/js/PIE.htc);
+	background:url(/images/yue/bgn.jpg) no-repeat;
+}
+#titleArea{
+	background-color:#3f7dac;
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:44px;
+	color:white;
+	margin-top:0px;
+}
+#bottomArea{
+	background-color:#3f7dac;
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:24px;
+	color:white;
+	margin-top:0px;
+	line-height:60px;
+}
+#showArea{
+	/* border:1px black solid;  */
+	border-radius:10px;
+	width:995px;
+	height:570px;
+	margin-left:11px;
+	margin-top:20px;
+	behavior:url(/js/PIE.htc);
+}
+td{
+	padding:3px;
+}
+.pageButton{
+	width:180px;
+	height:60px;
+	border:1px black solid;
+	border-radius:10px;
+	background-color:#85c531;
+	line-height:60px;
+	margin-left:20px;
+	behavior:url(/js/PIE.htc);
+}
+#confirmBtn{
+	border:2px solid #3f7dac;
+	width:180px;
+	height:60px;
+	line-height:60px;
+	border-radius:10px;
+	margin-left:20px;
+	behavior:url(/js/PIE.htc);
+}
+.theads{
+	height:35px;
+	border:1px solid #3f7dac;
+	font-size:25px;
+	text-align:center;
+	color: white;
+}
+.tb_tr{
+	height:35px;
+	border:1px solid #3f7dac;
+	margin:10px;
+}
+.tb_td{
+	border:1px solid #3f7dac;
+	font-size:20px;
+	text-align:center;
+	height:35px;
+}

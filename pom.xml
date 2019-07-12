@@ -35,10 +35,10 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
         </dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -174,7 +174,11 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+			<version>1.9.22</version>
+		</dependency>
 
 <!--支付宝支付-->
 		<dependency>
@@ -184,8 +188,18 @@
 		</dependency>
 
     </dependencies>
-
 	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+
+			</plugin>
+		</plugins>
+	</build>
+
+	<!--<build>
 		<finalName>fsxrmyy</finalName>
 		<plugins>
 
@@ -193,7 +207,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-					<!--如果想在没有web.xml文件的情况下构建WAR，请设置为false。-->
+					&lt;!&ndash;如果想在没有web.xml文件的情况下构建WAR，请设置为false。&ndash;&gt;
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 
@@ -201,19 +215,11 @@
 		</plugins>
 
 
-		<!--<plugins>-->
-			<!--<plugin>-->
-				<!--<groupId>org.springframework.boot</groupId>-->
-				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-			<!--</plugin>-->
-		<!--</plugins>-->
-	<!--</build>-->
 
-	<!--<build>-->
 		<resources>
 			<resource>
 				<directory>src/main/webapp</directory>
-				<!--注意此次必须要放在此目录下才能被访问到 -->
+				&lt;!&ndash;注意此次必须要放在此目录下才能被访问到 &ndash;&gt;
 				<targetPath>META-INF/resources</targetPath>
 				<includes>
 					<include>**/**</include>
@@ -227,5 +233,5 @@
 				</includes>
 			</resource>
 		</resources>
-	</build>
+	</build>-->
 </project>

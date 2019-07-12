@@ -51,15 +51,25 @@ spring:
 #      validation-query: select * from dual
 
 #
-#    suffix: .jsp #添加路径前缀
-   #spring.mvc.view.prefix=/WEB-INF/jsp/
-   #spring.mvc.view.suffix=.jsp
-   #application.message: Hello Phil
+  thymeleaf:
+    cache: false #关闭缓存
+    prefix: classpath:/ #添加路径前缀
+#        view:
+#            prefix: /
+#            suffix: .jsp
+    suffix: .html
+    mode: HTML5
+    content-type: text/html
+    encoding: utf-8
+#    html
+#spring.thymeleaf.mode=HTML5
+#spring.thymeleaf.encoding=UTF-8
+#spring.thymeleaf.content-type=text/html
 
-  mvc:
-    view:
-        prefix: /
-        suffix: .jsp
+#  mvc:
+#    view:
+#        prefix: /
+#        suffix: .jsp
 #    static-path-pattern: /static/**
 
 

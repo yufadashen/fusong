@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>挂号成功</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+
+<link rel="stylesheet" href="/static/css/layui.css" media="all">
+<link rel="stylesheet" href="/css/control.css" media="all">
+
+<style type="text/css">
+body {
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	text-align: center;
+	background:url(../../../../../../../fsxrmyy/src/main/webapp/images/yue/bgn.jpg) no-repeat;
+}
+#titleArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:44px;
+	color:white;
+	margin-top:0px;
+}
+#bottomArea{
+	background-color:#3f7dac; 
+	width:1024px;
+	height:68px;
+	text-align:left;
+	font-size:24px;
+	color:white;
+	margin-top:35px;
+	line-height:60px;
+}
+#showArea{
+	border:1px black solid; 
+	border-radius:10px; 
+	width:995px;
+	height:570px;
+	margin-left:11px;
+	margin-top:20px;
+	behavior:url(../../js/PIE.htc);
+}
+.models{
+	width:210px;
+	height:80px;
+	background-color:#599CE0;
+	border-radius:10px;
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 22px;
+    behavior:url(../../js/PIE.htc);
+}
+.pageButton{
+	width:260px;
+	height:60px;
+	border-radius:10px; 
+	background-color:#85c531;
+	line-height:60px;
+	font-size:30px;
+	color:white;
+	behavior:url(../../js/PIE.htc);
+}
+
+#showArea{
+	
+}
+#wxts{
+	position: absolute;
+    font-size: 30px;
+    margin-left: 63px;
+    margin-top: 84px;
+}
+#yycg{
+	position: absolute;
+    margin-left: 268px;
+    font-size: 40px;
+    margin-top: 209px;
+}
+#confirmApp{
+	margin-top: 450px;
+    margin-left: 355px;
+}
+#btn_tk{
+	width:260px;
+	height:60px;
+	border-radius:10px; 
+	background-color:#f37208;
+	margin-left:533px;
+	margin-top: -60px;
+	line-height:60px;
+	font-size:30px;
+	color:white;
+	behavior:url(../../js/PIE.htc);
+}
+</style>
+</head>
+<body scroll="no"  onselectstart="return false">
+	<div id="time" style="position:absolute;top:3px;left:900px;font-size:60px;color: #FF0000;"></div>
+	<div id="titleArea">
+		<font style="margin-left:40px;">挂号成功</font>
+	</div>
+	<div id="showArea">
+		<div id="wxts">温馨提示：</div>
+			<div id="yycg">挂号成功，请取走凭条！</div>
+		<div class="pageButton" id="confirmApp">确认返回</div>
+	</div>
+	
+	
+	<div id="bottomArea">
+		<span style="margin-left:620px;">
+			<img id="btnMain" style="margin-top:8px;" src="/images/yue/mzgh_index_y.png" res_img="" height="" width=""/>
+		</span>
+		<span style="margin-left:40px;">
+			<img id="btnReturn" style="margin-top:6px;" src="/images/yue/mzgh_return_y.png" res_img="" height="" width=""/>
+		</span>
+	</div>
+	
+	<div id="tip_div"  style="margin: -529px 0px 0px 0px;display:none;z-index:1000;width:659px;height:243px;background-image:url('/images/dck2.png');position:absolute;left:212px;">
+         <div id="tip_divInfo" style="text-align:center;position:relative;top:82px">
+           <span id="error" style="font-size:30px;color:#EE7700;"><strong></strong></span>
+         </div>
+      <img id="tip_s" src="/images/qdmix.png" 
+        width="90" height="43" style="position:relative;top:125px;left:4px" />
+   </div> 
+   <div id="waiting"  style="margin: -529px 0px 0px 0px;display:none;z-index:1000;width:576px;height:321px;background-image:url('/images/waiting.gif');position:absolute;left:212px;">
+   </div>
+</body>
+<script type="text/javascript" src="/js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="/js/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/easing.js"></script>
+<script type="text/javascript" src="/js/stepBar.js"></script>
+<script type="text/javascript" src="/js/jqsession.js"></script>
+<script type="text/javascript" src="/js/mzgh/ghsuccess.js"></script>
+</html>

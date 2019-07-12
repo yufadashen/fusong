@@ -1,0 +1,24 @@
+@charset "utf-8";
+body {
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	text-align: center;
+	margin:0px;
+	background: url(/images/bgn.jpg) no-repeat;
+}
+div{
+	position: absolute;
+	text-align: center;
+}
+img[name=numKey]{
+	margin-top:4px;
+}
+#qrcz{
+	margin: 486px 0px 0px 404px;
+	height: 54px;
+	width: 219px;
+	background-color: #F89C35;
+	font-size: 38px;
+	border-radius: 20px;
+}
